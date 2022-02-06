@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D6FF8D57-5873-4D31-9B86-811F01A2218C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ESNLib.Examples</RootNamespace>
+    <AssemblyName>ESNLib.Examples</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ex_clipboard_monitor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_clipboard_monitor.Designer.cs">
+      <DependentUpon>ex_clipboard_monitor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_dialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_dialog.Designer.cs">
+      <DependentUpon>ex_dialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_dialogInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_dialogInput.Designer.cs">
+      <DependentUpon>ex_dialogInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_flags.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_flags.Designer.cs">
+      <DependentUpon>ex_flags.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_logger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_logger.Designer.cs">
+      <DependentUpon>ex_logger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_math.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_math.Designer.cs">
+      <DependentUpon>ex_math.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_plugins.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_plugins.Designer.cs">
+      <DependentUpon>ex_plugins.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_RoundButton.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_RoundButton.Designer.cs">
+      <DependentUpon>ex_RoundButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_settings_manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_settings_manager.Designer.cs">
+      <DependentUpon>ex_settings_manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_setting_manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_setting_manager.Designer.cs">
+      <DependentUpon>ex_setting_manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_textbox_watermark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_textbox_watermark.Designer.cs">
+      <DependentUpon>ex_textbox_watermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_text_dialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_text_dialog.Designer.cs">
+      <DependentUpon>ex_text_dialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_text_panel.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_text_panel.Designer.cs">
+      <DependentUpon>ex_text_panel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_time_picker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_time_picker.Designer.cs">
+      <DependentUpon>ex_time_picker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_tools.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_tools.Designer.cs">
+      <DependentUpon>ex_tools.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_update_checker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_update_checker.Designer.cs">
+      <DependentUpon>ex_update_checker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ex_watermark.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_watermark.Designer.cs">
+      <DependentUpon>ex_watermark.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ex_dialog.resx">
+      <DependentUpon>ex_dialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_dialogInput.resx">
+      <DependentUpon>ex_dialogInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_flags.resx">
+      <DependentUpon>ex_flags.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_logger.resx">
+      <DependentUpon>ex_logger.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_math.resx">
+      <DependentUpon>ex_math.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_plugins.resx">
+      <DependentUpon>ex_plugins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_RoundButton.resx">
+      <DependentUpon>ex_RoundButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_settings_manager.resx">
+      <DependentUpon>ex_settings_manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_setting_manager.resx">
+      <DependentUpon>ex_setting_manager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_textbox_watermark.resx">
+      <DependentUpon>ex_textbox_watermark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_text_dialog.resx">
+      <DependentUpon>ex_text_dialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_text_panel.resx">
+      <DependentUpon>ex_text_panel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_time_picker.resx">
+      <DependentUpon>ex_time_picker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_tools.resx">
+      <DependentUpon>ex_tools.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_update_checker.resx">
+      <DependentUpon>ex_update_checker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_watermark.resx">
+      <DependentUpon>ex_watermark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
