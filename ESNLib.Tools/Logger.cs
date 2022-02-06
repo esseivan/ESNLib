@@ -33,9 +33,14 @@ namespace ESNLib.Tools
         public WriteModes WriteMode { get; set; } = WriteModes.Append;
 
         /// <summary>
-        /// Define the DateTime format when PrefixModes is set to CurrentTime. Default value is "yyyy_MM_dd__hh_mm_ss"
+        /// Log level filter. Only higher level logs are processed
         /// </summary>
-        public string DateTimeFormat { get; set; } = "yyyy_MM_dd__hh_mm_ss";
+        public LogLevels LogLeveFilter { get; set; } = LogLevels.All;
+
+        /// <summary>
+        /// Define the DateTime format when PrefixModes is set to CurrentTime. Default value is "yyyy_MM_dd__HH_mm_ss"
+        /// </summary>
+        public string DateTimeFormat { get; set; } = "yyyy_MM_dd__HH_mm_ss";
         /// <summary>
         /// Define the right padding for the log level prefixes (Global prefixes not included). Default is 8
         /// </summary>
@@ -46,17 +51,26 @@ namespace ESNLib.Tools
         /// </summary>
         public string RuntimePrefixFormat { get; set; } = "000000.000";
         /// <summary>
-        /// Define the current time prefix format. Default is "hh:mm:ss"
+        /// Define the current time prefix format. Default is "HH:mm:ss"
         /// </summary>
-        public string CurrenttimePrefixFormat { get; set; } = "hh:mm:ss";
+        public string CurrenttimePrefixFormat { get; set; } = "HH:mm:ss";
 
         /// <summary>
         /// Error occurred
         /// </summary>
         public bool HasError { get; set; }
 
-        protected bool Enabled = false;
+        protected bool enabled = false;
 
+        /// <summary>
+        /// Is the logger enabled
+        /// </summary>
+        public bool Enabled { get => enabled; }
+
+        /// <summary>
+        /// Log pending to be written. Happens when WriteLog is called but logger is disabled
+        /// </summary>
+        private StringBuilder? pendingLog = null;
 
         public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
         /// <summary>
@@ -90,7 +104,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Define the creation time of the logger. Can be reset
         /// </summary>
-        protected DateTime creationTime;
+        public DateTime CreationTime { get; protected set; }
 
         /// <summary>
         /// Define how the log filename is generated
@@ -106,7 +120,7 @@ namespace ESNLib.Tools
             /// </summary>
             FileName = 1,
             /// <summary>
-            /// Log to specified fileName with dateTime prefix
+            /// Log to specified fileName with dateTime suffix
             /// </summary>
             FileName_DateSuffix = 2,
             /// <summary>
@@ -144,12 +158,18 @@ namespace ESNLib.Tools
         public enum LogLevels
         {
             None = 0,
-            Trace = 1,
-            Debug = 2,
-            Info = 3,
-            Warn = 4,
-            Error = 5,
-            Fatal = 6,
+
+            Fatal = 10,
+            Error = 20,
+            Warn = 30,
+
+            User = 35,
+
+            Debug = 40,
+            Port = 42,
+            Trace = 50,
+
+            All = 255,
         }
 
         /// <summary>
@@ -176,6 +196,7 @@ namespace ESNLib.Tools
         /// </summary>
         public Logger()
         {
+            CreationTime = DateTime.Now;
         }
 
         /// <summary>
@@ -194,9 +215,6 @@ namespace ESNLib.Tools
         {
             switch (FilenameMode)
             {
-                case FilenamesModes.None:
-                    // No filepath to generate
-                    break;
                 case FilenamesModes.FileName:
                     // If string empty, invalid FilePath
                     if (string.IsNullOrEmpty(FilePath))
@@ -204,8 +222,8 @@ namespace ESNLib.Tools
 
                     // Set final output path
                     outputPath = FilePath;
-
                     break;
+
                 case FilenamesModes.FileName_DateSuffix:
                     // If string empty, invalid FilePath
                     if (string.IsNullOrEmpty(FilePath))
@@ -256,16 +274,17 @@ namespace ESNLib.Tools
                     }
 
                     break;
+
+                case FilenamesModes.None:
+                // No filepath to generate
                 default:
                     break;
             }
 
             outputPath = CheckFile(outputPath);
+            CreationTime = DateTime.Now;
 
-            creationTime = DateTime.Now;
-
-            // If no invalid condition, return true
-            Enabled = true;
+            enabled = true;
             return true;
         }
 
@@ -274,7 +293,7 @@ namespace ESNLib.Tools
         /// </summary>
         public void Disable()
         {
-            Enabled = false;
+            enabled = false;
         }
 
         /// <summary>
@@ -282,13 +301,13 @@ namespace ESNLib.Tools
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        /// <exception cref="InvalidOperationException"></exception>
+        /// <exception cref="InvalidOperationException"/>
         protected virtual string CheckFile(string path)
         {
             if (WriteMode == WriteModes.Stream)
                 throw new InvalidOperationException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
 
-            if (path == string.Empty)
+            if (string.IsNullOrEmpty(path))
                 return path;
 
             if (!Directory.Exists(Path.GetDirectoryName(path)))
@@ -319,7 +338,7 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Write log with default level (debug)
+        /// Write log with default level (debug). Level filter may skip this
         /// </summary>
         public bool WriteLog(string data)
         {
@@ -327,15 +346,20 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Write log with specified level
+        /// Write log with specified level. Level filter may skip this
         /// </summary>
+        /// <returns>Returns false if logger is not enabled or log is filtered. Call Enable() if not done</returns>
         public bool WriteLog(string data, LogLevels logLevel)
         {
+            // If filtered
+            if ((int)logLevel > (int)LogLeveFilter)
+                return false;
+
             return WriteLog(data, logLevel.ToString());
         }
 
         /// <summary>
-        /// Write log with custom text
+        /// Write log with custom text. No filter is applied here
         /// </summary>
         /// <returns>Returns false if logger is not enabled. Call Enable()</returns>
         public virtual bool WriteLog(string data, string logLevelName)
@@ -343,69 +367,49 @@ namespace ESNLib.Tools
             if (WriteMode == WriteModes.Stream)
                 throw new InvalidOperationException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
 
-            if (!Enabled)
+            string output = GenerateLogLines(data, logLevelName);
+
+            // Logging disabled
+            if (!enabled)
+            {
+                // Add to pending log
+                if (pendingLog == null)
+                    pendingLog = new StringBuilder();
+                pendingLog = pendingLog.Append(output);
                 return false;
-
-            // Split by lines
-            var lines = data.Replace("\r", "").Split('\n');
-
-            string output = string.Empty;
-            string prefix = string.Empty;
-            string loglevelPrefix = logLevelName;
-
-            // Set the log level prefix string
-            if (loglevelPrefix == "None" || loglevelPrefix == string.Empty)
-                loglevelPrefix = string.Empty;
-            else
-                loglevelPrefix = $"[{loglevelPrefix}] ";
-            // Set to be all the same length to have a better readability
-            loglevelPrefix.PadRight(PrefixPadding);
-
-            switch (PrefixMode)
-            {
-                case PrefixModes.RunTime:
-                    prefix = (DateTime.Now - creationTime).TotalSeconds.ToString(RuntimePrefixFormat);
-                    break;
-                case PrefixModes.CurrentTime:
-                    prefix = DateTime.Now.ToString(CurrenttimePrefixFormat);
-                    break;
-                case PrefixModes.Custom:
-                    prefix = CustomPrefix;
-                    break;
-                case PrefixModes.None:
-                default:
-                    break;
             }
 
-            if (!string.IsNullOrEmpty(prefix))
+            // Write pending log before, if any
+            if (pendingLog != null)
             {
-                prefix = $"[{prefix}] ";
+                Write(pendingLog.ToString());
+                pendingLog = null;
             }
 
-            foreach (var line in lines)
-            {
-                output += $"{prefix}{loglevelPrefix}{line}{Environment.NewLine}";
-            }
+            Write(output);
 
-            OnLogWrite?.Invoke(this, new LoggerEventArgs(output));
-
-            if (FilenameMode != FilenamesModes.None)
-                File.AppendAllText(outputPath, output);
             return true;
         }
 
-        public void GenerateLogLine(string data, string logLevelName)
+        /// <summary>
+        /// Actually write log. Private function
+        /// </summary>
+        private void Write(string data)
         {
-            if (WriteMode == WriteModes.Stream)
-                throw new InvalidOperationException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
+            OnLogWrite?.Invoke(this, new LoggerEventArgs(data));
 
-            if (!Enabled)
-                return false;
+            if (FilenameMode != FilenamesModes.None)
+                File.AppendAllText(outputPath, data);
+        }
 
+        /// <summary>
+        /// Generate the lines for the log
+        /// </summary>
+        public string GenerateLogLines(string log, string logLevelName)
+        {
             // Split by lines
-            var lines = data.Replace("\r", "").Split('\n');
+            var lines = log.Replace("\r", "").Split('\n');
 
-            string output = string.Empty;
             string prefix = string.Empty;
             string loglevelPrefix = logLevelName;
 
@@ -420,7 +424,7 @@ namespace ESNLib.Tools
             switch (PrefixMode)
             {
                 case PrefixModes.RunTime:
-                    prefix = (DateTime.Now - creationTime).TotalSeconds.ToString(RuntimePrefixFormat);
+                    prefix = (DateTime.Now - CreationTime).TotalSeconds.ToString(RuntimePrefixFormat);
                     break;
                 case PrefixModes.CurrentTime:
                     prefix = DateTime.Now.ToString(CurrenttimePrefixFormat);
@@ -438,16 +442,13 @@ namespace ESNLib.Tools
                 prefix = $"[{prefix}] ";
             }
 
+            StringBuilder outputLog = new StringBuilder();
             foreach (var line in lines)
             {
-                output += $"{prefix}{loglevelPrefix}{line}{Environment.NewLine}";
+                outputLog.Append($"{prefix}{loglevelPrefix}{line}{Environment.NewLine}");
             }
 
-            OnLogWrite?.Invoke(this, new LoggerEventArgs(output));
-
-            if (FilenameMode != FilenamesModes.None)
-                File.AppendAllText(outputPath, output);
-            return true;
+            return outputLog.ToString();
         }
 
         public class LoggerEventArgs : EventArgs

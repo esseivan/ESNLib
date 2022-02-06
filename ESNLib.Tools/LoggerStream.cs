@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace ESNLib.Tools
 {
     /// <summary>
-    /// Manage logging
+    /// Logging manager. Supports streams
     /// </summary>
-    public class Logger_Extended<T> : Logger
+    public class LoggerStream<T> : Logger
     {
         /// <summary>
         /// The output stream if WriteMode is WriteMode.Stream
         /// </summary>
         public StreamLogger<T>? OutputStream { get; set; } = null;
 
-        public Logger_Extended()
+        public LoggerStream() : base()
         {
 
         }
@@ -92,7 +92,7 @@ namespace ESNLib.Tools
                 case PrefixModes.None:
                     break;
                 case PrefixModes.RunTime:
-                    suffix = (DateTime.Now - creationTime).TotalSeconds.ToString("000000.000");
+                    suffix = (DateTime.Now - CreationTime).TotalSeconds.ToString("000000.000");
                     break;
                 case PrefixModes.CurrentTime:
                     suffix = DateTime.Now.ToString("hh:mm:ss");
