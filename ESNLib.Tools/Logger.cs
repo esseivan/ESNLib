@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESNLib.Tools
 {
     /// <summary>
-    /// Manage logging
+    /// Manage logging for your application
     /// </summary>
     public class Logger
     {
