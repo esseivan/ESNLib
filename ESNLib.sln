@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Tools", "ESNLib.Tools\ESNLib.Tools.csproj", "{4736DF5C-0EF3-4EBE-B49B-EC032A9F9456}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Tools", "ESNLib.Tools\ESNLib.Tools.csproj", "{4736DF5C-0EF3-4EBE-B49B-EC032A9F9456}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Tools.Tests", "ESNLib.ToolsTests\ESNLib.Tools.Tests.csproj", "{3B3686F0-8229-4F5F-96AF-8A811EF91327}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Tools.Tests", "ESNLib.ToolsTests\ESNLib.Tools.Tests.csproj", "{3B3686F0-8229-4F5F-96AF-8A811EF91327}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Examples", "ESNLib.Examples\ESNLib.Examples.csproj", "{D6FF8D57-5873-4D31-9B86-811F01A2218C}"
 EndProject
