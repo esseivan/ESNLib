@@ -21,7 +21,7 @@ namespace ESNLib.Tools
 
         }
 
-        protected override string CheckFile(string path)
+        public override string CheckFile(string path)
         {
             if (WriteMode == WriteModes.Stream)
                 return "true";
@@ -58,7 +58,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Write log with custom text
         /// </summary>
-        public override bool WriteLog(string data, string log_level)
+        public override bool Write(string data, string log_level)
         {
             if (!Enabled)
                 return false;
