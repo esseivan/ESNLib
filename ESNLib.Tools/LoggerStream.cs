@@ -23,8 +23,9 @@ namespace ESNLib.Tools
 
         public override string CheckFile(string path)
         {
-            if (WriteMode == WriteModes.Stream)
-                return "true";
+            if (!(WriteMode.HasFlag(WriteModes.Write) ||
+                WriteMode.HasFlag(WriteModes.Append)))
+                return string.Empty;
 
             // Create directory if not existing
             if (!Directory.Exists(Path.GetDirectoryName(path)))
@@ -46,7 +47,7 @@ namespace ESNLib.Tools
             // Else if file existing and writemode set to write, clear file
             else
             {
-                if (WriteMode == WriteModes.Write)
+                if (WriteMode.HasFlag(WriteModes.Write))
                 {
                     File.WriteAllText(path, string.Empty);
                 }
@@ -55,74 +56,57 @@ namespace ESNLib.Tools
             return path;
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            if (OutputStream != null)
+                (OutputStream.StreamOutput as IDisposable)?.Dispose();
+        }
+
         /// <summary>
         /// Write log with custom text
         /// </summary>
-        public override bool Write(string data, string log_level)
+        public override bool Write(string data, string logLevelName)
         {
-            if (!Enabled)
+            string output = GenerateLogLines(data, logLevelName);
+
+            // Logging disabled
+            if (!enabled)
+            {
+                // Add to pending log
+                if (pendingLog == null)
+                    pendingLog = new StringBuilder();
+                pendingLog = pendingLog.Append(output);
                 return false;
-
-            if (WriteMode == WriteModes.Stream)
-            {
-                if (OutputStream == null)
-                {
-                    LastException = new ArgumentException("Output stream is not set !", nameof(OutputStream));
-                    return false;
-                }
             }
 
-            var lines = data.Replace("\r", "").Split('\n');
-
-            string output = string.Empty;
-            string suffix = string.Empty;
-            string level = log_level;
-
-            if (level == "None" || level == string.Empty)
+            if (WriteMode.HasFlag(WriteModes.Stream) && OutputStream == null)
             {
-                level = string.Empty;
-            }
-            else
-            {
-                level = $"[{level}] ".PadRight(8);
+                LastException = new ArgumentException("Output stream is not set !", nameof(OutputStream));
+                return false;
             }
 
-            switch (PrefixMode)
+            // Write pending log before, if any
+            if (pendingLog != null)
             {
-                case PrefixModes.None:
-                    break;
-                case PrefixModes.RunTime:
-                    suffix = (DateTime.Now - CreationTime).TotalSeconds.ToString("000000.000");
-                    break;
-                case PrefixModes.CurrentTime:
-                    suffix = DateTime.Now.ToString("hh:mm:ss");
-                    break;
-                case PrefixModes.Custom:
-                    suffix = CustomPrefix;
-                    break;
-                default:
-                    break;
+                _write(pendingLog.ToString());
+                pendingLog = null;
             }
 
-            if (suffix != string.Empty)
-            {
-                suffix = $"[{suffix}] ";
-            }
+            _write(output);
 
-            foreach (var line in lines)
-            {
-                output += $"{suffix}{level}{line}";
-            }
-
-            if (WriteMode == WriteModes.Stream)
-            {
-                OutputStream.WriteData(output);
-            }
-            if (FilenameMode != FilenamesModes.None)
-            {
-                File.AppendAllText(outputPath, output + Environment.NewLine);
-            }
             return true;
+        }
+
+        protected void _write(string data)
+        {
+            base._write(data);
+
+            if (WriteMode.HasFlag(WriteModes.Stream) && OutputStream != null)
+            {
+                OutputStream.WriteData(data);
+            }
         }
     }
 

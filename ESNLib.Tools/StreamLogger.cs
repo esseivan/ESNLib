@@ -47,18 +47,19 @@ namespace ESNLib.Tools
 
             Type streamType = StreamOutput.GetType();
 
+            // Note : Newline is already in the data string
             if (streamType.IsSubclassOf(typeof(Stream)))
             {
-                byte[] bytes = Encoding.Default.GetBytes(data + Environment.NewLine);
+                byte[] bytes = Encoding.Default.GetBytes(data);
                 (StreamOutput as Stream).Write(bytes, 0, bytes.Length);
             }
             else if (streamType.IsSubclassOf(typeof(StreamWriter)))
             {
-                (StreamOutput as StreamWriter).WriteLine(data);
+                (StreamOutput as StreamWriter).Write(data);
             }
             else if (streamType.IsSubclassOf(typeof(TextWriter)))
             {
-                (StreamOutput as TextWriter).WriteLine(data);
+                (StreamOutput as TextWriter).Write(data);
             }
             else
             {

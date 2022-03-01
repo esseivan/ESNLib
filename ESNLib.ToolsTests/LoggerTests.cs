@@ -13,11 +13,11 @@ namespace ESNLib.Tools.Tests
     [TestClass()]
     public class LoggerTests
     {
+        readonly string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
+
         [TestMethod()]
         public void LoggerRuntimePrefixTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
@@ -43,8 +43,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void LoggerCurrentTimePrefixTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
@@ -70,8 +68,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void LoggerCustomPrefixTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
@@ -96,8 +92,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void LoggerNoPrefixTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
@@ -121,8 +115,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void LoggerBasicTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger(path)
             {
                 WriteMode = Logger.WriteModes.Write
@@ -145,8 +137,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void FileNameLastPreviousTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
@@ -177,8 +167,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void FileNameDateSuffixTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_DateSuffix,
@@ -200,8 +188,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void FileNameTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName,
@@ -223,8 +209,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void BasicWriteTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName,
@@ -253,8 +237,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void BasicAppendTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger logDel = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName,
@@ -295,8 +277,6 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void BasicAppendLastPreviousTest()
         {
-            string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
-
             Logger log = new Logger()
             {
                 FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,

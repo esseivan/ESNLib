@@ -70,13 +70,18 @@ namespace ESNLib.Tools
         /// <summary>
         /// Log pending to be written. Happens when WriteLog is called but logger is disabled
         /// </summary>
-        private StringBuilder? pendingLog = null;
+        protected StringBuilder? pendingLog = null;
 
         public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
         /// <summary>
         /// Event called when a text is written to the log
         /// </summary>
-        public event LoggerEventHandler OnLogWrite;
+        public event LoggerEventHandler? OnLogWrite;
+        /// <summary>
+        /// Invoke the OnLogWrite event
+        /// </summary>
+        protected void OnLogWriteInvoke(object sender, string data) => OnLogWrite?.Invoke(sender, new LoggerEventArgs(data));
+
 
         /// <summary>
         /// Last exception occurred. Resets HasError flags when read
@@ -119,19 +124,19 @@ namespace ESNLib.Tools
             /// <summary>
             /// Don't log to file
             /// </summary>
-            None = 0,
+            None = 1,
             /// <summary>
             /// Log to specified FileName
             /// </summary>
-            FileName = 1,
+            FileName = 2,
             /// <summary>
             /// Log to specified fileName with dateTime suffix
             /// </summary>
-            FileName_DateSuffix = 2,
+            FileName_DateSuffix = 4,
             /// <summary>
             /// Keep the 2 last logs name last and previous
             /// </summary>
-            FileName_LastPrevious = 3
+            FileName_LastPrevious = 8
         }
 
         /// <summary>
@@ -180,20 +185,21 @@ namespace ESNLib.Tools
         /// <summary>
         /// Define how to write the log
         /// </summary>
+        [Flags]
         public enum WriteModes
         {
             /// <summary>
             /// Write over existing file
             /// </summary>
-            Write,
+            Write = 1,
             /// <summary>
             /// Append to exitsing file
             /// </summary>
-            Append,
+            Append = 2,
             /// <summary>
             /// Output to a stream
             /// </summary>
-            Stream,
+            Stream = 4,
         }
 
         /// <summary>
@@ -310,7 +316,7 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Disable writelog function. Note that when re-enabling, a new log file will be created
+        /// Disable writelog function. Note that when re-enabling, a new log file may be created
         /// </summary>
         public void Disable()
         {
@@ -412,12 +418,17 @@ namespace ESNLib.Tools
         /// <summary>
         /// Actually write log. Private function
         /// </summary>
-        private void _write(string data)
+        protected void _write(string data, bool invoke = true)
         {
-            OnLogWrite?.Invoke(this, new LoggerEventArgs(data));
+            if (invoke)
+                OnLogWriteInvoke(this, data);
 
-            if (FilenameMode != FilenamesModes.None)
+            if ((WriteMode.HasFlag(WriteModes.Append) ||
+                WriteMode.HasFlag(WriteModes.Write)) &&
+                !FilenameMode.HasFlag(FilenamesModes.None))
+            {
                 File.AppendAllText(outputPath, data);
+            }
         }
 
         /// <summary>
@@ -469,7 +480,7 @@ namespace ESNLib.Tools
             return outputLog.ToString();
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             Disable();
         }
