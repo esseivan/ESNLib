@@ -18,7 +18,7 @@ namespace ESNLib.ToolsWinForms
         private static string GetExecPath()
         {
             Assembly assembly = Assembly.GetEntryAssembly() ?? Assembly.GetExecutingAssembly();
-            return System.IO.Path.GetDirectoryName(assembly.Location);
+            return Path.GetDirectoryName(assembly.Location) ?? string.Empty;
         }
 
         /// <summary>
@@ -30,7 +30,11 @@ namespace ESNLib.ToolsWinForms
         /// <param name="path">Optionnal path to the executable. If left empty (default), the current executable path is used (Application.ExecutablePath)</param>
         public static void SetStartup(string appName, bool runOnStartup, string args = "", string path = "")
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, true);
+
+            if (rk == null)
+                throw new Exception("Unable to get key : " + key);
 
             if (runOnStartup)
             {
@@ -48,7 +52,11 @@ namespace ESNLib.ToolsWinForms
         /// </summary>
         public static string GetStartupCmd(string appName)
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+            string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, false);
+
+            if (rk == null)
+                throw new Exception("Unable to get key : " + key);
 
             return (string)rk.GetValue(appName, null);
         }
@@ -58,7 +66,11 @@ namespace ESNLib.ToolsWinForms
         /// </summary>
         public static bool GetStartupState(string appName)
         {
-            RegistryKey rk = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", false);
+            string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
+            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, false);
+
+            if (rk == null)
+                throw new Exception("Unable to get key : " + key);
 
             return rk.GetValue(appName, null) != null;
         }

@@ -17,7 +17,7 @@ namespace ESNLib.Tools.Tests
         readonly string pathStream = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log_stream.txt");
 
         [TestMethod()]
-        public void LoggerStreamTest()
+        public void LoggerFileAndStreamTest()
         {
             StreamWriter sw = new StreamWriter(pathStream);
             StreamLogger<StreamWriter> sl = new StreamLogger<StreamWriter>(sw);
@@ -41,15 +41,58 @@ namespace ESNLib.Tools.Tests
         }
 
         [TestMethod()]
-        public void CheckFileTest()
+        public void LoggerStreamTest()
         {
-            Assert.Fail();
+            StreamWriter sw = new StreamWriter(pathStream);
+            StreamLogger<StreamWriter> sl = new StreamLogger<StreamWriter>(sw);
+
+            Logger logDel = new Logger()
+            {
+                FilenameMode = Logger.FilenamesModes.FileName,
+                FilePath = path,
+                WriteMode = Logger.WriteModes.Write,
+                PrefixMode = Logger.PrefixModes.None,
+            };
+            string output = logDel.CheckFile(path);
+            logDel.Dispose();
+            File.Delete(output);
+
+            LoggerStream<StreamWriter> log = new LoggerStream<StreamWriter>()
+            {
+                OutputStream = sl,
+                FilePath = path,
+                WriteMode = Logger.WriteModes.Stream,
+                FilenameMode = Logger.FilenamesModes.FileName,
+                PrefixMode = Logger.PrefixModes.None,
+            };
+
+            Assert.IsTrue(log.Enable());
+            string outputPath = log.FileOutputPath;
+
+            Assert.IsTrue(log.Write("Hello world"));
+            log.Dispose();
+
+            string dataStream = File.ReadAllText(pathStream).Trim();
+
+            Assert.IsFalse(File.Exists(outputPath));
+            Assert.AreEqual("[Debug] Hello world", dataStream);
         }
 
         [TestMethod()]
-        public void WriteTest()
+        public void LoggerFileTest()
         {
-            Assert.Fail();
+            LoggerTests lg = new LoggerTests();
+            lg.BasicAppendLastPreviousTest();
+            lg.BasicAppendTest();
+            lg.BasicWriteTest();
+            lg.FileNameLastPreviousTest();
+            lg.FileNameTest();
+            lg.FileNameDateSuffixTest();
+            lg.LoggerBasicTest();
+            lg.LoggerCurrentTimePrefixTest();
+            lg.LoggerNoPrefixTest();
+            lg.LoggerRuntimePrefixTest();
+            lg.LoggerCustomPrefixTest();
         }
     }
 }

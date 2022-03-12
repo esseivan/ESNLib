@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ESNLib.Tools
 {
     /// <summary>
-    /// Adapter for stream logging
+    /// Adapter for stream logging. Use LoggerStream instead
     /// </summary>
     /// <typeparam name="T">Stream, StreamWriter or TextWriter child</typeparam>
     public class StreamLogger<T>
