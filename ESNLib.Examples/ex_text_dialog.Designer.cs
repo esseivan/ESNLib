@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.textDialog1 = new EsseivaN.Controls.TextDialog();
+            this.textDialog1 = new ESNLib.Controls.TextDialog();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
@@ -66,7 +66,7 @@
 
         #endregion
 
-        private EsseivaN.Controls.TextDialog textDialog1;
+        private ESNLib.Controls.TextDialog textDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richTextBox1;
     }

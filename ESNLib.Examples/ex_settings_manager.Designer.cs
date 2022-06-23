@@ -41,10 +41,10 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtData2 = new EsseivaN.Controls.TextboxWatermark();
-            this.txtName = new EsseivaN.Controls.TextboxWatermark();
-            this.txtIndex = new EsseivaN.Controls.TextboxWatermark();
-            this.txtData1 = new EsseivaN.Controls.TextboxWatermark();
+            this.txtData2 = new ESNLib.Controls.TextboxWatermark();
+            this.txtName = new ESNLib.Controls.TextboxWatermark();
+            this.txtIndex = new ESNLib.Controls.TextboxWatermark();
+            this.txtData1 = new ESNLib.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // btnDel
@@ -245,14 +245,14 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnGet;
         private System.Windows.Forms.Button btnAdd;
-        private EsseivaN.Controls.TextboxWatermark txtData2;
-        private EsseivaN.Controls.TextboxWatermark txtData1;
+        private ESNLib.Controls.TextboxWatermark txtData2;
+        private ESNLib.Controls.TextboxWatermark txtData1;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
-        private EsseivaN.Controls.TextboxWatermark txtIndex;
-        private EsseivaN.Controls.TextboxWatermark txtName;
+        private ESNLib.Controls.TextboxWatermark txtIndex;
+        private ESNLib.Controls.TextboxWatermark txtName;
         private System.Windows.Forms.Button btnUpdate;
     }
 }

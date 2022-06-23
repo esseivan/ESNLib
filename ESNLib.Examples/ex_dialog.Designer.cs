@@ -36,11 +36,11 @@
             this.mL3 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.mI1 = new System.Windows.Forms.ComboBox();
-            this.mMsg = new EsseivaN.Controls.TextboxWatermark();
-            this.mTitle = new EsseivaN.Controls.TextboxWatermark();
-            this.mB3 = new EsseivaN.Controls.TextboxWatermark();
-            this.mB2 = new EsseivaN.Controls.TextboxWatermark();
-            this.mB1 = new EsseivaN.Controls.TextboxWatermark();
+            this.mMsg = new ESNLib.Controls.TextboxWatermark();
+            this.mTitle = new ESNLib.Controls.TextboxWatermark();
+            this.mB3 = new ESNLib.Controls.TextboxWatermark();
+            this.mB2 = new ESNLib.Controls.TextboxWatermark();
+            this.mB1 = new ESNLib.Controls.TextboxWatermark();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -208,16 +208,16 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private EsseivaN.Controls.TextboxWatermark mMsg;
+        private ESNLib.Controls.TextboxWatermark mMsg;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox mL1;
-        private EsseivaN.Controls.TextboxWatermark mTitle;
+        private ESNLib.Controls.TextboxWatermark mTitle;
         private System.Windows.Forms.ComboBox mL2;
         private System.Windows.Forms.Button button2;
-        private EsseivaN.Controls.TextboxWatermark mB3;
+        private ESNLib.Controls.TextboxWatermark mB3;
         private System.Windows.Forms.ComboBox mL3;
-        private EsseivaN.Controls.TextboxWatermark mB2;
-        private EsseivaN.Controls.TextboxWatermark mB1;
+        private ESNLib.Controls.TextboxWatermark mB2;
+        private ESNLib.Controls.TextboxWatermark mB1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox mI1;
     }

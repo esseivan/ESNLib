@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net45</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>ESN</Authors>
     <Description>My personnal library</Description>
-    <RepositoryUrl>https://github.com/esseivan/ESNLib</RepositoryUrl>
+    <RepositoryUrl>https://github.com/ESNLib/ESNLib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>esn</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="System.Text.Json" Version="6.0.5" />
   </ItemGroup>
 
 </Project>

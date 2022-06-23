@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
-            this.roundButton1 = new EsseivaN.Deprecated.RoundButton();
+            this.roundButton1 = new ESNLib.Deprecated.RoundButton();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -85,7 +85,7 @@
         #endregion
 
         private System.Windows.Forms.PropertyGrid propertyGrid1;
-        private EsseivaN.Deprecated.RoundButton roundButton1;
+        private ESNLib.Deprecated.RoundButton roundButton1;
         private System.Windows.Forms.Label label1;
     }
 }

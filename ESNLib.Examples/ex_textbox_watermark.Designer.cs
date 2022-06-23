@@ -33,8 +33,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.richTextboxWatermark1 = new EsseivaN.Controls.RichTextboxWatermark();
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
+            this.richTextboxWatermark1 = new ESNLib.Controls.RichTextboxWatermark();
+            this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
             this.textboxWatermark3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -132,13 +132,13 @@
 
         #endregion
 
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark1;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.TextBox textBox2;
-        private EsseivaN.Controls.RichTextboxWatermark richTextboxWatermark1;
+        private ESNLib.Controls.RichTextboxWatermark richTextboxWatermark1;
         private System.Windows.Forms.TextBox textboxWatermark3;
     }
 }

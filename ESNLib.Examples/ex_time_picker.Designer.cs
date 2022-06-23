@@ -34,7 +34,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.timePicker_21 = new EsseivaN.Deprecated.TimePicker_2();
+            this.timePicker_21 = new ESNLib.Deprecated.TimePicker_2();
             this.SuspendLayout();
             // 
             // textBox1
@@ -137,7 +137,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox2;
-        private EsseivaN.Deprecated.TimePicker_2 timePicker_21;
+        private ESNLib.Deprecated.TimePicker_2 timePicker_21;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;

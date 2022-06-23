@@ -30,17 +30,17 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.mInput = new System.Windows.Forms.TextBox();
-            this.mMsg = new EsseivaN.Controls.TextboxWatermark();
+            this.mMsg = new ESNLib.Controls.TextboxWatermark();
             this.label1 = new System.Windows.Forms.Label();
             this.mL1 = new System.Windows.Forms.ComboBox();
-            this.mDInput = new EsseivaN.Controls.TextboxWatermark();
-            this.mTitle = new EsseivaN.Controls.TextboxWatermark();
+            this.mDInput = new ESNLib.Controls.TextboxWatermark();
+            this.mTitle = new ESNLib.Controls.TextboxWatermark();
             this.mL2 = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
-            this.mB3 = new EsseivaN.Controls.TextboxWatermark();
+            this.mB3 = new ESNLib.Controls.TextboxWatermark();
             this.mL3 = new System.Windows.Forms.ComboBox();
-            this.mB2 = new EsseivaN.Controls.TextboxWatermark();
-            this.mB1 = new EsseivaN.Controls.TextboxWatermark();
+            this.mB2 = new ESNLib.Controls.TextboxWatermark();
+            this.mB1 = new ESNLib.Controls.TextboxWatermark();
             this.mI1 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -220,17 +220,17 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private EsseivaN.Controls.TextboxWatermark mMsg;
+        private ESNLib.Controls.TextboxWatermark mMsg;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox mL1;
-        private EsseivaN.Controls.TextboxWatermark mTitle;
+        private ESNLib.Controls.TextboxWatermark mTitle;
         private System.Windows.Forms.ComboBox mL2;
         private System.Windows.Forms.Button button2;
-        private EsseivaN.Controls.TextboxWatermark mB3;
+        private ESNLib.Controls.TextboxWatermark mB3;
         private System.Windows.Forms.ComboBox mL3;
-        private EsseivaN.Controls.TextboxWatermark mB2;
-        private EsseivaN.Controls.TextboxWatermark mB1;
-        private EsseivaN.Controls.TextboxWatermark mDInput;
+        private ESNLib.Controls.TextboxWatermark mB2;
+        private ESNLib.Controls.TextboxWatermark mB1;
+        private ESNLib.Controls.TextboxWatermark mDInput;
         private System.Windows.Forms.TextBox mInput;
         private System.Windows.Forms.ComboBox mI1;
     }

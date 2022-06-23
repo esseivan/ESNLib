@@ -1,14 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ESNLib.Tools
 {
-    public class SettingsManager
+    public abstract class SettingsManager
     {
         /// <summary>
         /// Get the default path to save settings if not specified
@@ -101,7 +101,7 @@ namespace ESNLib.Tools
         /// </summary>
         private static T Deserialize<T>(string data)
         {
-            return JsonConvert.DeserializeObject<T>(data);
+            return JsonSerializer.Deserialize<T>(data);
         }
 
         /// <summary>
@@ -109,7 +109,11 @@ namespace ESNLib.Tools
         /// </summary>
         private static string Serialize<T>(T data, bool indent)
         {
-            return JsonConvert.SerializeObject(data, indent ? Formatting.Indented : Formatting.None);
+            JsonSerializerOptions jso = new JsonSerializerOptions
+            {
+                WriteIndented = indent
+            };
+            return JsonSerializer.Serialize(data, jso);
         }
     }
 }

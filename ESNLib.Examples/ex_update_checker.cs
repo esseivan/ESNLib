@@ -1,4 +1,4 @@
-﻿using EsseivaN.Tools;
+﻿using ESNLib.Tools;
 using System;
 using System.Windows.Forms;
 
@@ -35,7 +35,7 @@ namespace Examples
         private void ex_update_checker_Load(object sender, EventArgs e)
         {
             textboxWatermark1.Text = "1.0";
-            textboxWatermark2.Text = @"http://www.esseivan.ch/files/softwares/resistortool/version.xml";
+            textboxWatermark2.Text = @"http://www.ESNLib.ch/files/softwares/resistortool/version.xml";
         }
     }
 }

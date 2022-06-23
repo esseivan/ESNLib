@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace ESNLib.Tools.Tests
 {
@@ -221,7 +220,7 @@ namespace ESNLib.Tools.Tests
             public int x;
             public string name;
             public double[] constants;
-            [Newtonsoft.Json.JsonIgnore()]
+            [System.Text.Json.Serialization.JsonIgnore()]
             public string hiddenText;
         }
     }

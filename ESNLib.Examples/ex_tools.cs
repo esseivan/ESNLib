@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Examples
 {
-    public partial class ex_tools : Form, EsseivaN.Tools.IAdminForm
+    public partial class ex_tools : Form, ESNLib.Tools.IAdminForm
     {
         public string[] args { get; set; }
 
@@ -28,7 +28,7 @@ namespace Examples
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            EsseivaN.Tools.Tools.RunAsAdmin(this, "hello world");
+            ESNLib.Tools.Tools.RunAsAdmin(this, "hello world");
         }
 
         private void Ex_tools_Load(object sender, EventArgs e)

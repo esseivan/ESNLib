@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textPanel1 = new EsseivaN.Controls.TextPanel();
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
-            this.textboxWatermark2 = new EsseivaN.Controls.TextboxWatermark();
+            this.textPanel1 = new ESNLib.Controls.TextPanel();
+            this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
+            this.textboxWatermark2 = new ESNLib.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // textBox1
@@ -94,8 +94,8 @@
 
         #endregion
         private System.Windows.Forms.TextBox textBox1;
-        private EsseivaN.Controls.TextPanel textPanel1;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark2;
+        private ESNLib.Controls.TextPanel textPanel1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark2;
     }
 }

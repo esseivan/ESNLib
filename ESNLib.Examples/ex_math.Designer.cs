@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
+            this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
@@ -67,7 +67,7 @@
 
         #endregion
 
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark1;
         private System.Windows.Forms.ComboBox comboBox1;
     }
 }

@@ -37,9 +37,9 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.textboxWatermark2 = new EsseivaN.Controls.TextboxWatermark();
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
-            this.richTextboxWatermark1 = new EsseivaN.Controls.RichTextboxWatermark();
+            this.textboxWatermark2 = new ESNLib.Controls.TextboxWatermark();
+            this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
+            this.richTextboxWatermark1 = new ESNLib.Controls.RichTextboxWatermark();
             this.SuspendLayout();
             // 
             // button1
@@ -182,14 +182,14 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.Button button2;
-        private EsseivaN.Controls.RichTextboxWatermark richTextboxWatermark1;
+        private ESNLib.Controls.RichTextboxWatermark richTextboxWatermark1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button button3;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark1;
         private System.Windows.Forms.ComboBox comboBox4;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark2;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark2;
     }
 }

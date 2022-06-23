@@ -1,4 +1,4 @@
-﻿using EsseivaN.Tools;
+﻿using ESNLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -10,7 +10,7 @@ namespace Examples
         List<setting> settingsList = new List<setting>();
         Dictionary<int, string> settingsNames = new Dictionary<int, string>();
 
-        EsseivaN.Tools.SettingsManager<setting> settingsManager;
+        ESNLib.Tools.SettingsManager<setting> settingsManager;
 
         // The class to save
         class setting

@@ -38,8 +38,8 @@
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnGetAll = new System.Windows.Forms.Button();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
-            this.txtData2 = new EsseivaN.Controls.TextboxWatermark();
-            this.txtData1 = new EsseivaN.Controls.TextboxWatermark();
+            this.txtData2 = new ESNLib.Controls.TextboxWatermark();
+            this.txtData1 = new ESNLib.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // btnSave
@@ -176,8 +176,8 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnGet;
         private System.Windows.Forms.Button btnAdd;
-        private EsseivaN.Controls.TextboxWatermark txtData2;
-        private EsseivaN.Controls.TextboxWatermark txtData1;
+        private ESNLib.Controls.TextboxWatermark txtData2;
+        private ESNLib.Controls.TextboxWatermark txtData1;
         private System.Windows.Forms.Button btnLoad;
         private System.Windows.Forms.Button btnNew;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;

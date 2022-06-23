@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.button1 = new System.Windows.Forms.Button();
-            this.textboxWatermark1 = new EsseivaN.Controls.TextboxWatermark();
-            this.textboxWatermark2 = new EsseivaN.Controls.TextboxWatermark();
+            this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
+            this.textboxWatermark2 = new ESNLib.Controls.TextboxWatermark();
             this.SuspendLayout();
             // 
             // button1
@@ -84,7 +84,7 @@
         #endregion
 
         private System.Windows.Forms.Button button1;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark1;
-        private EsseivaN.Controls.TextboxWatermark textboxWatermark2;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark1;
+        private ESNLib.Controls.TextboxWatermark textboxWatermark2;
     }
 }
