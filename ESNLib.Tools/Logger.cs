@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -70,13 +71,13 @@ namespace ESNLib.Tools
         /// <summary>
         /// Log pending to be written. Happens when WriteLog is called but logger is disabled
         /// </summary>
-        protected StringBuilder? pendingLog = null;
+        protected StringBuilder pendingLog = null;
 
         public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
         /// <summary>
         /// Event called when a text is written to the log
         /// </summary>
-        public event LoggerEventHandler? OnLogWrite;
+        public event LoggerEventHandler OnLogWrite;
         /// <summary>
         /// Invoke the OnLogWrite event
         /// </summary>

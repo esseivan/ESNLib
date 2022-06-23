@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// The output stream if WriteMode is WriteMode.Stream
         /// </summary>
-        public StreamLogger<T>? OutputStream { get; set; } = null;
+        public StreamLogger<T> OutputStream { get; set; } = null;
 
         public LoggerStream() : base()
         {

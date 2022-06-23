@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -31,7 +32,7 @@ namespace ESNLib.ToolsWinForms
         public static void SetStartup(string appName, bool runOnStartup, string args = "", string path = "")
         {
             string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, true);
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(key, true);
 
             if (rk == null)
                 throw new Exception("Unable to get key : " + key);
@@ -53,7 +54,7 @@ namespace ESNLib.ToolsWinForms
         public static string GetStartupCmd(string appName)
         {
             string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, false);
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(key, false);
 
             if (rk == null)
                 throw new Exception("Unable to get key : " + key);
@@ -67,7 +68,7 @@ namespace ESNLib.ToolsWinForms
         public static bool GetStartupState(string appName)
         {
             string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
-            RegistryKey? rk = Registry.CurrentUser.OpenSubKey(key, false);
+            RegistryKey rk = Registry.CurrentUser.OpenSubKey(key, false);
 
             if (rk == null)
                 throw new Exception("Unable to get key : " + key);

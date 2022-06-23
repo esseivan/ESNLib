@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace ESNLib.Tools
     /// <typeparam name="T">Stream, StreamWriter or TextWriter child</typeparam>
     public class StreamLogger<T>
     {
-        public T? StreamOutput { get; set; }
+        public T StreamOutput { get; set; }
 
         public StreamLogger()
         {
