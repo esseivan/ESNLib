@@ -17,11 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
+    <ProjectReference Include="..\ESNLib.Controls\ESNLib.Controls.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESNLib.Controls\ESNLib.Controls.csproj" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Diagnostics;
 
-namespace ESNLib.Tools.Tests
+namespace ESNLib.Tools.UnitTests
 {
     [TestClass()]
     public class LoggerTests

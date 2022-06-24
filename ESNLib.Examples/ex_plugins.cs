@@ -1,4 +1,4 @@
-﻿using ESNLib.Plugins;
+﻿using ESNLib.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_plugins : Form
     {

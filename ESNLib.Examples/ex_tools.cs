@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESNLib.Tools.WinForms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
-    public partial class ex_tools : Form, ESNLib.Tools.IAdminForm
+    public partial class ex_tools : Form, MiscTools.IAdminForm
     {
         public string[] args { get; set; }
 
@@ -28,7 +29,7 @@ namespace Examples
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            ESNLib.Tools.Tools.RunAsAdmin(this, "hello world");
+            MiscTools.RunAsAdmin(this, "hello world");
         }
 
         private void Ex_tools_Load(object sender, EventArgs e)

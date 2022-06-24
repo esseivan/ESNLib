@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_flags : Form
     {

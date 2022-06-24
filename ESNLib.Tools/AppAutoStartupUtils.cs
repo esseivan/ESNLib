@@ -6,7 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-namespace ESNLib.ToolsWinForms
+
+namespace ESNLib.Tools
 {
     /// <summary>
     /// Contain static functions to manage your application automatic startup on windows boot

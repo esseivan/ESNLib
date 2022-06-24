@@ -3,18 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_setting_manager : Form
     {
-        Setting setting = new Setting();
-        SettingManager<Setting> settingManager;
+        List<Setting> settings = new List<Setting>();
 
         // The class to save
-        class Setting
+        private class Setting
         {
-            public string data1;
-            public string data2;
+            public string data1 { get; set; } = string.Empty;
+            public string data2 = string.Empty;
+
+            public override string ToString()
+            {
+                return "(" + data1?.ToString() + "&" + data2?.ToString() + ")";
+            }
         }
 
         public ex_setting_manager()
@@ -24,20 +28,20 @@ namespace Examples
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            // Create new file
-            settingManager = new SettingManager<Setting>();
-
-            btnGetAll.PerformClick();
+            settings = new List<Setting>
+            {
+                new Setting() {data1 = "hello", data2 = "world" },
+                new Setting() {data1 = DateTime.Now.ToString(), data2 = "bar" },
+            };
+            Console.WriteLine(string.Join(",", settings));
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                settingManager = new SettingManager<Setting>();
-                settingManager.Load(openFileDialog1.FileName, out setting);
-
-                btnGetAll.PerformClick();
+                SettingsManager.LoadFrom(openFileDialog1.FileName, out settings);
+                Console.WriteLine(string.Join(",", settings));
             }
         }
 
@@ -45,69 +49,8 @@ namespace Examples
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                if (settingManager == null)
-                {
-                    return;
-                }
-
-                settingManager.Save(saveFileDialog1.FileName);
+                SettingsManager.SaveTo(saveFileDialog1.FileName, settings);
             }
-        }
-
-        private void btnDel_Click(object sender, EventArgs e)
-        {
-            settingManager.Clear();
-            btnGetAll.PerformClick();
-        }
-
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            if (settingManager == null)
-            {
-                return;
-            }
-
-            settingManager.SetSetting(new Setting() { data1 = txtData1.Text, data2 = txtData2.Text });
-            btnGetAll.PerformClick();
-        }
-
-        private void btnGetAll_Click(object sender, EventArgs e)
-        {
-            richTextBox2.Text = settingManager.GenerateFileData();
-        }
-
-        private void btnGet_Click(object sender, EventArgs e)
-        {
-            if (settingManager == null)
-            {
-                return;
-            }
-
-            txtData1.Text = txtData2.Text = string.Empty;
-
-            Setting setting = settingManager.GetSetting();
-            if (setting == null)
-            {
-                txtData1.Text = txtData2.Text = string.Empty;
-            }
-            else
-            {
-                txtData1.Text = setting.data1.ToString();
-                txtData2.Text = setting.data2.ToString();
-            }
-        }
-
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            Setting setting = settingManager.GetSetting();
-            if (setting == null)
-            {
-                setting = new Setting();
-            }
-
-            setting.data1 = txtData1.Text;
-            setting.data2 = txtData2.Text;
-            btnGetAll.PerformClick();
         }
     }
 }

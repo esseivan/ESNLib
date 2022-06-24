@@ -1,8 +1,9 @@
 ﻿using ESNLib.Tools;
+using ESNLib.Tools.WinForms;
 using System;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_update_checker : Form
     {
@@ -19,12 +20,16 @@ namespace Examples
                 return;
             }
 
-            UpdateChecker_Runner.CheckUpdateAndProcess(textboxWatermark2.Text, textboxWatermark1.Text, appExit, showMsg);
+            UpdateChecker uc = new UpdateChecker(textboxWatermark2.Text, textboxWatermark1.Text);
+            if (uc.CheckUpdates())
+            {
+                showMsg("New update : " + uc.Result.LastVersion + "\nDownload at : " + uc.Result.UpdateURL, "Update !", MessageBoxIcon.None);
+            }
         }
 
-        internal void showMsg(string msg, string title, int icon)
+        internal void showMsg(string msg, string title, MessageBoxIcon icon)
         {
-            MessageBox.Show(msg, title, MessageBoxButtons.OK, (MessageBoxIcon)icon);
+            MessageBox.Show(msg, title, MessageBoxButtons.OK, icon);
         }
 
         internal void appExit()

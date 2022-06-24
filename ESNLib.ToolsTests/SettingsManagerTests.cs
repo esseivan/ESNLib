@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
-namespace ESNLib.Tools.Tests
+namespace ESNLib.Tools.UnitTests
 {
     [TestClass()]
     public class SettingsManagerTests
@@ -215,13 +216,15 @@ namespace ESNLib.Tools.Tests
             Assert.AreNotEqual(tc2.hiddenText, read2.hiddenText);
         }
 
-        private class TestClass
+        public class TestClass
         {
-            public int x;
-            public string name;
-            public double[] constants;
-            [System.Text.Json.Serialization.JsonIgnore()]
-            public string hiddenText;
+            [JsonPropertyName("Value")]
+            public int x { get; set; }
+            public string name { get; set; }
+            [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
+            public double[] constants { get; set; }
+            [JsonIgnore()]
+            public string hiddenText { get; set; }
         }
     }
 }

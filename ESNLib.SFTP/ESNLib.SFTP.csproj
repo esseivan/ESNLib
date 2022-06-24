@@ -17,11 +17,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="6.0.5" />
+    <PackageReference Include="WinSCP" Version="5.21.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ESNLib.Controls\ESNLib.Controls.csproj" />
+    <ProjectReference Include="..\ESNLib.Tools\ESNLib.Tools.csproj" />
   </ItemGroup>
 
 </Project>

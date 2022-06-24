@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class Form1 : Form
     {
@@ -14,10 +14,8 @@ namespace Examples
         {
             typeof(ex_dialog),
             typeof(ex_dialogInput),
-            typeof(ex_settings_manager),
+            typeof(ex_setting_manager),
             typeof(ex_textbox_watermark),
-            typeof(ex_text_dialog),
-            typeof(ex_text_panel),
             typeof(ex_update_checker),
             typeof(ex_watermark),
             typeof(ex_flags),
@@ -26,9 +24,6 @@ namespace Examples
             typeof(ex_tools),
             typeof(ex_math),
             typeof(ex_plugins),
-            typeof(ex_setting_manager),
-            typeof(ex_RoundButton),
-            typeof(ex_time_picker),
         };
 
         public Form1()
@@ -75,23 +70,18 @@ namespace Examples
 
             listBox1.Items.AddRange(new string[]
             {
-                "Dialog",               // 0
-                "Dialog Input",         // 1
-                "Settings Manager",     // 2
-                "TextBox Watermark",    // 3
-                "Text Dialog",          // 4
-                "Text Panel",           // 5
-                "Update Checker",       // 6
-                "Watermark",            // 7
-                "Flags",                // 8
-                "Clipboard monitor",    // 9
-                "Logger",               // 10
-                "Tools",                // 11
-                "Math",                 // 12
-                "Plugin",               // 13
-                "Setting Manager",      // 14
-                "Round Button",         // 15
-                "Time Picker",          // 16
+                "Dialog",
+                "Dialog Input",
+                "Settings Manager",
+                "TextBox Watermark",
+                "Update Checker",
+                "Watermark",
+                "Flags",
+                "Clipboard monitor",
+                "Logger",
+                "Tools",
+                "Math",
+                "Plugin",
             });
         }
 

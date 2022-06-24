@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_logger : Form
     {
@@ -19,10 +19,10 @@ namespace Examples
 
         private void button1_Click(object sender, EventArgs e)
         {
-            WriteLog(richTextboxWatermark1.Text);
+            Write(richTextboxWatermark1.Text);
         }
 
-        private void WriteLog(string data, Logger.Log_level level)
+        private void Write(string data, Logger.LogLevels level)
         {
             if (logger == null)
             {
@@ -32,17 +32,17 @@ namespace Examples
 
             if (comboBox4.SelectedIndex == comboBox4.Items.Count - 1)
             {
-                logger.WriteLog(data, textboxWatermark2.Text);
+                logger.Write(data, textboxWatermark2.Text);
             }
             else
             {
-                logger.WriteLog(data, level);
+                logger.Write(data, level);
             }
         }
 
-        private void WriteLog(string data)
+        private void Write(string data)
         {
-            WriteLog(data, (Logger.Log_level)comboBox4.SelectedIndex);
+            Write(data, (Logger.LogLevels)comboBox4.SelectedIndex);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -63,21 +63,21 @@ namespace Examples
 
         private void button4_Click(object sender, EventArgs e)
         {
-            logger.LogToFile_CustomSuffix = textboxWatermark1.Text;
-            logger.LogToFile_FilePath = path;
-            logger.LogToFile_SaveMode = (Logger.SaveFileMode)comboBox1.SelectedIndex;
-            logger.LogToFile_SuffixMode = (Logger.Suffix_mode)comboBox2.SelectedIndex;
-            logger.LogToFile_WriteMode = (Logger.WriteMode)comboBox3.SelectedIndex;
+            logger.CustomPrefix = textboxWatermark1.Text;
+            logger.FilePath = path;
+            logger.FilenameMode = (Logger.FilenamesModes)comboBox1.SelectedIndex;
+            logger.PrefixMode = (Logger.PrefixModes)comboBox2.SelectedIndex;
+            logger.WriteMode = (Logger.WriteModes)comboBox3.SelectedIndex;
 
             logger.Enable();
         }
 
         private void ex_logger_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Enum.GetNames(typeof(Logger.SaveFileMode)));
-            comboBox2.Items.AddRange(Enum.GetNames(typeof(Logger.Suffix_mode)));
-            comboBox3.Items.AddRange(Enum.GetNames(typeof(Logger.WriteMode)));
-            comboBox4.Items.AddRange(Enum.GetNames(typeof(Logger.Log_level)));
+            comboBox1.Items.AddRange(Enum.GetNames(typeof(Logger.FilenamesModes)));
+            comboBox2.Items.AddRange(Enum.GetNames(typeof(Logger.PrefixModes)));
+            comboBox3.Items.AddRange(Enum.GetNames(typeof(Logger.WriteModes)));
+            comboBox4.Items.AddRange(Enum.GetNames(typeof(Logger.LogLevels)));
             comboBox4.Items.Add("Custom");
             comboBox1.SelectedIndex = comboBox2.SelectedIndex = comboBox3.SelectedIndex = comboBox4.SelectedIndex = 0;
         }

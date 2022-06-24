@@ -88,18 +88,6 @@
     <Compile Include="ex_plugins.Designer.cs">
       <DependentUpon>ex_plugins.cs</DependentUpon>
     </Compile>
-    <Compile Include="ex_RoundButton.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ex_RoundButton.Designer.cs">
-      <DependentUpon>ex_RoundButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ex_settings_manager.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ex_settings_manager.Designer.cs">
-      <DependentUpon>ex_settings_manager.cs</DependentUpon>
-    </Compile>
     <Compile Include="ex_setting_manager.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,24 +99,6 @@
     </Compile>
     <Compile Include="ex_textbox_watermark.Designer.cs">
       <DependentUpon>ex_textbox_watermark.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ex_text_dialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ex_text_dialog.Designer.cs">
-      <DependentUpon>ex_text_dialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ex_text_panel.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ex_text_panel.Designer.cs">
-      <DependentUpon>ex_text_panel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ex_time_picker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ex_time_picker.Designer.cs">
-      <DependentUpon>ex_time_picker.cs</DependentUpon>
     </Compile>
     <Compile Include="ex_tools.cs">
       <SubType>Form</SubType>
@@ -156,6 +126,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ex_clipboard_monitor.resx">
+      <DependentUpon>ex_clipboard_monitor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ex_dialog.resx">
       <DependentUpon>ex_dialog.cs</DependentUpon>
     </EmbeddedResource>
@@ -174,26 +147,11 @@
     <EmbeddedResource Include="ex_plugins.resx">
       <DependentUpon>ex_plugins.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ex_RoundButton.resx">
-      <DependentUpon>ex_RoundButton.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ex_settings_manager.resx">
-      <DependentUpon>ex_settings_manager.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ex_setting_manager.resx">
       <DependentUpon>ex_setting_manager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_textbox_watermark.resx">
       <DependentUpon>ex_textbox_watermark.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ex_text_dialog.resx">
-      <DependentUpon>ex_text_dialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ex_text_panel.resx">
-      <DependentUpon>ex_text_panel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ex_time_picker.resx">
-      <DependentUpon>ex_time_picker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_tools.resx">
       <DependentUpon>ex_tools.cs</DependentUpon>
@@ -225,6 +183,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESNLib.Controls\ESNLib.Controls.csproj">
+      <Project>{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}</Project>
+      <Name>ESNLib.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESNLib.Tools.WinForms\ESNLib.Tools.WinForms.csproj">
+      <Project>{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}</Project>
+      <Name>ESNLib.Tools.WinForms</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESNLib.Tools\ESNLib.Tools.csproj">
+      <Project>{4736DF5C-0EF3-4EBE-B49B-EC032A9F9456}</Project>
+      <Name>ESNLib.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

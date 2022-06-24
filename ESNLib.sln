@@ -10,22 +10,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Examples", "ESNLib.Examples\ESNLib.Examples.csproj", "{D6FF8D57-5873-4D31-9B86-811F01A2218C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old", "old", "{689BC73F-FA59-4F17-9937-F6528D75A408}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\ClipboardMonitor.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\ClipboardMonitor.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Dialog.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Dialog.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Flags.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Flags.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib.UnitTests\Flags.UnitTests.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib.UnitTests\Flags.UnitTests.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\FTPManager.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\FTPManager.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Logger.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Logger.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingManager.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingManager.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingManager_Fast.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingManager_Fast.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingsManager.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\SettingsManager.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Tools.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Tools.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib.UnitTests\Tools.UnitTests.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib.UnitTests\Tools.UnitTests.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\UpdateChecker.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\UpdateChecker.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Watermark.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\Watermark.cs
-		..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\XmlReader.cs = ..\..\cloud\01_Programming\ESN_Lib\EsseivaN_Lib\Tools\XmlReader.cs
-	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Tools.WinForms", "ESNLib.Tools.WinForms\ESNLib.Tools.WinForms.csproj", "{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Controls", "ESNLib.Controls\ESNLib.Controls.csproj", "{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.SFTP", "ESNLib.SFTP\ESNLib.SFTP.csproj", "{C9EA4868-E93D-414D-827A-1155F87D2009}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +35,18 @@ Global
 		{D6FF8D57-5873-4D31-9B86-811F01A2218C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6FF8D57-5873-4D31-9B86-811F01A2218C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6FF8D57-5873-4D31-9B86-811F01A2218C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9EA4868-E93D-414D-827A-1155F87D2009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9EA4868-E93D-414D-827A-1155F87D2009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9EA4868-E93D-414D-827A-1155F87D2009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9EA4868-E93D-414D-827A-1155F87D2009}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

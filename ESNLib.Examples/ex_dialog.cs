@@ -1,8 +1,9 @@
-﻿using ESNLib.Tools;
+﻿using ESNLib.Controls;
+using ESNLib.Tools;
 using System;
 using System.Windows.Forms;
 
-namespace Examples
+namespace ESNLib.Examples
 {
     public partial class ex_dialog : Form
     {
@@ -30,7 +31,7 @@ namespace Examples
             };
 
             label1.Text = string.Empty;
-            label1.Text = Dialog.ShowDialog(dialogConfig).ToString();
+            label1.Text = Dialog.ShowDialog(dialogConfig).DialogResult.ToString();
         }
 
         private void ex_dialogInput_Load(object sender, EventArgs e)

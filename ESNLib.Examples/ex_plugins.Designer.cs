@@ -1,4 +1,4 @@
-﻿namespace Examples
+﻿namespace ESNLib.Examples
 {
     partial class ex_plugins
     {
