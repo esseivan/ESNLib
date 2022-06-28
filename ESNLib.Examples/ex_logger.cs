@@ -19,7 +19,10 @@ namespace ESNLib.Examples
 
         private void button1_Click(object sender, EventArgs e)
         {
+            richTextboxWatermark1.Text = richTextboxWatermark1.Text.Trim();
             Write(richTextboxWatermark1.Text);
+            richTextboxWatermark1.SelectAll();
+            richTextboxWatermark1.Focus();
         }
 
         private void Write(string data, Logger.LogLevels level)
@@ -30,7 +33,7 @@ namespace ESNLib.Examples
                 return;
             }
 
-            if (comboBox4.SelectedIndex == comboBox4.Items.Count - 1)
+            if (cbLoglevel.SelectedIndex == cbLoglevel.Items.Count - 1)
             {
                 logger.Write(data, textboxWatermark2.Text);
             }
@@ -42,7 +45,9 @@ namespace ESNLib.Examples
 
         private void Write(string data)
         {
-            Write(data, (Logger.LogLevels)comboBox4.SelectedIndex);
+            Write(data, (Logger.LogLevels)Enum.Parse(
+                typeof(Logger.LogLevels),
+                cbLoglevel.SelectedItem.ToString()));
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -65,21 +70,45 @@ namespace ESNLib.Examples
         {
             logger.CustomPrefix = textboxWatermark1.Text;
             logger.FilePath = path;
-            logger.FilenameMode = (Logger.FilenamesModes)comboBox1.SelectedIndex;
-            logger.PrefixMode = (Logger.PrefixModes)comboBox2.SelectedIndex;
-            logger.WriteMode = (Logger.WriteModes)comboBox3.SelectedIndex;
+            logger.FilenameMode = (Logger.FilenamesModes)Enum.Parse(
+                typeof(Logger.FilenamesModes),
+                cbFilename.SelectedItem.ToString());
+
+            logger.PrefixMode = (Logger.PrefixModes)Enum.Parse(
+                typeof(Logger.PrefixModes),
+                cbPrefix.SelectedItem.ToString());
+
+            logger.WriteMode = (Logger.WriteModes)Enum.Parse(
+                typeof(Logger.WriteModes),
+                cbWrite.SelectedItem.ToString());
 
             logger.Enable();
         }
 
         private void ex_logger_Load(object sender, EventArgs e)
         {
-            comboBox1.Items.AddRange(Enum.GetNames(typeof(Logger.FilenamesModes)));
-            comboBox2.Items.AddRange(Enum.GetNames(typeof(Logger.PrefixModes)));
-            comboBox3.Items.AddRange(Enum.GetNames(typeof(Logger.WriteModes)));
-            comboBox4.Items.AddRange(Enum.GetNames(typeof(Logger.LogLevels)));
-            comboBox4.Items.Add("Custom");
-            comboBox1.SelectedIndex = comboBox2.SelectedIndex = comboBox3.SelectedIndex = comboBox4.SelectedIndex = 0;
+            cbFilename.Items.AddRange(Enum.GetNames(typeof(Logger.FilenamesModes)));
+            cbPrefix.Items.AddRange(Enum.GetNames(typeof(Logger.PrefixModes)));
+            cbWrite.Items.AddRange(Enum.GetNames(typeof(Logger.WriteModes)));
+            cbLoglevel.Items.AddRange(Enum.GetNames(typeof(Logger.LogLevels)));
+            cbLoglevel.Items.Add("Custom");
+            cbFilename.SelectedIndex = 3;
+            cbPrefix.SelectedIndex = 1;
+            cbWrite.SelectedIndex = cbLoglevel.SelectedIndex = 0;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            logger.Disable();
+        }
+
+        private void richTextboxWatermark1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && (e.KeyCode.HasFlag(Keys.Enter)))
+            {
+                e.Handled = true;
+                button1.PerformClick();
+            }
         }
     }
 }

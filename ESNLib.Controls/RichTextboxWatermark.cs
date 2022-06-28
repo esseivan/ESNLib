@@ -121,6 +121,7 @@ namespace ESNLib.Controls
             }
 
             // Do the keydown then check text
+            base.OnKeyDown(e);
             Application.DoEvents();
 
             if (Text == string.Empty)

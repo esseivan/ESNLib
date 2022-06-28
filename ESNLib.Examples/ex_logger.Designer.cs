@@ -32,11 +32,12 @@
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.button2 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.cbFilename = new System.Windows.Forms.ComboBox();
+            this.cbPrefix = new System.Windows.Forms.ComboBox();
+            this.cbWrite = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.cbLoglevel = new System.Windows.Forms.ComboBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.textboxWatermark2 = new ESNLib.Controls.TextboxWatermark();
             this.textboxWatermark1 = new ESNLib.Controls.TextboxWatermark();
             this.richTextboxWatermark1 = new ESNLib.Controls.RichTextboxWatermark();
@@ -72,32 +73,32 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // comboBox1
+            // cbFilename
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(12, 41);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 6;
+            this.cbFilename.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFilename.FormattingEnabled = true;
+            this.cbFilename.Location = new System.Drawing.Point(12, 41);
+            this.cbFilename.Name = "cbFilename";
+            this.cbFilename.Size = new System.Drawing.Size(121, 21);
+            this.cbFilename.TabIndex = 6;
             // 
-            // comboBox2
+            // cbPrefix
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(12, 68);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 6;
+            this.cbPrefix.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbPrefix.FormattingEnabled = true;
+            this.cbPrefix.Location = new System.Drawing.Point(12, 68);
+            this.cbPrefix.Name = "cbPrefix";
+            this.cbPrefix.Size = new System.Drawing.Size(121, 21);
+            this.cbPrefix.TabIndex = 6;
             // 
-            // comboBox3
+            // cbWrite
             // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(12, 95);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 6;
+            this.cbWrite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbWrite.FormattingEnabled = true;
+            this.cbWrite.Location = new System.Drawing.Point(12, 95);
+            this.cbWrite.Name = "cbWrite";
+            this.cbWrite.Size = new System.Drawing.Size(121, 21);
+            this.cbWrite.TabIndex = 6;
             // 
             // button3
             // 
@@ -109,14 +110,24 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // comboBox4
+            // cbLoglevel
             // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(12, 151);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 6;
+            this.cbLoglevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbLoglevel.FormattingEnabled = true;
+            this.cbLoglevel.Location = new System.Drawing.Point(12, 151);
+            this.cbLoglevel.Name = "cbLoglevel";
+            this.cbLoglevel.Size = new System.Drawing.Size(121, 21);
+            this.cbLoglevel.TabIndex = 6;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(93, 122);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(75, 23);
+            this.button5.TabIndex = 5;
+            this.button5.Text = "Disable log";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // textboxWatermark2
             // 
@@ -152,6 +163,7 @@
             this.richTextboxWatermark1.TextColor = System.Drawing.SystemColors.ControlText;
             this.richTextboxWatermark1.WatermarkColor = System.Drawing.SystemColors.GrayText;
             this.richTextboxWatermark1.WatermarkText = "Type here...";
+            this.richTextboxWatermark1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.richTextboxWatermark1_KeyDown);
             // 
             // ex_logger
             // 
@@ -161,10 +173,11 @@
             this.Controls.Add(this.textboxWatermark2);
             this.Controls.Add(this.textboxWatermark1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.comboBox4);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cbLoglevel);
+            this.Controls.Add(this.cbWrite);
+            this.Controls.Add(this.cbPrefix);
+            this.Controls.Add(this.cbFilename);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.richTextboxWatermark1);
             this.Controls.Add(this.button2);
@@ -184,12 +197,13 @@
         private System.Windows.Forms.Button button2;
         private ESNLib.Controls.RichTextboxWatermark richTextboxWatermark1;
         private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox cbFilename;
+        private System.Windows.Forms.ComboBox cbPrefix;
+        private System.Windows.Forms.ComboBox cbWrite;
         private System.Windows.Forms.Button button3;
         private ESNLib.Controls.TextboxWatermark textboxWatermark1;
-        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.ComboBox cbLoglevel;
         private ESNLib.Controls.TextboxWatermark textboxWatermark2;
+        private System.Windows.Forms.Button button5;
     }
 }

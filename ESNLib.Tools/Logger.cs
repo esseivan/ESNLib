@@ -125,19 +125,19 @@ namespace ESNLib.Tools
             /// <summary>
             /// Don't log to file
             /// </summary>
-            None = 1,
+            None = 0,
             /// <summary>
             /// Log to specified FileName
             /// </summary>
-            FileName = 2,
+            FileName = 1,
             /// <summary>
             /// Log to specified fileName with dateTime suffix
             /// </summary>
-            FileName_DateSuffix = 4,
+            FileName_DateSuffix = 2,
             /// <summary>
             /// Keep the 2 last logs name last and previous
             /// </summary>
-            FileName_LastPrevious = 8
+            FileName_LastPrevious = 3
         }
 
         /// <summary>
@@ -426,7 +426,7 @@ namespace ESNLib.Tools
 
             if ((WriteMode.HasFlag(WriteModes.Append) ||
                 WriteMode.HasFlag(WriteModes.Write)) &&
-                !FilenameMode.HasFlag(FilenamesModes.None))
+                FilenameMode != FilenamesModes.None)
             {
                 File.AppendAllText(outputPath, data);
             }

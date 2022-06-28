@@ -9,13 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Tools.Tests", "ESNLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Examples", "ESNLib.Examples\ESNLib.Examples.csproj", "{D6FF8D57-5873-4D31-9B86-811F01A2218C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "old", "old", "{689BC73F-FA59-4F17-9937-F6528D75A408}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Tools.WinForms", "ESNLib.Tools.WinForms\ESNLib.Tools.WinForms.csproj", "{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Tools.WinForms", "ESNLib.Tools.WinForms\ESNLib.Tools.WinForms.csproj", "{CFE50291-95F6-49B0-B6A4-9D4213FEFE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Controls", "ESNLib.Controls\ESNLib.Controls.csproj", "{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Controls", "ESNLib.Controls\ESNLib.Controls.csproj", "{9ED12B30-014E-47BB-B5AB-6C7C2D08DF9E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.SFTP", "ESNLib.SFTP\ESNLib.SFTP.csproj", "{C9EA4868-E93D-414D-827A-1155F87D2009}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.SFTP", "ESNLib.SFTP\ESNLib.SFTP.csproj", "{C9EA4868-E93D-414D-827A-1155F87D2009}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
