@@ -207,23 +207,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Static instance of the most recently created logger
         /// </summary>
-        public static Logger Instance
-        {
-            get
-            {
-                if (_instance != null)
-                    return _instance;
-                else
-                {
-                    _ = new Logger(); // The constructor already saves it to _instance
-                    return _instance;
-                }
-            }
-            set
-            {
-                _instance = value;
-            }
-        }
+        public static Logger Instance { get => _instance; set => _instance = value; }
 
         /// <summary>
         /// Call the Enable function before to write to log
