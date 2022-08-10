@@ -208,7 +208,14 @@ namespace ESNLib.Tools
         /// <summary>
         /// Static instance of the most recently created logger
         /// </summary>
-        public static Logger Instance { get => _instance; set => _instance = value; }
+        public static Logger Instance
+        {
+            get
+            {
+                return _instance ?? new Logger();
+            }
+            set => _instance = value;
+        }
 
         /// <summary>
         /// Call the Enable function before to write to log
@@ -249,6 +256,8 @@ namespace ESNLib.Tools
         /// <returns>Returns false if the logger couldn't be enabled. Check that the 'FilePath' is set and the modes are corrects</returns>
         public bool Enable()
         {
+            if (enabled) return true;
+
             switch (FilenameMode)
             {
                 case FilenamesModes.FileName:
