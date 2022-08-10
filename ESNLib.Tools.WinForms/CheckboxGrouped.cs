@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ESNlib.Tools.WinForms
+namespace ESNLib.Tools.WinForms
 {
     /// <summary>
     /// Group checkboxes

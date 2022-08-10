@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,22 @@ namespace ESNLib.Tools
 {
     public abstract class MiscTools
     {
+
+        /// <summary>
+        /// Inform if the app has admin privileges
+        /// </summary>
+        /// <returns></returns>
+        public static bool HasAdminPrivileges()
+        {
+            bool isElevated;
+            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
+            {
+                WindowsPrincipal principal = new WindowsPrincipal(identity);
+                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            }
+
+            return isElevated;
+        }
 
         /// <summary>
         /// Convert decimal format to engineer format

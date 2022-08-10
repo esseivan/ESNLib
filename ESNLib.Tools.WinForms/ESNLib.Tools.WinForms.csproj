@@ -5,19 +5,21 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>ESN</Authors>
     <Description>My personnal library</Description>
-    <RepositoryUrl>https://github.com/ESNLib/ESNLib</RepositoryUrl>
+    <RepositoryUrl>https://github.com/esseivan/ESNLib</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>esn</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <Version>1.0.5</Version>
+    <AssemblyVersion>1.0.5</AssemblyVersion>
+    <FileVersion>1.0.5</FileVersion>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
+	<PackageReleaseNotes>Corrected repository url</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ESNLib.Controls\ESNLib.Controls.csproj" />
+    <ProjectReference Include="..\ESNLib.Tools\ESNLib.Tools.csproj" />
   </ItemGroup>
 
   <ItemGroup>

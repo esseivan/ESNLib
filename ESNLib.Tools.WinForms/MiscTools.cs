@@ -11,21 +11,6 @@ namespace ESNLib.Tools.WinForms
 {
     public abstract class MiscTools
     {
-        /// <summary>
-        /// Inform if the app has admin privileges
-        /// </summary>
-        /// <returns></returns>
-        public static bool HasAdminPrivileges()
-        {
-            bool isElevated;
-            using (WindowsIdentity identity = WindowsIdentity.GetCurrent())
-            {
-                WindowsPrincipal principal = new WindowsPrincipal(identity);
-                isElevated = principal.IsInRole(WindowsBuiltInRole.Administrator);
-            }
-
-            return isElevated;
-        }
 
         /// <summary>
         /// Open the process with admin rights
@@ -34,10 +19,10 @@ namespace ESNLib.Tools.WinForms
         public static void RunAsAdmin(Process process)
         {
             // Do nothing
-            if (HasAdminPrivileges())
+            if (Tools.MiscTools.HasAdminPrivileges())
                 return;
 
-            //Vista or higher check
+            // Vista or higher check
             if (Environment.OSVersion.Version.Major >= 6)
             {
                 if (process.StartInfo.Verb == string.Empty)
@@ -65,7 +50,7 @@ namespace ESNLib.Tools.WinForms
         public static void RunAsAdmin(IAdminForm app, string arguments)
         {
             // Do nothing
-            if (HasAdminPrivileges())
+            if (Tools.MiscTools.HasAdminPrivileges())
                 return;
 
             //Vista or higher check
