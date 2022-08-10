@@ -16,7 +16,6 @@ namespace ESNLib.Tools
         /// <summary>
         /// Inform if the app has admin privileges
         /// </summary>
-        /// <returns></returns>
         public static bool HasAdminPrivileges()
         {
             bool isElevated;

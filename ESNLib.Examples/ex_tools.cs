@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace ESNLib.Examples
 {
-    public partial class ex_tools : Form, MiscTools.IAdminForm
+    public partial class ex_tools : Form, AdminTools.IAdminForm
     {
         public string[] args { get; set; }
 
@@ -29,7 +29,7 @@ namespace ESNLib.Examples
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            MiscTools.RunAsAdmin(this, "hello world");
+            AdminTools.RunAsAdmin(this, "hello world");
         }
 
         private void Ex_tools_Load(object sender, EventArgs e)

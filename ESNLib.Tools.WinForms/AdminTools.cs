@@ -9,8 +9,15 @@ using System.Windows.Forms;
 
 namespace ESNLib.Tools.WinForms
 {
-    public abstract class MiscTools
+    public abstract class AdminTools
     {
+        /// <summary>
+        /// Inform if the app has admin privileges
+        /// </summary>
+        public static bool HasAdminPrivileges()
+        {
+            return Tools.MiscTools.HasAdminPrivileges();
+        }
 
         /// <summary>
         /// Open the process with admin rights
@@ -29,8 +36,15 @@ namespace ESNLib.Tools.WinForms
                     process.StartInfo.Verb = "runas";
                 else
                     process.StartInfo.Verb += "runas";
-
-                process.Start();
+                
+                try
+                {
+                    process.Start();
+                }
+                catch (System.ComponentModel.Win32Exception)
+                {
+                    return;
+                }
             }
             else
                 throw new SystemException("OS version not supported");
@@ -69,15 +83,28 @@ namespace ESNLib.Tools.WinForms
                 else
                     p.StartInfo.Verb += "runas";
 
-                p.Start();
+                try
+                {
+                    p.Start();
+                }
+                catch (System.ComponentModel.Win32Exception)
+                {
+                    return;
+                }
                 Application.Exit();
             }
             else
                 throw new SystemException("OS version not supported");
         }
 
+        /// <summary>
+        /// Admin Form that is compatible with RunAsAdmin function
+        /// </summary>
         public interface IAdminForm
         {
+            /// <summary>
+            /// Indicate the executable path. Often must be set as Application.ExecutablePath
+            /// </summary>
             string GetAppPath();
         }
 

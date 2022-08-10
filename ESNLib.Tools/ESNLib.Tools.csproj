@@ -10,9 +10,9 @@
     <PackageTags>esn</PackageTags>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <Version>1.0.6.5</Version>
-    <AssemblyVersion>1.0.6.5</AssemblyVersion>
-    <FileVersion>1.0.6.5</FileVersion>
+    <Version>1.0.6.6</Version>
+    <AssemblyVersion>1.0.6.6</AssemblyVersion>
+    <FileVersion>1.0.6.6</FileVersion>
     <SignAssembly>False</SignAssembly>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	<PackageReleaseNotes></PackageReleaseNotes>
