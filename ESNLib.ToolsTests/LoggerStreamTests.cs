@@ -12,9 +12,9 @@ namespace ESNLib.Tools.UnitTests
     [TestClass()]
     public class LoggerStreamTests
     {
-        readonly string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
+        readonly string path = Logger.GetDefaultLogPath("ESN", "UnitTests", "log.txt");
 
-        readonly string pathStream = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log_stream.txt");
+        readonly string pathStream = Logger.GetDefaultLogPath("ESN", "UnitTests", "log_stream.txt");
 
         [TestMethod()]
         public void LoggerFileAndStreamTest()

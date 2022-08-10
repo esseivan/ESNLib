@@ -13,7 +13,7 @@ namespace ESNLib.Tools.UnitTests
     [TestClass()]
     public class LoggerTests
     {
-        readonly string path = Path.Combine(Logger.GetDefaultLogPath("ESN", "UnitTests"), "log.txt");
+        readonly string path = Logger.GetDefaultLogPath("ESN", "UnitTests", "log.txt");
 
         [TestMethod()]
         public void LoggerRuntimePrefixTest()
@@ -271,7 +271,7 @@ namespace ESNLib.Tools.UnitTests
 
 
             Assert.AreEqual(outputPath1, outputPath2);
-            Assert.AreEqual("[Debug] Hello world 1"+Environment.NewLine+ "[Debug] Hello world 2", data2);
+            Assert.AreEqual("[Debug] Hello world 1" + Environment.NewLine + "[Debug] Hello world 2", data2);
         }
 
         [TestMethod()]

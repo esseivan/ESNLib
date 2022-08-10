@@ -19,7 +19,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// How is the filaneme determined
         /// </summary>
-        public FilenamesModes FilenameMode { get; set; } = FilenamesModes.FileName_DateSuffix;
+        public FilenamesModes FilenameMode { get; set; } = FilenamesModes.FileName_LastPrevious;
         /// <summary>
         /// Prefix of the lines in the log
         /// </summary>
@@ -61,7 +61,7 @@ namespace ESNLib.Tools
         /// </summary>
         public bool HasError { get; set; }
 
-        protected bool enabled = false;
+        internal bool enabled = false;
 
         /// <summary>
         /// Is the logger enabled
@@ -84,6 +84,7 @@ namespace ESNLib.Tools
         protected void OnLogWriteInvoke(object sender, string data) => OnLogWrite?.Invoke(sender, new LoggerEventArgs(data));
 
 
+        private Exception _lastException = null;
         /// <summary>
         /// Last exception occurred. Resets HasError flags when read
         /// </summary>
@@ -92,13 +93,13 @@ namespace ESNLib.Tools
             get
             {
                 HasError = false;
-                return LastException;
+                return _lastException;
             }
             protected set
             {
-                if (LastException != null)
+                _lastException = value;
+                if (_lastException != null)
                     HasError = true;
-                LastException = value;
             }
         }
 
@@ -237,9 +238,9 @@ namespace ESNLib.Tools
         /// <summary>
         /// Returns %appdata%\'Manufacturer'\'ProductName'\logs\
         /// </summary>
-        public static string GetDefaultLogPath(string Manufacturer, string ProductName)
+        public static string GetDefaultLogPath(string Manufacturer, string ProductName, string FileName)
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $@"{Manufacturer}\{ProductName}\logs\");
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $@"{Manufacturer}\{ProductName}\logs\{FileName}");
         }
 
         /// <summary>
@@ -320,6 +321,7 @@ namespace ESNLib.Tools
             ResetCreationTime();
 
             enabled = true;
+            Write("Application starting...");
             return true;
         }
 
