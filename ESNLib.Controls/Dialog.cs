@@ -175,7 +175,7 @@ namespace ESNLib.Controls
             {
                 this.Message = Message;
                 this.Title = Title;
-                this.Input = false;
+                this.Input = Input;
             }
         }
 

@@ -176,6 +176,7 @@ namespace ESNLib.Tools
             Warn = 30,
 
             User = 35,
+            Info = 36,
 
             Debug = 40,
             Port = 42,
