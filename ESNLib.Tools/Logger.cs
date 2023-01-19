@@ -416,6 +416,29 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
+        /// Create file if not existing
+        /// </summary>
+        /// <param name="path">file path</param>
+        /// <returns>True if success</returns>
+        public static bool CheckFilePath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+
+            if (!File.Exists(path))
+            {
+                File.Create(path).Close();
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Write log with default level (debug). Level filter may skip this
         /// </summary>
         public bool Write(string data)
