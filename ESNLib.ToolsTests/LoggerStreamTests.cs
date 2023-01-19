@@ -16,20 +16,36 @@ namespace ESNLib.Tools.UnitTests
 
         readonly string pathStream = Logger.GetDefaultLogPath("ESN", "UnitTests", "log_stream.txt");
 
+        /// <summary>
+        /// Delete UnitTests directory to perform a clean test
+        /// </summary>
+        private void DeleteDirectory()
+        {
+            if (Directory.Exists(Path.GetDirectoryName(path)))
+                Directory.Delete(Path.GetDirectoryName(path), true);
+        }
+
         [TestMethod()]
         public void LoggerFileAndStreamTest()
         {
+            DeleteDirectory();
+
+            if (!Logger.CheckFilePath(pathStream))
+                Assert.Fail("Unable to validate path");
+
             StreamWriter sw = new StreamWriter(pathStream);
             StreamLogger<StreamWriter> sl = new StreamLogger<StreamWriter>(sw);
 
-            LoggerStream<StreamWriter> log = new LoggerStream<StreamWriter>()
+
+            LoggerStream<StreamWriter> log = new LoggerStream<StreamWriter>
             {
                 OutputStream = sl,
                 FilePath = path,
                 WriteMode = Logger.WriteModes.Stream | Logger.WriteModes.Write,
                 FilenameMode = Logger.FilenamesModes.FileName,
-                PrefixMode = Logger.PrefixModes.None,
+                PrefixMode = Logger.PrefixModes.None
             };
+
 
             Assert.IsTrue(log.Enable());
             string outputPath = log.FileOutputPath;
@@ -38,24 +54,19 @@ namespace ESNLib.Tools.UnitTests
             log.Dispose();
 
 
+            DeleteDirectory();
         }
 
         [TestMethod()]
         public void LoggerStreamTest()
         {
+            DeleteDirectory();
+
+            if (!Logger.CheckFilePath(pathStream))
+                Assert.Fail("Unable to validate path");
+
             StreamWriter sw = new StreamWriter(pathStream);
             StreamLogger<StreamWriter> sl = new StreamLogger<StreamWriter>(sw);
-
-            Logger logDel = new Logger()
-            {
-                FilenameMode = Logger.FilenamesModes.FileName,
-                FilePath = path,
-                WriteMode = Logger.WriteModes.Write,
-                PrefixMode = Logger.PrefixModes.None,
-            };
-            string output = logDel.CheckFile(path);
-            logDel.Dispose();
-            File.Delete(output);
 
             LoggerStream<StreamWriter> log = new LoggerStream<StreamWriter>()
             {
@@ -76,11 +87,15 @@ namespace ESNLib.Tools.UnitTests
 
             Assert.IsFalse(File.Exists(outputPath));
             Assert.AreEqual("[Debug] Hello world", dataStream);
+
+            DeleteDirectory();
         }
 
         [TestMethod()]
         public void LoggerFileTest()
         {
+            DeleteDirectory();
+
             LoggerTests lg = new LoggerTests();
             lg.BasicAppendLastPreviousTest();
             lg.BasicAppendTest();
@@ -93,6 +108,8 @@ namespace ESNLib.Tools.UnitTests
             lg.LoggerNoPrefixTest();
             lg.LoggerRuntimePrefixTest();
             lg.LoggerCustomPrefixTest();
+
+            DeleteDirectory();
         }
     }
 }
