@@ -13,6 +13,9 @@ using System.Windows.Forms;
 
 namespace ESNLib.Controls
 {
+    /// <summary>
+    /// Dialog window form
+    /// </summary>
     internal partial class DialogInputForm : Form
     {
         private new static Dialog.DialogResult DialogResult;
@@ -90,7 +93,7 @@ namespace ESNLib.Controls
 
             DialogInputForm dialogForm = new DialogInputForm();
 
-            // Button 1
+            // Button 1 configuration
             if (Btn1 == Dialog.ButtonType.None)
             {
                 dialogForm.button1.Visible = false;
@@ -226,15 +229,15 @@ namespace ESNLib.Controls
         // Execute on load
         private void DialogInputForm_Load(object sender, EventArgs e)
         {
-            panelInput.Visible = Input;
+            panelInput.Visible = Input; // Is user input requested
             if (Input)
             {
-                txt_userInput.Focus();
-                txt_userInput.Select(txt_userInput.TextLength, 0);
+                txt_userInput.Focus(); // If so, focus the userinput
+                txt_userInput.Select(txt_userInput.TextLength, 0); // And make sure cursor is in last position
             }
             else
             {
-                button1.Focus();
+                button1.Focus(); // Otherwise, focus first button
             }
         }
 
@@ -242,6 +245,7 @@ namespace ESNLib.Controls
 
         private void DialogInputForm_KeyDown(object sender, KeyEventArgs e)
         {
+            // If no cancel button defined and escape is pressed, close the window
             if (e.KeyCode == Keys.Escape && CancelButton == null)
             {
                 Close();
@@ -250,24 +254,28 @@ namespace ESNLib.Controls
 
         private void Button1_Click(object sender, EventArgs e)
         {
+            // button 1 clicked
             DialogResult = (Dialog.DialogResult)Btn1;
             Close();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            // button 2 clicked
             DialogResult = (Dialog.DialogResult)Btn2;
             Close();
         }
 
         private void Button3_CLick(object sender, EventArgs e)
         {
+            // button 3 clicked
             DialogResult = (Dialog.DialogResult)Btn3;
             Close();
         }
 
         private void DialogInputForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Save the user input when closing
             Result = txt_userInput.Text;
         }
     }

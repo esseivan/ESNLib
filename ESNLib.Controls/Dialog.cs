@@ -2,24 +2,41 @@
 
 namespace ESNLib.Controls
 {
+    /// <summary>
+    /// Highly configurable Dialog window (e.g. Windows Forms' MessageBox). Can also ask inputs to the user.
+    /// </summary>
     public class Dialog
     {
+        /// <summary>
+        /// The configuration for the dialog window
+        /// </summary>
         public DialogConfig Config { get; set; }
 
+        /// <summary>
+        /// Create a default dialog window with no configuration
+        /// </summary>
         public Dialog()
         {
         }
 
+        /// <summary>
+        /// Create a dialog window with the specified configuration
+        /// </summary>
         public Dialog(DialogConfig config) : this()
         {
             this.Config = config;
         }
 
+        /// <summary>
+        /// Display the dialog window to the user and await a result
+        /// </summary>
+        /// <returns>Result from the user. Includes optionnal user input.</returns>
         public ShowDialogResult ShowDialog()
         {
             return ShowDialog(Config);
         }
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         /// <summary>
         /// Type of buttons
         /// </summary>
@@ -39,8 +56,17 @@ namespace ESNLib.Controls
             Yes = 11,
             No = 12,
 
+            /// <summary>
+            /// Custom button 1. Defined by CustomButton1Text in the config
+            /// </summary>
             Custom1 = 253,
+            /// <summary>
+            /// Custom button 2. Defined by CustomButton2Text in the config
+            /// </summary>
             Custom2 = 254,
+            /// <summary>
+            /// Custom button 3. Defined by CustomButton3Text in the config
+            /// </summary>
             Custom3 = 255,
         }
 
@@ -81,10 +107,20 @@ namespace ESNLib.Controls
             Yes = 11,
             No = 12,
 
+            /// <summary>
+            /// Custom button 1. Defined by CustomButton1Text in the config
+            /// </summary>
             Custom1 = 253,
+            /// <summary>
+            /// Custom button 2. Defined by CustomButton2Text in the config
+            /// </summary>
             Custom2 = 254,
+            /// <summary>
+            /// Custom button 3. Defined by CustomButton3Text in the config
+            /// </summary>
             Custom3 = 255,
         }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 
         /// <summary>
         /// Show dialog with config class
@@ -143,34 +179,79 @@ namespace ESNLib.Controls
         /// </summary>
         public class DialogConfig
         {
+            /// <summary>
+            /// The main message displayed in the window
+            /// </summary>
             public string Message { get; set; } = string.Empty;
+            /// <summary>
+            /// Title of the window
+            /// </summary>
             public string Title { get; set; } = "Information";
+            /// <summary>
+            /// The default text in the textbox
+            /// </summary>
             public string DefaultInput { get; set; } = "";
+            /// <summary>
+            /// Wether a text input is requested to the user (textbox visible)
+            /// </summary>
             public bool Input { get; set; } = false;
+            /// <summary>
+            /// Leftmost button
+            /// </summary>
             public ButtonType Button1 { get; set; } = ButtonType.OK;
+            /// <summary>
+            /// Middle button
+            /// </summary>
             public ButtonType Button2 { get; set; } = ButtonType.None;
+            /// <summary>
+            /// Rightmost button
+            /// </summary>
             public ButtonType Button3 { get; set; } = ButtonType.None;
+            /// <summary>
+            /// Icon next to the message
+            /// </summary>
             public DialogIcon Icon { get; set; } = DialogIcon.None;
+            /// <summary>
+            /// Custom button text for Custom1 button type
+            /// </summary>
             public string CustomButton1Text { get; set; } = "Custom1";
+            /// <summary>
+            /// Custom button text for Custom2 button type
+            /// </summary>
             public string CustomButton2Text { get; set; } = "Custom2";
+            /// <summary>
+            /// Custom button text for Custom3 button type
+            /// </summary>
             public string CustomButton3Text { get; set; } = "Custom3";
 
+            /// <summary>
+            /// Create a default config
+            /// </summary>
             public DialogConfig()
             {
 
             }
 
+            /// <summary>
+            /// Create a default config with the specified message
+            /// </summary>
             public DialogConfig(string Message)
             {
                 this.Message = Message;
             }
 
+            /// <summary>
+            /// Create a default config with the specified message and title
+            /// </summary>
             public DialogConfig(string Message, string Title)
             {
                 this.Message = Message;
                 this.Title = Title;
             }
 
+            /// <summary>
+            /// Create a default config with the specified message, with specifing user input
+            /// </summary>
             public DialogConfig(string Message, string Title, bool Input)
             {
                 this.Message = Message;
@@ -189,16 +270,22 @@ namespace ESNLib.Controls
             /// </summary>
             public string UserInput { get; set; }
             /// <summary>
-            /// The button clicked
+            /// The button clicked (or window closed)
             /// </summary>
             public DialogResult DialogResult { get; set; }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public ShowDialogResult(string UserInput)
             {
                 this.UserInput = UserInput;
                 DialogResult = DialogResult.None;
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
             public ShowDialogResult(string input, DialogResult dialogResult)
             {
                 this.UserInput = input;
