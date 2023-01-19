@@ -8,21 +8,26 @@ using System.Windows.Forms;
 
 namespace ESNLib.Controls
 {
+    /// <summary>
+    /// A watermark is a default text that is displayed when the placeholder is empty.
+    /// With this class, you can apply a watermark to any text-based item.
+    /// </summary>
     public class Watermark
     {
         /// <summary>
-        /// Function to get the text of the control
+        /// Function to get the text of the control. Required
         /// </summary>
         public Func<string> getText;
         /// <summary>
-        /// Function to set the text of the control
+        /// Function to set the text of the control. Required
         /// </summary>
         public Action<string> setText;
         /// <summary>
-        /// Function to set hte font (fore) color of the control
+        /// Function to set the font (fore) color of the parent. Optionnal
         /// </summary>
-        public Action<Color> setFontColor;
+        public Action<Color> setFontColor = null;
         
+        // Private variables
         private bool active = false;
         private bool enabled = false;
         private string watermarkText = "Type here...";
@@ -65,10 +70,13 @@ namespace ESNLib.Controls
         /// </summary>
         public Color TextColor { get; set; }
 
+        /// <summary>
+        /// What text is considered empty. Leave <c>string.Empty</c> if you're unsure
+        /// </summary>
         public string EmptyText { get; set; } = string.Empty;
 
         /// <summary>
-        /// Implement watermark to a text control
+        /// Disabled by default, call the <c>Enable()</c> function
         /// </summary>
         public Watermark()
         {
@@ -100,7 +108,7 @@ namespace ESNLib.Controls
             {
                 active = false;
                 setText(EmptyText);
-                setFontColor(TextColor);
+                setFontColor?.Invoke(TextColor);
             }
         }
 
@@ -111,7 +119,7 @@ namespace ESNLib.Controls
         {
             active = false;
             setText(EmptyText);
-            setFontColor(TextColor);
+            setFontColor?.Invoke(TextColor);
         }
 
         /// <summary>
@@ -121,11 +129,11 @@ namespace ESNLib.Controls
         {
             active = true;
             setText(WatermarkText);
-            setFontColor(WatermarkColor);
+            setFontColor?.Invoke(WatermarkColor);
         }
 
         /// <summary>
-        /// Update when WatermarkText changed on runtime
+        /// Update when WatermarkText is changed on runtime
         /// </summary>
         public void Invalidate()
         {
@@ -139,7 +147,7 @@ namespace ESNLib.Controls
         }
         
         /// <summary>
-        /// Call this on the onFocusEnter event
+        /// Call this when the parent onFocusEnter event is trigerred. Clear the watermark
         /// </summary>
         public void onFocusEnter()
         {
@@ -154,7 +162,7 @@ namespace ESNLib.Controls
         }
 
         /// <summary>
-        /// Call this on the onFocusLost event
+        /// Call this when the parent onFocusEnter event is trigerred. Apply the watermark if required
         /// </summary>
         public void onFocusLost()
         {
