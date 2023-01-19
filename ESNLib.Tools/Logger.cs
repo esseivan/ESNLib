@@ -366,7 +366,6 @@ namespace ESNLib.Tools
             ResetCreationTime();
 
             enabled = true;
-            Write("Application starting...");
             return true;
         }
 
