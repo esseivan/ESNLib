@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace ESNLib.Tools
 {
     /// <summary>
     /// Manage plugins
     /// </summary>
+    [Obsolete("No use and bad implementation. Use another library from the web if you really need")]
     public class PluginsManager
     {
         /// <summary>
@@ -73,6 +75,7 @@ namespace ESNLib.Tools
     /// <summary>
     /// Plugins caller for the IPlugin interface
     /// </summary>
+    [Obsolete("No use and bad implementation. Use another library from the web if you really need")]
     public class PluginsCaller
     {
         /// <summary>
@@ -106,6 +109,7 @@ namespace ESNLib.Tools
         /// Initialize a new plugin caller to call plugins
         /// </summary>
         /// <param name="list">The list of plugins</param>
+        /// <param name="pluginsManager">Manager of the plugins</param>
         public PluginsCaller(List<Plugin> list, PluginsManager pluginsManager)
         {
             this.list = list;
@@ -176,6 +180,7 @@ namespace ESNLib.Tools
     /// <summary>
     /// Plugin event arguments (to user)
     /// </summary>
+    [Obsolete("No use and bad implementation. Use another library from the web if you really need")]
     public class PluginEventArgs : EventArgs
     {
         public string Msg;
@@ -194,6 +199,7 @@ namespace ESNLib.Tools
     /// <summary>
     /// Interface to be implemented to be reconized as a plugin
     /// </summary>
+    [Obsolete("No use and bad implementation. Use another library from the web if you really need")]
     public abstract class Plugin
     {
         /// <summary>
@@ -241,3 +247,4 @@ namespace ESNLib.Tools
         }
     }
 }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member

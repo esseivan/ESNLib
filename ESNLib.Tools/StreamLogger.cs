@@ -8,25 +8,34 @@ using System.Threading.Tasks;
 namespace ESNLib.Tools
 {
     /// <summary>
-    /// Adapter for stream logging. Use LoggerStream instead
+    /// Adapter for stream logging. <b>Do not use this class directly.</b> Use <see cref="LoggerStream{T}"/> instead
     /// </summary>
     /// <typeparam name="T">Stream, StreamWriter or TextWriter child</typeparam>
     public class StreamLogger<T>
     {
+        /// <summary>
+        /// The stream where the logs will be written
+        /// </summary>
         public T StreamOutput { get; set; }
 
+        /// <summary>
+        /// Create an instance of the <see cref="StreamLogger{T}"/>
+        /// </summary>
         public StreamLogger()
         {
 
         }
 
+        /// <summary>
+        /// Create an instance of the <see cref="StreamLogger{T}"/> with a specified stream
+        /// </summary>
         public StreamLogger(T stream)
         {
             this.StreamOutput = stream;
         }
 
         /// <summary>
-        /// Indicate if the specifie type is supported
+        /// Indicate if the specified type is supported by the class
         /// </summary>
         public static bool IsTypeSupported(Type type)
         {

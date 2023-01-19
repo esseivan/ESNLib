@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+#pragma warning disable CS0618 // Type or member is obsolete
 namespace ESNLib.Examples
 {
     public partial class ex_plugins : Form
@@ -102,3 +103,4 @@ namespace ESNLib.Examples
         }
     }
 }
+#pragma warning restore CS0618 // Type or member is obsolete

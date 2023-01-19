@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace ESNLib.Tools.WinForms
 {
+    /// <summary>
+    /// Tools to manage admin privileges on a winforms app
+    /// </summary>
     public abstract class AdminTools
     {
         /// <summary>

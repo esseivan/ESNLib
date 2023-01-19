@@ -22,6 +22,7 @@ namespace ESNLib.Controls
         /// <summary>
         /// Create a dialog window with the specified configuration
         /// </summary>
+        /// <param name="config"/>
         public Dialog(DialogConfig config) : this()
         {
             this.Config = config;

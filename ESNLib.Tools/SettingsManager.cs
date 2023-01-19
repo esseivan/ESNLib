@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ESNLib.Tools
 {
+    /// <summary>
+    /// Manage settings for an application that are serialized into a json file (non-secure !)
+    /// </summary>
     public abstract class SettingsManager
     {
         /// <summary>

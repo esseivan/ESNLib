@@ -17,6 +17,9 @@ namespace ESNLib.Tools
         /// </summary>
         public const int typeByteCount = 32;
 
+        /// <summary>
+        /// Create a Flags class
+        /// </summary>
         public Flags()
         {
             FlagList = new List<int>();

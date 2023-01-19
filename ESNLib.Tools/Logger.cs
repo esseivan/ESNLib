@@ -73,6 +73,11 @@ namespace ESNLib.Tools
         /// </summary>
         protected StringBuilder pendingLog = null;
 
+        /// <summary>
+        /// Log based event handler
+        /// </summary>
+        /// <param name="sender">Calling instance</param>
+        /// <param name="e">Event argument coming from <see cref="LoggerEventArgs"/></param>
         public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
         /// <summary>
         /// Event called when a text is written to the log
@@ -165,23 +170,53 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Define the log levels and their priority
+        /// Define the log levels and their priority. You can use custom values
         /// </summary>
         public enum LogLevels
         {
+            /// <summary>
+            /// No log will pass
+            /// </summary>
             None = 0,
 
+            /// <summary>
+            /// Only Fatal level
+            /// </summary>
             Fatal = 10,
+            /// <summary>
+            /// Error level and above
+            /// </summary>
             Error = 20,
+            /// <summary>
+            /// Warn level and above
+            /// </summary>
             Warn = 30,
 
+            /// <summary>
+            /// User level and above
+            /// </summary>
             User = 35,
+            /// <summary>
+            /// Info level and above
+            /// </summary>
             Info = 36,
 
+            /// <summary>
+            /// Debug level and above
+            /// </summary>
             Debug = 40,
+            /// <summary>
+            /// Port level and above
+            /// </summary>
             Port = 42,
+            /// <summary>
+            /// Trace level and above
+            /// </summary>
             Trace = 50,
 
+            /// <summary>
+            /// All log will pass
+            /// </summary>
             All = 255,
         }
 
@@ -436,8 +471,10 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Actually write log. Private function
+        /// Write without checking if allowed
         /// </summary>
+        /// <param name="data">Text to write</param>
+        /// <param name="invoke">If set to true, invoke the <see cref="OnLogWrite"/> event</param>
         protected void _write(string data, bool invoke = true)
         {
             if (invoke)
@@ -500,15 +537,28 @@ namespace ESNLib.Tools
             return outputLog.ToString();
         }
 
+        /// <summary>
+        /// Dispose of the logger class. It will call <see cref="Dispose"/>
+        /// </summary>
         public virtual void Dispose()
         {
             Disable();
         }
 
+        /// <summary>
+        /// Contains informations about what log is written in the event.
+        /// </summary>
         public class LoggerEventArgs : EventArgs
         {
+            /// <summary>
+            /// The log written
+            /// </summary>
             public string Log { get; private set; } = string.Empty;
 
+            /// <summary>
+            /// Create an instance of <see cref="LoggerEventArgs"/>
+            /// </summary>
+            /// <param name="Text">The log written</param>
             public LoggerEventArgs(string Text)
             {
                 this.Log = Text;

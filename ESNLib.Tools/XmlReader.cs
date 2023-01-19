@@ -5,10 +5,18 @@ using System.Xml;
 
 namespace ESNLib.Tools
 {
-    public class XmlWebReader
+    /// <summary>
+    /// Manage reading a <see cref="XmlDocument"/> from a file or from the web
+    /// </summary>
+    public abstract class XmlWebReader
     {
         private XmlWebReader() { }
 
+        /// <summary>
+        /// Read a <see cref="XmlDocument"/> from a file
+        /// </summary>
+        /// <param name="path">Path to the xml file</param>
+        /// <returns><see cref="XmlDocument"/> read or null if failed</returns>
         public static XmlDocument ReadFromFile(string path)
         {
             if (!File.Exists(path))
@@ -36,6 +44,11 @@ namespace ESNLib.Tools
             return doc;
         }
         
+        /// <summary>
+        /// Read a <see cref="XmlDocument"/> from a web URL
+        /// </summary>
+        /// <param name="url">URL to read the xml document</param>
+        /// <returns><see cref="XmlDocument"/> read or null if failed</returns>
         public static XmlDocument ReadFromWeb(string url)
         {
             try

@@ -8,20 +8,28 @@ using System.Threading.Tasks;
 namespace ESNLib.Tools
 {
     /// <summary>
-    /// Logging manager. Supports streams
+    /// Logging manager that supports <see cref="Stream"/> as output
     /// </summary>
     public class LoggerStream<T> : Logger
     {
         /// <summary>
-        /// The output stream if WriteMode is WriteMode.Stream
+        /// The output stream when WriteMode is set to WriteMode.Stream
         /// </summary>
         public StreamLogger<T> OutputStream { get; set; } = null;
 
+        /// <summary>
+        /// Create an instance of the <see cref="LoggerStream{T}"/>
+        /// </summary>
         public LoggerStream() : base()
         {
 
         }
 
+        /// <summary>
+        /// Check and validate the path given. Prepare the file.
+        /// </summary>
+        /// <param name="path">Path to the log file</param>
+        /// <returns>Actual path to the log file, if modified (e.g. added '.log' extension if none specified)</returns>
         public override string CheckFile(string path)
         {
             if (!(WriteMode.HasFlag(WriteModes.Write) ||
@@ -57,6 +65,9 @@ namespace ESNLib.Tools
             return path;
         }
 
+        /// <summary>
+        /// Dispose of the logger. The <see cref="Stream"/> will be disposed as well !
+        /// </summary>
         public override void Dispose()
         {
             base.Dispose();
@@ -100,6 +111,10 @@ namespace ESNLib.Tools
             return true;
         }
 
+        /// <summary>
+        /// Write without checking if allowed
+        /// </summary>
+        /// <param name="data">Text to write</param>
         protected void _write(string data)
         {
             base._write(data);
