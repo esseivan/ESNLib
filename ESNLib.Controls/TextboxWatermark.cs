@@ -91,7 +91,7 @@ namespace ESNLib.Controls
             }
             base.OnInvalidated(e);
         }
-        
+
         public override void ResetText()
         {
             watermarkActive = true;
