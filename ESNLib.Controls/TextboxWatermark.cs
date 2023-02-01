@@ -12,7 +12,7 @@ namespace ESNLib.Controls
         private Color watermarkColor = SystemColors.GrayText;
         private Color textColor = SystemColors.ControlText;
 
-        [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark"),]
+        [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark")]
         public string WatermarkText
         {
             get
