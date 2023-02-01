@@ -1,0 +1,12 @@
+name: Validate PR
+on:
+  push:
+jobs:
+  check_formatting:
+    runs-on: windows-latest
+    name: Check Formatting
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+        dotnet tool restore
+        dotnet csharpier --check .
