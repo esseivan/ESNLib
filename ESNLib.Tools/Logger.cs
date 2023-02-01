@@ -149,8 +149,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Define the suffix of each log
         /// </summary>
-        public enum PrefixModes
-        {
+        public enum PrefixModes {
             /// <summary>
             /// No suffix
             /// </summary>
