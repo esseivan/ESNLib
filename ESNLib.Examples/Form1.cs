@@ -53,7 +53,10 @@ namespace ESNLib.Examples
                 }
 
                 // Restart the exe without the "INSTALLED" argument
-                Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location, args_line);
+                Process.Start(
+                    System.Reflection.Assembly.GetExecutingAssembly().Location,
+                    args_line
+                );
                 Close();
                 return;
             }
@@ -68,21 +71,23 @@ namespace ESNLib.Examples
                 }
             }
 
-            listBox1.Items.AddRange(new string[]
-            {
-                "Dialog",
-                "Dialog Input",
-                "Settings Manager",
-                "TextBox Watermark",
-                "Update Checker",
-                "Watermark",
-                "Flags",
-                "Clipboard monitor",
-                "Logger",
-                "Tools",
-                "Math",
-                "Plugin",
-            });
+            listBox1.Items.AddRange(
+                new string[]
+                {
+                    "Dialog",
+                    "Dialog Input",
+                    "Settings Manager",
+                    "TextBox Watermark",
+                    "Update Checker",
+                    "Watermark",
+                    "Flags",
+                    "Clipboard monitor",
+                    "Logger",
+                    "Tools",
+                    "Math",
+                    "Plugin",
+                }
+            );
         }
 
         private void button1_Click(object sender, EventArgs e)

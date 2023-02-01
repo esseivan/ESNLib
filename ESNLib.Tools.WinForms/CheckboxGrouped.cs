@@ -38,10 +38,7 @@ namespace ESNLib.Tools.WinForms
         // List of checkboxes with index
         private Dictionary<int, CheckBox> boxList = new Dictionary<int, CheckBox>();
 
-        public CheckboxGrouped()
-        {
-
-        }
+        public CheckboxGrouped() { }
 
         #region Collection management
         public int Add(CheckBox checkBox)
@@ -107,14 +104,14 @@ namespace ESNLib.Tools.WinForms
         /// </summary>
         public void CheckNoSelection()
         {
-            if(!AllowNoSelection)
+            if (!AllowNoSelection)
             {
                 foreach (var item in boxList)
                 {
                     int index = item.Key;
                     CheckBox checkBox = item.Value;
 
-                    if(checkBox.Checked)
+                    if (checkBox.Checked)
                     {
                         return;
                     }

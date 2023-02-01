@@ -30,8 +30,8 @@ namespace ESNLib.Examples
         {
             settings = new List<Setting>
             {
-                new Setting() {data1 = "hello", data2 = "world" },
-                new Setting() {data1 = DateTime.Now.ToString(), data2 = "bar" },
+                new Setting() { data1 = "hello", data2 = "world" },
+                new Setting() { data1 = DateTime.Now.ToString(), data2 = "bar" },
             };
             Console.WriteLine(string.Join(",", settings));
         }

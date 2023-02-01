@@ -16,7 +16,7 @@ namespace ESNLib.Tools.UnitTests
             // Act
             string engineer = MiscTools.DecimalToEngineer(dec);
 
-            // Assert 
+            // Assert
             Assert.AreEqual("36.69k", engineer);
         }
 
@@ -29,7 +29,7 @@ namespace ESNLib.Tools.UnitTests
             // Act
             string engineer = MiscTools.DecimalToEngineer(dec, 6);
 
-            // Assert 
+            // Assert
             Assert.AreEqual("36.689877k", engineer);
         }
 
@@ -42,7 +42,7 @@ namespace ESNLib.Tools.UnitTests
             // Act
             string engineer = MiscTools.DecimalToEngineer(dec);
 
-            // Assert 
+            // Assert
             Assert.AreEqual(null, engineer);
         }
 
@@ -54,7 +54,7 @@ namespace ESNLib.Tools.UnitTests
 
             // Act
             double dec = MiscTools.EngineerToDecimal(engineer);
-            
+
             // Assert
             Assert.AreEqual(36689, dec);
         }

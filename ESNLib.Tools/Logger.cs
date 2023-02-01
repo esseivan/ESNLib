@@ -16,18 +16,22 @@ namespace ESNLib.Tools
         /// File path (.log is default extension)
         /// </summary>
         public string FilePath { get; set; } = string.Empty;
+
         /// <summary>
         /// How is the filaneme determined
         /// </summary>
         public FilenamesModes FilenameMode { get; set; } = FilenamesModes.FileName_LastPrevious;
+
         /// <summary>
         /// Prefix of the lines in the log
         /// </summary>
         public PrefixModes PrefixMode { get; set; } = PrefixModes.RunTime;
+
         /// <summary>
         /// Custom prefix when the mode is set to Custom
         /// </summary>
         public string CustomPrefix { get; set; } = "[Custom Prefix]";
+
         /// <summary>
         /// Write mode. Default is Append
         /// </summary>
@@ -42,6 +46,7 @@ namespace ESNLib.Tools
         /// Define the DateTime format for the file name with DateSuffix set. Default value is "yyyy_MM_dd__HH_mm_ss"
         /// </summary>
         public string DateSuffixFormat { get; set; } = "yyyy_MM_dd__HH_mm_ss";
+
         /// <summary>
         /// Define the right padding for the log level prefixes (Global prefixes not included). Default is 8
         /// </summary>
@@ -51,6 +56,7 @@ namespace ESNLib.Tools
         /// Define the runtime prefix format. Default is "000000.000"
         /// </summary>
         public string RuntimePrefixFormat { get; set; } = "000000.000";
+
         /// <summary>
         /// Define the current time prefix format. Default is "HH:mm:ss.f"
         /// </summary>
@@ -66,7 +72,10 @@ namespace ESNLib.Tools
         /// <summary>
         /// Is the logger enabled
         /// </summary>
-        public bool Enabled { get => enabled; }
+        public bool Enabled
+        {
+            get => enabled;
+        }
 
         /// <summary>
         /// Log pending to be written. Happens when WriteLog is called but logger is disabled
@@ -79,17 +88,20 @@ namespace ESNLib.Tools
         /// <param name="sender">Calling instance</param>
         /// <param name="e">Event argument coming from <see cref="LoggerEventArgs"/></param>
         public delegate void LoggerEventHandler(object sender, LoggerEventArgs e);
+
         /// <summary>
         /// Event called when a text is written to the log
         /// </summary>
         public event LoggerEventHandler OnLogWrite;
+
         /// <summary>
         /// Invoke the OnLogWrite event
         /// </summary>
-        protected void OnLogWriteInvoke(object sender, string data) => OnLogWrite?.Invoke(sender, new LoggerEventArgs(data));
-
+        protected void OnLogWriteInvoke(object sender, string data) =>
+            OnLogWrite?.Invoke(sender, new LoggerEventArgs(data));
 
         private Exception _lastException = null;
+
         /// <summary>
         /// Last exception occurred. Resets HasError flags when read
         /// </summary>
@@ -132,14 +144,17 @@ namespace ESNLib.Tools
             /// Don't log to file
             /// </summary>
             None = 0,
+
             /// <summary>
             /// Log to specified FileName
             /// </summary>
             FileName = 1,
+
             /// <summary>
             /// Log to specified fileName with dateTime suffix
             /// </summary>
             FileName_DateSuffix = 2,
+
             /// <summary>
             /// Keep the 2 last logs name last and previous
             /// </summary>
@@ -149,19 +164,23 @@ namespace ESNLib.Tools
         /// <summary>
         /// Define the suffix of each log
         /// </summary>
-        public enum PrefixModes {
+        public enum PrefixModes
+        {
             /// <summary>
             /// No suffix
             /// </summary>
             None = 0,
+
             /// <summary>
             /// Time elapsed from the start
             /// </summary>
             RunTime = 1,
+
             /// <summary>
             /// Current time
             /// </summary>
             CurrentTime = 2,
+
             /// <summary>
             /// Custom text
             /// </summary>
@@ -182,10 +201,12 @@ namespace ESNLib.Tools
             /// Only Fatal level
             /// </summary>
             Fatal = 10,
+
             /// <summary>
             /// Error level and above
             /// </summary>
             Error = 20,
+
             /// <summary>
             /// Warn level and above
             /// </summary>
@@ -195,6 +216,7 @@ namespace ESNLib.Tools
             /// User level and above
             /// </summary>
             User = 35,
+
             /// <summary>
             /// Info level and above
             /// </summary>
@@ -204,10 +226,12 @@ namespace ESNLib.Tools
             /// Debug level and above
             /// </summary>
             Debug = 40,
+
             /// <summary>
             /// Port level and above
             /// </summary>
             Port = 42,
+
             /// <summary>
             /// Trace level and above
             /// </summary>
@@ -229,10 +253,12 @@ namespace ESNLib.Tools
             /// Write over existing file
             /// </summary>
             Write = 1,
+
             /// <summary>
             /// Append to exitsing file
             /// </summary>
             Append = 2,
+
             /// <summary>
             /// Output to a stream
             /// </summary>
@@ -240,15 +266,13 @@ namespace ESNLib.Tools
         }
 
         private static Logger _instance = null;
+
         /// <summary>
         /// Static instance of the most recently created logger
         /// </summary>
         public static Logger Instance
         {
-            get
-            {
-                return _instance ?? new Logger();
-            }
+            get { return _instance ?? new Logger(); }
             set => _instance = value;
         }
 
@@ -264,7 +288,8 @@ namespace ESNLib.Tools
         /// <summary>
         /// Call the Enable function before to write to log
         /// </summary>
-        public Logger(string path) : this()
+        public Logger(string path)
+            : this()
         {
             FilePath = path;
         }
@@ -280,9 +305,16 @@ namespace ESNLib.Tools
         /// <summary>
         /// Returns %appdata%\'Manufacturer'\'ProductName'\logs\
         /// </summary>
-        public static string GetDefaultLogPath(string Manufacturer, string ProductName, string FileName)
+        public static string GetDefaultLogPath(
+            string Manufacturer,
+            string ProductName,
+            string FileName
+        )
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), $@"{Manufacturer}\{ProductName}\logs\{FileName}");
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                $@"{Manufacturer}\{ProductName}\logs\{FileName}"
+            );
         }
 
         /// <summary>
@@ -291,7 +323,8 @@ namespace ESNLib.Tools
         /// <returns>Returns false if the logger couldn't be enabled. Check that the 'FilePath' is set and the modes are corrects</returns>
         public bool Enable()
         {
-            if (enabled) return true;
+            if (enabled)
+                return true;
 
             switch (FilenameMode)
             {
@@ -382,7 +415,9 @@ namespace ESNLib.Tools
         public virtual string CheckFile(string path)
         {
             if (WriteMode == WriteModes.Stream)
-                throw new InvalidOperationException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
+                throw new InvalidOperationException(
+                    "Invalid write mode. Use Logger<T> for WriteMode.Stream"
+                );
 
             if (string.IsNullOrEmpty(path))
                 return path;
@@ -465,7 +500,9 @@ namespace ESNLib.Tools
         public virtual bool Write(string data, string logLevelName)
         {
             if (WriteMode == WriteModes.Stream)
-                throw new InvalidOperationException("Invalid write mode. Use Logger<T> for WriteMode.Stream");
+                throw new InvalidOperationException(
+                    "Invalid write mode. Use Logger<T> for WriteMode.Stream"
+                );
 
             string output = GenerateLogLines(data, logLevelName);
 
@@ -501,9 +538,10 @@ namespace ESNLib.Tools
             if (invoke)
                 OnLogWriteInvoke(this, data);
 
-            if ((WriteMode.HasFlag(WriteModes.Append) ||
-                WriteMode.HasFlag(WriteModes.Write)) &&
-                FilenameMode != FilenamesModes.None)
+            if (
+                (WriteMode.HasFlag(WriteModes.Append) || WriteMode.HasFlag(WriteModes.Write))
+                && FilenameMode != FilenamesModes.None
+            )
             {
                 File.AppendAllText(outputPath, data);
             }
@@ -531,7 +569,9 @@ namespace ESNLib.Tools
             switch (PrefixMode)
             {
                 case PrefixModes.RunTime:
-                    prefix = (DateTime.Now - CreationTime).TotalSeconds.ToString(RuntimePrefixFormat);
+                    prefix = (DateTime.Now - CreationTime).TotalSeconds.ToString(
+                        RuntimePrefixFormat
+                    );
                     break;
                 case PrefixModes.CurrentTime:
                     prefix = DateTime.Now.ToString(CurrentTimePrefixFormat);
@@ -586,5 +626,4 @@ namespace ESNLib.Tools
             }
         }
     }
-
 }

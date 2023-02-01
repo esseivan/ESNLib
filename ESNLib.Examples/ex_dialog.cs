@@ -53,7 +53,12 @@ namespace ESNLib.Examples
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(mMsg.Text, mTitle.Text, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            MessageBox.Show(
+                mMsg.Text,
+                mTitle.Text,
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Warning
+            );
         }
     }
 }

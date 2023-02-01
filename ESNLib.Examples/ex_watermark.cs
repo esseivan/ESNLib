@@ -22,6 +22,7 @@ namespace ESNLib.Examples
         Watermark watermark_combobox;
         Watermark watermark_numeric;
         Watermark watermark_textbox;
+
         private void ex_watermark_Load(object sender, EventArgs e)
         {
             watermark_combobox = new Watermark();
@@ -33,14 +34,12 @@ namespace ESNLib.Examples
             watermark_textbox.setFontColor = setFontColor_textbox;
             watermark_textbox.Enable();
 
-
             watermark_numeric.EmptyText = "0";
             watermark_numeric.WatermarkText = "100";
             watermark_numeric.getText = getText_numeric;
             watermark_numeric.setText = setText_numeric;
             watermark_numeric.setFontColor = setFontColor_numeric;
             watermark_numeric.Enable();
-
 
             watermark_combobox.getText = getText_combobox;
             watermark_combobox.setText = setText_combobox;

@@ -17,7 +17,10 @@ namespace ESNLib.Examples
             InitializeComponent();
         }
 
-        private void clipboardMonitor1_ClipboardChanged(object sender, Tools.WinForms.ClipboardChangedEventArgs e)
+        private void clipboardMonitor1_ClipboardChanged(
+            object sender,
+            Tools.WinForms.ClipboardChangedEventArgs e
+        )
         {
             string format = e.DataObject.GetFormats(true)[0];
             Console.WriteLine(e.DataObject.GetData(format, true));

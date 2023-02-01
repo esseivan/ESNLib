@@ -37,7 +37,8 @@ namespace ESNLib.Tools
             this.Caller = Caller;
         }
 
-        public PluginsManager(Plugin Plugin) : this()
+        public PluginsManager(Plugin Plugin)
+            : this()
         {
             RegisterPlugin(Plugin);
         }
@@ -206,10 +207,12 @@ namespace ESNLib.Tools
         /// Name
         /// </summary>
         public string Name { get; set; } = "Undefined";
+
         /// <summary>
         /// ID
         /// </summary>
         public int ID { get; set; } = -1;
+
         /// <summary>
         /// Enabled
         /// </summary>
@@ -220,10 +223,7 @@ namespace ESNLib.Tools
         /// </summary>
         public PluginsCaller Caller { get; set; }
 
-        public Plugin()
-        {
-
-        }
+        public Plugin() { }
 
         public Plugin(PluginsCaller Caller)
         {
@@ -232,10 +232,15 @@ namespace ESNLib.Tools
         }
 
         public virtual void OnStart() { }
+
         public virtual void OnStop() { }
+
         public virtual void OnResume() { }
+
         public virtual void OnPause() { }
+
         public virtual void OnRestart() { }
+
         public virtual void OnTick() { }
 
         protected void SendEvent(PluginEventArgs e)

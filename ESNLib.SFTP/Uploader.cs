@@ -8,7 +8,8 @@ namespace ESNLib.SFTP
 {
     public class Uploader
     {
-        private static string helpText = @"upload folders's content using SFTP protocol
+        private static string helpText =
+            @"upload folders's content using SFTP protocol
 usage: <app_name> [BaseConfig path]";
 
         public static void Main(string[] args)
@@ -21,7 +22,9 @@ usage: <app_name> [BaseConfig path]";
             }
             catch (Exception)
             {
-                Console.Error.WriteLine("WinSCP not available ! Check if it is installer or install from the official website :\nwinscp.net");
+                Console.Error.WriteLine(
+                    "WinSCP not available ! Check if it is installer or install from the official website :\nwinscp.net"
+                );
                 Console.ReadLine();
                 Environment.Exit(-1);
                 return;
@@ -100,7 +103,10 @@ usage: <app_name> [BaseConfig path]";
                 using (Session session = new Session())
                 {
                     // Enable log
-                    string logPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "sftp_upload_log");
+                    string logPath = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "sftp_upload_log"
+                    );
                     if (!Directory.Exists(logPath))
                         Directory.CreateDirectory(logPath);
 
@@ -115,12 +121,18 @@ usage: <app_name> [BaseConfig path]";
                     Array.Sort(baseConfig.Configs);
                     foreach (BaseConfig.Config config in baseConfig.Configs)
                     {
-                        Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting new upload");
+                        Console.WriteLine(
+                            $"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Starting new upload"
+                        );
 
                         if (config.SyncModeEnabled)
-                            Console.WriteLine($"Synchronize local {config.LocalPath} to remote {config.RemotePath}");
+                            Console.WriteLine(
+                                $"Synchronize local {config.LocalPath} to remote {config.RemotePath}"
+                            );
                         else
-                            Console.WriteLine($"Upload local {config.LocalPath} to remote {config.RemotePath}");
+                            Console.WriteLine(
+                                $"Upload local {config.LocalPath} to remote {config.RemotePath}"
+                            );
 
                         if (config.FileMask != string.Empty)
                             Console.WriteLine("With file mask : \"" + config.FileMask + "\"");
@@ -149,31 +161,36 @@ usage: <app_name> [BaseConfig path]";
                         if (config.SyncModeEnabled)
                         {
                             // Synchronise
-                            SynchronizationResult syncResult = session.SynchronizeDirectories(mode: config.SyncMode,
-                                    localPath: config.LocalPath,
-                                    remotePath: config.RemotePath,
-                                    removeFiles: config.RemoveFiles,
-                                    mirror: config.Mirror,
-                                    criteria: config.SyncCriteria,
-                                    options: transferOptions);
+                            SynchronizationResult syncResult = session.SynchronizeDirectories(
+                                mode: config.SyncMode,
+                                localPath: config.LocalPath,
+                                remotePath: config.RemotePath,
+                                removeFiles: config.RemoveFiles,
+                                mirror: config.Mirror,
+                                criteria: config.SyncCriteria,
+                                options: transferOptions
+                            );
 
                             WriteResult(syncResult);
                         }
                         else
                         {
                             // Upload
-                            TransferOperationResult transfResult = session.PutFiles(localPath: config.LocalPath,
+                            TransferOperationResult transfResult = session.PutFiles(
+                                localPath: config.LocalPath,
                                 remotePath: config.RemotePath,
                                 remove: config.RemoveFiles,
-                                options: transferOptions);
+                                options: transferOptions
+                            );
 
                             WriteResult(transfResult);
                         }
                     }
                     // Session is automatically closed with the using keyword
                 }
-                Console.WriteLine($"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Upload success");
-
+                Console.WriteLine(
+                    $"[{DateTime.Now.ToString("yyyy.MM.dd hh.mm.ss")}] Upload success"
+                );
             }
             catch (Exception ex)
             {
@@ -253,30 +270,36 @@ usage: <app_name> [BaseConfig path]";
         {
             string cfgpath = Path.Combine(Environment.CurrentDirectory, "config.cfg");
             string varpath = Path.Combine(Environment.CurrentDirectory, "var.cfg");
-            ConfigManager.ExportConfig(cfgpath, new BaseConfig[] { new BaseConfig()
-            {
-                FtpMode = FtpMode.Passive,
-                HostKeyPath = @"C:\TBD",
-                PrivateKeyPath = @"C:\TBD",
-                Hostname = @"www.hostname.com",
-                Username = "pi",
-                Passphrase = "passphrase",
-                Port = 22,
-                Configs = new BaseConfig.Config[]
+            ConfigManager.ExportConfig(
+                cfgpath,
+                new BaseConfig[]
                 {
-                    new BaseConfig.Config()
+                    new BaseConfig()
                     {
-                        LocalPath = @"C:\TBD",
-                        RemotePath = @"\var\www\tbd",
-                        Mirror = false,
-                        RemoveFiles = false,
-                        RunPriority = 0,
-                        SyncCriteria = SynchronizationCriteria.Either,
-                        SyncMode = SynchronizationMode.Remote,
-                        TransferMode = TransferMode.Binary
+                        FtpMode = FtpMode.Passive,
+                        HostKeyPath = @"C:\TBD",
+                        PrivateKeyPath = @"C:\TBD",
+                        Hostname = @"www.hostname.com",
+                        Username = "pi",
+                        Passphrase = "passphrase",
+                        Port = 22,
+                        Configs = new BaseConfig.Config[]
+                        {
+                            new BaseConfig.Config()
+                            {
+                                LocalPath = @"C:\TBD",
+                                RemotePath = @"\var\www\tbd",
+                                Mirror = false,
+                                RemoveFiles = false,
+                                RunPriority = 0,
+                                SyncCriteria = SynchronizationCriteria.Either,
+                                SyncMode = SynchronizationMode.Remote,
+                                TransferMode = TransferMode.Binary
+                            }
+                        }
                     }
                 }
-            } });
+            );
         }
     }
 }

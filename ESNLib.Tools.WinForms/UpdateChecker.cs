@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using System.Xml;
 
 /* Example :
- * 
+ *
  * private void CheckUpdates()
  *      {
  *          ESNLib.Controls.UpdateChecker update = new ESNLib.Controls.UpdateChecker("http://.../.../.../version.xml", this.ProductVersion);
- *          
+ *
  *          if (update.NeedUpdate())
  *          {   // Update available
  *              var result = update.Result;
@@ -33,7 +33,7 @@ using System.Xml;
  *	<silent>http://www.website.com/softwares/silentInstaller.msi</silent>
  *  <name>productName</name>
  *	</Feed>
- *	
+ *
  *	Silent installer is used to run a quick update
  */
 
@@ -45,19 +45,18 @@ namespace ESNLib.Tools.WinForms
         /// Website where is located the file
         /// </summary>
         public string FileUrl { get; set; } = "";
+
         /// <summary>
         /// Result of the check
         /// </summary>
         public CheckUpdateResult Result { get; private set; } = new CheckUpdateResult();
+
         /// <summary>
         /// Actual version
         /// </summary>
         public string ProductVersion { get; set; }
 
-
-        public UpdateChecker()
-        {
-        }
+        public UpdateChecker() { }
 
         public UpdateChecker(string FileUrl, string ProductVersion)
         {
@@ -111,7 +110,7 @@ namespace ESNLib.Tools.WinForms
 
                     // Check versions
                     if (Result.lastVersion > Result.currentVersion)
-                    {   // Update available
+                    { // Update available
                         Result.needUpdate = true;
 
                         // Get the download path
@@ -163,31 +162,58 @@ namespace ESNLib.Tools.WinForms
             /// <summary>
             /// The current version
             /// </summary>
-            public Version CurrentVersion { get => currentVersion; }
+            public Version CurrentVersion
+            {
+                get => currentVersion;
+            }
+
             /// <summary>
             /// The last release version
             /// </summary>
-            public Version LastVersion { get => lastVersion; }
+            public Version LastVersion
+            {
+                get => lastVersion;
+            }
+
             /// <summary>
             /// Wheter the current version is lower to the release version
             /// </summary>
-            public bool NeedUpdate { get => needUpdate; }
+            public bool NeedUpdate
+            {
+                get => needUpdate;
+            }
+
             /// <summary>
             /// The URL of the publish page
             /// </summary>
-            public string UpdateURL { get => updateURL; }
+            public string UpdateURL
+            {
+                get => updateURL;
+            }
+
             /// <summary>
             /// Indicate if an error occurred
             /// </summary>
-            public bool ErrorOccurred { get => errorOccured; }
+            public bool ErrorOccurred
+            {
+                get => errorOccured;
+            }
+
             /// <summary>
             /// The error that occurred
             /// </summary>
-            public Exception Error { get => error; }
+            public Exception Error
+            {
+                get => error;
+            }
+
             /// <summary>
             /// The URL of the silent installer
             /// </summary>
-            public string SilentUpdateURL { get => silentUpdateURL; }
+            public string SilentUpdateURL
+            {
+                get => silentUpdateURL;
+            }
 
             /// <summary>
             /// Open the website
@@ -211,7 +237,10 @@ namespace ESNLib.Tools.WinForms
             public async Task<bool> DownloadUpdate(string downloadPath)
             {
                 WebClient webClient = new WebClient();
-                await webClient.DownloadFileTaskAsync(new Uri(SilentUpdateURL), downloadPath + filename + ".msi");
+                await webClient.DownloadFileTaskAsync(
+                    new Uri(SilentUpdateURL),
+                    downloadPath + filename + ".msi"
+                );
                 FileInfo info = new FileInfo(downloadPath + filename + ".msi");
                 if (info.Length != 0)
                 {
@@ -243,7 +272,6 @@ namespace ESNLib.Tools.WinForms
             User_DoNothing = 10,
             User_OpenWebsite = 11,
             User_Install = 12,
-
         }
 
         /// <summary>
@@ -261,7 +289,12 @@ namespace ESNLib.Tools.WinForms
         /// <param name="assembly">Assembly to retrieve version from</param>
         /// <param name="applicationExit">Function to exit application</param>
         /// <param name="showMsg">Function to show message</param>
-        public static void CheckUpdateAndProcess(string url, System.Reflection.Assembly assembly, Action applicationExit, Action<string, string, int> showMsg)
+        public static void CheckUpdateAndProcess(
+            string url,
+            System.Reflection.Assembly assembly,
+            Action applicationExit,
+            Action<string, string, int> showMsg
+        )
         {
             var r = CheckUpdateAndAsk(url, GetAppVersion(assembly));
             ProcessResult(r, applicationExit, showMsg);
@@ -274,7 +307,12 @@ namespace ESNLib.Tools.WinForms
         /// <param name="currentVersion">Actual version of the app</param>
         /// <param name="applicationExit">Function to exit application</param>
         /// <param name="showMsg">Function to show message</param>
-        public static void CheckUpdateAndProcess(string url, string currentVersion, Action applicationExit, Action<string, string, int> showMsg)
+        public static void CheckUpdateAndProcess(
+            string url,
+            string currentVersion,
+            Action applicationExit,
+            Action<string, string, int> showMsg
+        )
         {
             var r = CheckUpdateAndAsk(url, currentVersion);
             ProcessResult(r, applicationExit, showMsg);
@@ -308,13 +346,14 @@ namespace ESNLib.Tools.WinForms
                 }
 
                 if (update.CheckUpdates())
-                {   // Update available
+                { // Update available
                     var result = update.Result;
                     output[0] = result;
 
                     Dialog.DialogConfig dialogConfig = new Dialog.DialogConfig()
                     {
-                        Message = $"Update is available, do you want to download ?\nCurrent: { result.CurrentVersion}\nLast: { result.LastVersion}",
+                        Message =
+                            $"Update is available, do you want to download ?\nCurrent: {result.CurrentVersion}\nLast: {result.LastVersion}",
                         Title = "Update available",
                         Button1 = Dialog.ButtonType.Custom1,
                         CustomButton1Text = "Visit website",
@@ -360,9 +399,14 @@ namespace ESNLib.Tools.WinForms
         /// <param name="result"></param>
         /// <param name="showMessage_func"></param>
         /// <param name="applicationExit"></param>
-        public static async void ProcessResult(object[] result, Action applicationExit, Action<string, string, int> showMsg)
+        public static async void ProcessResult(
+            object[] result,
+            Action applicationExit,
+            Action<string, string, int> showMsg
+        )
         {
-            UpdateChecker.CheckUpdateResult checkResult = (UpdateChecker.CheckUpdateResult)result[0];
+            UpdateChecker.CheckUpdateResult checkResult = (UpdateChecker.CheckUpdateResult)
+                result[0];
             CheckUpdateAndAsk_Result askResult = (CheckUpdateAndAsk_Result)result[1];
             Exception ex = (Exception)result[2];
 
@@ -395,6 +439,5 @@ namespace ESNLib.Tools.WinForms
                     break;
             }
         }
-
     }
 }

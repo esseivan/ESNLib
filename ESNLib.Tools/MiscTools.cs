@@ -190,9 +190,9 @@ namespace ESNLib.Tools
                     PowS += 3;
                     break;
                 default:
-                    {
-                        return double.NaN;
-                    }
+                {
+                    return double.NaN;
+                }
             }
 
             Value *= Math.Pow(10, 3 * PowS);
@@ -220,18 +220,22 @@ namespace ESNLib.Tools
             /// byte
             /// </summary>
             B = 0,
+
             /// <summary>
             /// kilo byte
             /// </summary>
             kB = 1,
+
             /// <summary>
             /// mega byte
             /// </summary>
             MB = 2,
+
             /// <summary>
             /// giga byte
             /// </summary>
             GB = 3,
+
             /// <summary>
             /// tera byte
             /// </summary>
@@ -286,11 +290,13 @@ namespace ESNLib.Tools
         /// <returns>True if anything is downloaded. False if a 0-byte file is downloaded</returns>
         public static async Task<bool> DownloadFile(string webPath)
         {
-            return await DownloadFile(webPath,
+            return await DownloadFile(
+                webPath,
                 Path.GetTempPath(),
                 Path.GetFileName(webPath),
                 Path.GetExtension(webPath),
-                false);
+                false
+            );
         }
 
         /// <summary>
@@ -301,11 +307,13 @@ namespace ESNLib.Tools
         /// <returns>True if anything is downloaded. False if a 0-byte file is downloaded</returns>
         public static async Task<bool> DownloadFile(string webPath, bool RunAfterDownload)
         {
-            return await DownloadFile(webPath,
+            return await DownloadFile(
+                webPath,
                 Path.GetTempPath(),
                 Path.GetFileName(webPath),
                 Path.GetExtension(webPath),
-                RunAfterDownload);
+                RunAfterDownload
+            );
         }
 
         /// <summary>
@@ -315,13 +323,19 @@ namespace ESNLib.Tools
         /// <param name="fileName">The name of the file (once saved)</param>
         /// <param name="RunAfterDownload">If set to true, open the file once downloaded with the default program</param>
         /// <returns>True if anything is downloaded. False if a 0-byte file is downloaded</returns>
-        public static async Task<bool> DownloadFile(string webPath, string fileName, bool RunAfterDownload)
+        public static async Task<bool> DownloadFile(
+            string webPath,
+            string fileName,
+            bool RunAfterDownload
+        )
         {
-            return await DownloadFile(webPath,
+            return await DownloadFile(
+                webPath,
                 Path.GetTempPath(),
                 fileName,
                 Path.GetExtension(webPath),
-                RunAfterDownload);
+                RunAfterDownload
+            );
         }
 
         /// <summary>
@@ -332,13 +346,20 @@ namespace ESNLib.Tools
         /// <param name="fileName">The name of the file (once saved)</param>
         /// <param name="RunAfterDownload">If set to true, open the file once downloaded with the default program</param>
         /// <returns>True if anything is downloaded. False if a 0-byte file is downloaded</returns>
-        public static async Task<bool> DownloadFile(string webPath, string storePath, string fileName, bool RunAfterDownload)
+        public static async Task<bool> DownloadFile(
+            string webPath,
+            string storePath,
+            string fileName,
+            bool RunAfterDownload
+        )
         {
-            return await DownloadFile(webPath,
+            return await DownloadFile(
+                webPath,
                 storePath,
                 fileName,
                 Path.GetExtension(webPath),
-                RunAfterDownload);
+                RunAfterDownload
+            );
         }
 
         /// <summary>
@@ -350,9 +371,18 @@ namespace ESNLib.Tools
         /// <param name="extension">The extension of the file once saved</param>
         /// <param name="RunAfterDownload">If set to true, open the file once downloaded with the default program</param>
         /// <returns>True if anything is downloaded. False if a 0-byte file is downloaded</returns>
-        public static async Task<bool> DownloadFile(string webPath, string storePath, string fileName, string extension, bool RunAfterDownload)
+        public static async Task<bool> DownloadFile(
+            string webPath,
+            string storePath,
+            string fileName,
+            string extension,
+            bool RunAfterDownload
+        )
         {
-            string filePath = Path.ChangeExtension(Path.Combine(storePath, Path.GetFileNameWithoutExtension(fileName)), extension);
+            string filePath = Path.ChangeExtension(
+                Path.Combine(storePath, Path.GetFileNameWithoutExtension(fileName)),
+                extension
+            );
             WebClient webClient = new WebClient();
             await webClient.DownloadFileTaskAsync(new Uri(webPath), filePath);
             FileInfo info = new FileInfo(filePath);

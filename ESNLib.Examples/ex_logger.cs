@@ -45,9 +45,11 @@ namespace ESNLib.Examples
 
         private void Write(string data)
         {
-            Write(data, (Logger.LogLevels)Enum.Parse(
-                typeof(Logger.LogLevels),
-                cbLoglevel.SelectedItem.ToString()));
+            Write(
+                data,
+                (Logger.LogLevels)
+                    Enum.Parse(typeof(Logger.LogLevels), cbLoglevel.SelectedItem.ToString())
+            );
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -70,17 +72,14 @@ namespace ESNLib.Examples
         {
             logger.CustomPrefix = textboxWatermark1.Text;
             logger.FilePath = path;
-            logger.FilenameMode = (Logger.FilenamesModes)Enum.Parse(
-                typeof(Logger.FilenamesModes),
-                cbFilename.SelectedItem.ToString());
+            logger.FilenameMode = (Logger.FilenamesModes)
+                Enum.Parse(typeof(Logger.FilenamesModes), cbFilename.SelectedItem.ToString());
 
-            logger.PrefixMode = (Logger.PrefixModes)Enum.Parse(
-                typeof(Logger.PrefixModes),
-                cbPrefix.SelectedItem.ToString());
+            logger.PrefixMode = (Logger.PrefixModes)
+                Enum.Parse(typeof(Logger.PrefixModes), cbPrefix.SelectedItem.ToString());
 
-            logger.WriteMode = (Logger.WriteModes)Enum.Parse(
-                typeof(Logger.WriteModes),
-                cbWrite.SelectedItem.ToString());
+            logger.WriteMode = (Logger.WriteModes)
+                Enum.Parse(typeof(Logger.WriteModes), cbWrite.SelectedItem.ToString());
 
             logger.Enable();
         }

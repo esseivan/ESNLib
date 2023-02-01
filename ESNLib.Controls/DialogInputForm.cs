@@ -2,7 +2,7 @@
  * File     : DialogInputForm.cs
  * Author   : Esseiva Nicolas
  * Date     : 18.11.2017
- * 
+ *
  * Allows the user to enter an input and
  * use the result in the software
  */
@@ -19,8 +19,12 @@ namespace ESNLib.Controls
     internal partial class DialogInputForm : Form
     {
         private new static Dialog.DialogResult DialogResult;
-        private static Dialog.ButtonType Btn1, Btn2, Btn3;
-        private static string custom1_t, custom2_t, custom3_t;
+        private static Dialog.ButtonType Btn1,
+            Btn2,
+            Btn3;
+        private static string custom1_t,
+            custom2_t,
+            custom3_t;
         public string Result { get; set; }
         private bool Input { get; set; } = false;
 
@@ -78,14 +82,16 @@ namespace ESNLib.Controls
             }
         }
 
-        public static Dialog.ShowDialogResult ShowDialog(string Message,
+        public static Dialog.ShowDialogResult ShowDialog(
+            string Message,
             string Title = "Title",
             string DefaultInput = "",
             bool Input = false,
             Dialog.ButtonType Button1 = Dialog.ButtonType.OK,
             Dialog.ButtonType Button2 = Dialog.ButtonType.Cancel,
             Dialog.ButtonType Button3 = Dialog.ButtonType.None,
-            Dialog.DialogIcon Icon = Dialog.DialogIcon.None)
+            Dialog.DialogIcon Icon = Dialog.DialogIcon.None
+        )
         {
             Btn1 = Button1;
             Btn2 = Button2;

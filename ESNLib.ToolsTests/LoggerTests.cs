@@ -115,10 +115,7 @@ namespace ESNLib.Tools.UnitTests
         [TestMethod()]
         public void LoggerBasicTest()
         {
-            Logger log = new Logger(path)
-            {
-                WriteMode = Logger.WriteModes.Write
-            };
+            Logger log = new Logger(path) { WriteMode = Logger.WriteModes.Write };
 
             Assert.IsTrue(log.Enable());
 
@@ -156,7 +153,6 @@ namespace ESNLib.Tools.UnitTests
             Assert.IsTrue(log.Write("Hello world 2"));
             string outputPath2 = log.FileOutputPath;
             string data2 = File.ReadAllText(outputPath2).Trim();
-
 
             Assert.AreEqual("[Debug] Hello world 1", data1);
             Assert.AreEqual("log_current.txt", Path.GetFileName(outputPath1));
@@ -229,7 +225,6 @@ namespace ESNLib.Tools.UnitTests
             string outputPath2 = log.FileOutputPath;
             string data2 = File.ReadAllText(outputPath2).Trim();
 
-
             Assert.AreEqual(outputPath1, outputPath2);
             Assert.AreEqual("[Debug] Hello world 2", data2);
         }
@@ -247,7 +242,6 @@ namespace ESNLib.Tools.UnitTests
             string output = logDel.CheckFile(path);
             logDel.Dispose();
             File.Delete(output);
-
 
             Logger log = new Logger()
             {
@@ -269,9 +263,11 @@ namespace ESNLib.Tools.UnitTests
             string outputPath2 = log.FileOutputPath;
             string data2 = File.ReadAllText(outputPath2).Trim();
 
-
             Assert.AreEqual(outputPath1, outputPath2);
-            Assert.AreEqual("[Debug] Hello world 1" + Environment.NewLine + "[Debug] Hello world 2", data2);
+            Assert.AreEqual(
+                "[Debug] Hello world 1" + Environment.NewLine + "[Debug] Hello world 2",
+                data2
+            );
         }
 
         [TestMethod()]

@@ -20,10 +20,8 @@ namespace ESNLib.Tools
         /// <summary>
         /// Create an instance of the <see cref="LoggerStream{T}"/>
         /// </summary>
-        public LoggerStream() : base()
-        {
-
-        }
+        public LoggerStream()
+            : base() { }
 
         /// <summary>
         /// Check and validate the path given. Prepare the file.
@@ -32,8 +30,7 @@ namespace ESNLib.Tools
         /// <returns>Actual path to the log file, if modified (e.g. added '.log' extension if none specified)</returns>
         public override string CheckFile(string path)
         {
-            if (!(WriteMode.HasFlag(WriteModes.Write) ||
-                WriteMode.HasFlag(WriteModes.Append)))
+            if (!(WriteMode.HasFlag(WriteModes.Write) || WriteMode.HasFlag(WriteModes.Append)))
                 return string.Empty;
 
             // Create directory if not existing
@@ -95,7 +92,10 @@ namespace ESNLib.Tools
 
             if (WriteMode.HasFlag(WriteModes.Stream) && OutputStream == null)
             {
-                LastException = new ArgumentException("Output stream is not set !", nameof(OutputStream));
+                LastException = new ArgumentException(
+                    "Output stream is not set !",
+                    nameof(OutputStream)
+                );
                 return false;
             }
 
@@ -125,5 +125,4 @@ namespace ESNLib.Tools
             }
         }
     }
-
 }

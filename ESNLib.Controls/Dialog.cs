@@ -15,15 +15,14 @@ namespace ESNLib.Controls
         /// <summary>
         /// Create a default dialog window with no configuration
         /// </summary>
-        public Dialog()
-        {
-        }
+        public Dialog() { }
 
         /// <summary>
         /// Create a dialog window with the specified configuration
         /// </summary>
         /// <param name="config"/>
-        public Dialog(DialogConfig config) : this()
+        public Dialog(DialogConfig config)
+            : this()
         {
             this.Config = config;
         }
@@ -61,10 +60,12 @@ namespace ESNLib.Controls
             /// Custom button 1. Defined by CustomButton1Text in the config
             /// </summary>
             Custom1 = 253,
+
             /// <summary>
             /// Custom button 2. Defined by CustomButton2Text in the config
             /// </summary>
             Custom2 = 254,
+
             /// <summary>
             /// Custom button 3. Defined by CustomButton3Text in the config
             /// </summary>
@@ -112,10 +113,12 @@ namespace ESNLib.Controls
             /// Custom button 1. Defined by CustomButton1Text in the config
             /// </summary>
             Custom1 = 253,
+
             /// <summary>
             /// Custom button 2. Defined by CustomButton2Text in the config
             /// </summary>
             Custom2 = 254,
+
             /// <summary>
             /// Custom button 3. Defined by CustomButton3Text in the config
             /// </summary>
@@ -134,20 +137,23 @@ namespace ESNLib.Controls
             DialogInputForm.SetButton(3, Config.CustomButton3Text);
 
             // Show dialog
-            return DialogInputForm.ShowDialog(Config.Message,
+            return DialogInputForm.ShowDialog(
+                Config.Message,
                 Config.Title,
                 Config.DefaultInput,
                 Config.Input,
                 Config.Button1,
                 Config.Button2,
                 Config.Button3,
-                Config.Icon);
+                Config.Icon
+            );
         }
 
         /// <summary>
         /// Show dialog with config parameters
         /// </summary>
-        public static ShowDialogResult ShowDialog(string Message,
+        public static ShowDialogResult ShowDialog(
+            string Message,
             string Title = "Information",
             string DefaultInput = "",
             bool Input = false,
@@ -157,7 +163,8 @@ namespace ESNLib.Controls
             DialogIcon Icon = DialogIcon.None,
             string CB1_Text = "Custom1",
             string CB2_Text = "Custom2",
-            string CB3_Text = "Custom3")
+            string CB3_Text = "Custom3"
+        )
         {
             // Set custom buttons
             DialogInputForm.SetButton(1, CB1_Text);
@@ -165,14 +172,16 @@ namespace ESNLib.Controls
             DialogInputForm.SetButton(3, CB3_Text);
 
             // Show dialog
-            return DialogInputForm.ShowDialog(Message,
+            return DialogInputForm.ShowDialog(
+                Message,
                 Title,
                 DefaultInput,
                 Input,
                 Btn1,
                 Btn2,
                 Btn3,
-                Icon);
+                Icon
+            );
         }
 
         /// <summary>
@@ -184,42 +193,52 @@ namespace ESNLib.Controls
             /// The main message displayed in the window
             /// </summary>
             public string Message { get; set; } = string.Empty;
+
             /// <summary>
             /// Title of the window
             /// </summary>
             public string Title { get; set; } = "Information";
+
             /// <summary>
             /// The default text in the textbox
             /// </summary>
             public string DefaultInput { get; set; } = "";
+
             /// <summary>
             /// Wether a text input is requested to the user (textbox visible)
             /// </summary>
             public bool Input { get; set; } = false;
+
             /// <summary>
             /// Leftmost button
             /// </summary>
             public ButtonType Button1 { get; set; } = ButtonType.OK;
+
             /// <summary>
             /// Middle button
             /// </summary>
             public ButtonType Button2 { get; set; } = ButtonType.None;
+
             /// <summary>
             /// Rightmost button
             /// </summary>
             public ButtonType Button3 { get; set; } = ButtonType.None;
+
             /// <summary>
             /// Icon next to the message
             /// </summary>
             public DialogIcon Icon { get; set; } = DialogIcon.None;
+
             /// <summary>
             /// Custom button text for Custom1 button type
             /// </summary>
             public string CustomButton1Text { get; set; } = "Custom1";
+
             /// <summary>
             /// Custom button text for Custom2 button type
             /// </summary>
             public string CustomButton2Text { get; set; } = "Custom2";
+
             /// <summary>
             /// Custom button text for Custom3 button type
             /// </summary>
@@ -228,10 +247,7 @@ namespace ESNLib.Controls
             /// <summary>
             /// Create a default config
             /// </summary>
-            public DialogConfig()
-            {
-
-            }
+            public DialogConfig() { }
 
             /// <summary>
             /// Create a default config with the specified message
@@ -270,13 +286,14 @@ namespace ESNLib.Controls
             /// The text set by the user
             /// </summary>
             public string UserInput { get; set; }
+
             /// <summary>
             /// The button clicked (or window closed)
             /// </summary>
             public DialogResult DialogResult { get; set; }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public ShowDialogResult(string UserInput)
             {
@@ -285,7 +302,7 @@ namespace ESNLib.Controls
             }
 
             /// <summary>
-            /// 
+            ///
             /// </summary>
             public ShowDialogResult(string input, DialogResult dialogResult)
             {

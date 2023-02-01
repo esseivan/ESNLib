@@ -82,7 +82,6 @@ namespace ESNLib.Tools.WinForms
                 {
                     ClipboardChanged(this, new ClipboardChangedEventArgs(iData));
                 }
-
             }
             catch (Exception e)
             {

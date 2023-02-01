@@ -36,7 +36,6 @@ namespace ESNLib.Tools.UnitTests
             StreamWriter sw = new StreamWriter(pathStream);
             StreamLogger<StreamWriter> sl = new StreamLogger<StreamWriter>(sw);
 
-
             LoggerStream<StreamWriter> log = new LoggerStream<StreamWriter>
             {
                 OutputStream = sl,
@@ -46,13 +45,11 @@ namespace ESNLib.Tools.UnitTests
                 PrefixMode = Logger.PrefixModes.None
             };
 
-
             Assert.IsTrue(log.Enable());
             string outputPath = log.FileOutputPath;
 
             Assert.IsTrue(log.Write("Hello world"));
             log.Dispose();
-
 
             DeleteDirectory();
         }

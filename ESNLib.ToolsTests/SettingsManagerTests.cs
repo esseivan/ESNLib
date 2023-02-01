@@ -138,10 +138,7 @@ namespace ESNLib.Tools.UnitTests
                 constants = new double[] { Double.NegativeInfinity, int.MaxValue },
                 hiddenText = "123456",
             };
-            List<TestClass> list = new List<TestClass>()
-            {
-                tc1,tc2
-            };
+            List<TestClass> list = new List<TestClass>() { tc1, tc2 };
 
             // Save file then load it and read content
             SettingsManager.SaveToDefault(AppName, list, false, false);
@@ -221,8 +218,10 @@ namespace ESNLib.Tools.UnitTests
             [JsonPropertyName("Value")]
             public int x { get; set; }
             public string name { get; set; }
+
             [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
             public double[] constants { get; set; }
+
             [JsonIgnore()]
             public string hiddenText { get; set; }
         }

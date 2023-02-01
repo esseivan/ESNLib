@@ -12,6 +12,7 @@ namespace ESNLib.Tools
         /// List that contains all flags data
         /// </summary>
         public List<int> FlagList { get; set; }
+
         /// <summary>
         /// Number of bit per element of the FlagList (Int32)
         /// </summary>
@@ -74,7 +75,7 @@ namespace ESNLib.Tools
                 t_count = typeByteCount - t_index;
                 t_count2 = count - t_count;
             }
-            
+
             // If index not existing, return -1
             if (FlagList.Count < list_index + 1)
             {

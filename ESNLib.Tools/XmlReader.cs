@@ -32,7 +32,6 @@ namespace ESNLib.Tools
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Unable to read file : " + ex);
                 return null;
             }
@@ -43,7 +42,7 @@ namespace ESNLib.Tools
 
             return doc;
         }
-        
+
         /// <summary>
         /// Read a <see cref="XmlDocument"/> from a web URL
         /// </summary>
@@ -71,6 +70,5 @@ namespace ESNLib.Tools
             }
             return null;
         }
-
     }
 }

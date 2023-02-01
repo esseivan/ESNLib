@@ -18,30 +18,29 @@ namespace ESNLib.Controls
         /// Function to get the text of the control. Required
         /// </summary>
         public Func<string> getText;
+
         /// <summary>
         /// Function to set the text of the control. Required
         /// </summary>
         public Action<string> setText;
+
         /// <summary>
         /// Function to set the font (fore) color of the parent. Optionnal
         /// </summary>
         public Action<Color> setFontColor = null;
-        
+
         // Private variables
         private bool active = false;
         private bool enabled = false;
         private string watermarkText = "Type here...";
         private Color watermarkColor = SystemColors.GrayText;
-        
+
         /// <summary>
         /// Text of the watermark
         /// </summary>
         public string WatermarkText
         {
-            get
-            {
-                return watermarkText;
-            }
+            get { return watermarkText; }
             set
             {
                 watermarkText = value;
@@ -54,10 +53,7 @@ namespace ESNLib.Controls
         /// </summary>
         public Color WatermarkColor
         {
-            get
-            {
-                return watermarkColor;
-            }
+            get { return watermarkColor; }
             set
             {
                 watermarkColor = value;
@@ -104,7 +100,7 @@ namespace ESNLib.Controls
         public void Disable()
         {
             enabled = false;
-            if(active)
+            if (active)
             {
                 active = false;
                 setText(EmptyText);
@@ -145,7 +141,7 @@ namespace ESNLib.Controls
                 ApplyWatermark();
             }
         }
-        
+
         /// <summary>
         /// Call this when the parent onFocusEnter event is trigerred. Clear the watermark
         /// </summary>
@@ -155,7 +151,7 @@ namespace ESNLib.Controls
                 return;
 
             // When enterring focus, clear the watermark
-            if(active)
+            if (active)
             {
                 RemoveWatermark();
             }

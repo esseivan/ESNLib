@@ -7,6 +7,7 @@ namespace ESNLib.Examples
     public partial class ex_flags : Form
     {
         Flags flags = new Flags();
+
         public ex_flags()
         {
             InitializeComponent();
@@ -18,7 +19,12 @@ namespace ESNLib.Examples
             var r = flags.GetBits((int)numericUpDown1.Value, (int)numericUpDown2.Value);
             if (r == -1)
             {
-                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Error, no data",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             else
             {
@@ -27,14 +33,15 @@ namespace ESNLib.Examples
             }
         }
 
-        private void ex_flags_Load(object sender, EventArgs e)
-        {
-
-        }
+        private void ex_flags_Load(object sender, EventArgs e) { }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            flags.SetBits((int)numericUpDown1.Value, (int)numericUpDown2.Value, (int)numericUpDown3.Value);
+            flags.SetBits(
+                (int)numericUpDown1.Value,
+                (int)numericUpDown2.Value,
+                (int)numericUpDown3.Value
+            );
             displayBox();
         }
 
@@ -43,7 +50,12 @@ namespace ESNLib.Examples
             var r = flags.GetBits((int)numericUpDown1.Value, 1);
             if (r == -1)
             {
-                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Error, no data",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             else
             {
@@ -57,7 +69,12 @@ namespace ESNLib.Examples
             var r = flags.GetBit((int)numericUpDown1.Value) ? 1 : 0;
             if (r == -1)
             {
-                MessageBox.Show("Error, no data", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Error, no data",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error
+                );
             }
             else
             {

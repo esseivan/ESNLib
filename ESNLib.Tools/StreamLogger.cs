@@ -21,10 +21,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Create an instance of the <see cref="StreamLogger{T}"/>
         /// </summary>
-        public StreamLogger()
-        {
-
-        }
+        public StreamLogger() { }
 
         /// <summary>
         /// Create an instance of the <see cref="StreamLogger{T}"/> with a specified stream

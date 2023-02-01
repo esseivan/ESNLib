@@ -12,21 +12,52 @@ namespace ESNLib.Controls
         private Color watermarkColor = SystemColors.GrayText;
         private Color textColor = SystemColors.ControlText;
 
-        [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark"),]
+        [
+            Model.Browsable(true),
+            Model.Description("Watermark Text to be displayed"),
+            Model.Category("Watermark"),
+        ]
         public string WatermarkText
-        { get { return watermarkText; } set { watermarkText = value; Invalidate(); } }
-
-        [Model.Browsable(true), Model.Description("Watermark Text to be displayed"), Model.Category("Watermark")]
-        public Color WatermarkColor
-        { get { return watermarkColor; } set { watermarkColor = value; Invalidate(); } }
-
-        [Model.Browsable(true), Model.Description("Normal Text color"), Model.Category("Appearance")]
-        public Color TextColor
-        { get { return textColor; } set { textColor = value; Invalidate(); } }
-
-        public RichTextboxWatermark()
         {
+            get { return watermarkText; }
+            set
+            {
+                watermarkText = value;
+                Invalidate();
+            }
         }
+
+        [
+            Model.Browsable(true),
+            Model.Description("Watermark Text to be displayed"),
+            Model.Category("Watermark")
+        ]
+        public Color WatermarkColor
+        {
+            get { return watermarkColor; }
+            set
+            {
+                watermarkColor = value;
+                Invalidate();
+            }
+        }
+
+        [
+            Model.Browsable(true),
+            Model.Description("Normal Text color"),
+            Model.Category("Appearance")
+        ]
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                textColor = value;
+                Invalidate();
+            }
+        }
+
+        public RichTextboxWatermark() { }
 
         protected override void OnCreateControl()
         {
@@ -43,7 +74,11 @@ namespace ESNLib.Controls
                 ForeColor = textColor;
         }
 
-        [Model.Browsable(true), Model.Description("The text associated with the control"), Model.Category("Appearance")]
+        [
+            Model.Browsable(true),
+            Model.Description("The text associated with the control"),
+            Model.Category("Appearance")
+        ]
         public override string Text
         {
             get
@@ -63,25 +98,16 @@ namespace ESNLib.Controls
 
         public string baseText
         {
-            get
-            {
-                return base.Text;
-            }
-            set
-            {
-                base.Text = value;
-            }
+            get { return base.Text; }
+            set { base.Text = value; }
         }
 
         [Model.Browsable(false)]
         public override int TextLength
         {
-            get
-            {
-                return watermarkActive ? 0 : base.TextLength;
-            }
+            get { return watermarkActive ? 0 : base.TextLength; }
         }
-        
+
         protected override void OnInvalidated(InvalidateEventArgs e)
         {
             if (watermarkActive)
@@ -98,7 +124,7 @@ namespace ESNLib.Controls
             ForeColor = WatermarkColor;
             base.Text = WatermarkText;
         }
-        
+
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (watermarkActive)

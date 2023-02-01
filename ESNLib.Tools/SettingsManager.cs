@@ -23,7 +23,8 @@ namespace ESNLib.Tools
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "ESN",
                 "Defaults",
-                appName + "_config.txt");
+                appName + "_config.txt"
+            );
         }
 
         /// <summary>
@@ -64,7 +65,12 @@ namespace ESNLib.Tools
         /// <summary>
         /// Save settings to specified file
         /// </summary>
-        public static void SaveToDefault<T>(string appName, T setting, bool backup = true, bool indent = true)
+        public static void SaveToDefault<T>(
+            string appName,
+            T setting,
+            bool backup = true,
+            bool indent = true
+        )
         {
             SaveTo(GetDefaultPath(appName), setting, backup, indent);
         }
@@ -112,10 +118,7 @@ namespace ESNLib.Tools
         /// </summary>
         private static string Serialize<T>(T data, bool indent)
         {
-            JsonSerializerOptions jso = new JsonSerializerOptions
-            {
-                WriteIndented = indent
-            };
+            JsonSerializerOptions jso = new JsonSerializerOptions { WriteIndented = indent };
             return JsonSerializer.Serialize(data, jso);
         }
     }

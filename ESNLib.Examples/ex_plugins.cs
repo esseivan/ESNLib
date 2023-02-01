@@ -38,11 +38,9 @@ namespace ESNLib.Examples
 
         public class Plugin1 : Plugin
         {
-            public Plugin1(PluginsCaller Caller) : base(Caller)
-            {
+            public Plugin1(PluginsCaller Caller)
+                : base(Caller) { }
 
-            }
-            
             public override void OnPause()
             {
                 Console.WriteLine("Plugin1 : OnPause");

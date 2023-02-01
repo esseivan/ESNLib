@@ -39,7 +39,7 @@ namespace ESNLib.Tools.WinForms
                     process.StartInfo.Verb = "runas";
                 else
                     process.StartInfo.Verb += "runas";
-                
+
                 try
                 {
                     process.Start();
@@ -110,6 +110,5 @@ namespace ESNLib.Tools.WinForms
             /// </summary>
             string GetAppPath();
         }
-
     }
 }

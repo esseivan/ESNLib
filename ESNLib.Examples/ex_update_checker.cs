@@ -23,7 +23,14 @@ namespace ESNLib.Examples
             UpdateChecker uc = new UpdateChecker(textboxWatermark2.Text, textboxWatermark1.Text);
             if (uc.CheckUpdates())
             {
-                showMsg("New update : " + uc.Result.LastVersion + "\nDownload at : " + uc.Result.UpdateURL, "Update !", MessageBoxIcon.None);
+                showMsg(
+                    "New update : "
+                        + uc.Result.LastVersion
+                        + "\nDownload at : "
+                        + uc.Result.UpdateURL,
+                    "Update !",
+                    MessageBoxIcon.None
+                );
             }
         }
 
@@ -40,7 +47,8 @@ namespace ESNLib.Examples
         private void ex_update_checker_Load(object sender, EventArgs e)
         {
             textboxWatermark1.Text = "1.0";
-            textboxWatermark2.Text = @"http://www.ESNLib.ch/files/softwares/resistortool/version.xml";
+            textboxWatermark2.Text =
+                @"http://www.ESNLib.ch/files/softwares/resistortool/version.xml";
         }
     }
 }

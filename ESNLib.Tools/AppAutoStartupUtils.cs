@@ -30,7 +30,12 @@ namespace ESNLib.Tools
         /// <param name="runOnStartup">Whether it is enabled on not</param>
         /// <param name="args">Optionnal arguments. Leave empty if none required</param>
         /// <param name="path">Optionnal path to the executable. If left empty (default), the current executable path is used (Application.ExecutablePath)</param>
-        public static void SetStartup(string appName, bool runOnStartup, string args = "", string path = "")
+        public static void SetStartup(
+            string appName,
+            bool runOnStartup,
+            string args = "",
+            string path = ""
+        )
         {
             string key = "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
             RegistryKey rk = Registry.CurrentUser.OpenSubKey(key, true);
@@ -76,6 +81,5 @@ namespace ESNLib.Tools
 
             return rk.GetValue(appName, null) != null;
         }
-
     }
 }
