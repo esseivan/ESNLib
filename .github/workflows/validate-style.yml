@@ -6,7 +6,9 @@ jobs:
     runs-on: windows-latest
     name: Check Formatting
     steps:
-      - uses: actions/checkout@v2
-      - run: |
+    - name: 'Checkout'
+      uses: actions/checkout@v2
+    - name: 'validate'
+      run: |
         dotnet tool restore
         dotnet csharpier --check .
