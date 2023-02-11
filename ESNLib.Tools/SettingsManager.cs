@@ -30,7 +30,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// Backup the previous file
         /// </summary>
-        private static void BackupSetting(string path)
+        private static void BackupSetting(string path, bool hide)
         {
             // If current setting doesn't exists, abort. Do not delete the previous backup
             if (!File.Exists(path))
@@ -41,12 +41,22 @@ namespace ESNLib.Tools
             if (File.Exists(bakPath))
                 File.Delete(bakPath);
             File.Move(path, bakPath);
+            if (hide)
+            {
+                File.SetAttributes(path, FileAttributes.Hidden);
+            }
         }
 
         /// <summary>
         /// Save settings to specified file
         /// </summary>
-        public static void SaveTo<T>(string path, T setting, bool backup = true, bool indent = true)
+        public static void SaveTo<T>(
+            string path,
+            T setting,
+            bool backup = true,
+            bool indent = true,
+            bool hide = false
+        )
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentNullException(nameof(path));
@@ -57,9 +67,16 @@ namespace ESNLib.Tools
                 Directory.CreateDirectory(dirPath);
 
             if (backup)
-                BackupSetting(path);
+            {
+                BackupSetting(path, hide);
+            }
 
             File.WriteAllText(path, Serialize(setting, indent));
+
+            if (hide)
+            {
+                File.SetAttributes(path, FileAttributes.Hidden);
+            }
         }
 
         /// <summary>
@@ -69,10 +86,11 @@ namespace ESNLib.Tools
             string appName,
             T setting,
             bool backup = true,
-            bool indent = true
+            bool indent = true,
+            bool hide = false
         )
         {
-            SaveTo(GetDefaultPath(appName), setting, backup, indent);
+            SaveTo(GetDefaultPath(appName), setting, backup, indent, hide);
         }
 
         /// <summary>
