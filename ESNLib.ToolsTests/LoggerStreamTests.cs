@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace ESNLib.Tools.UnitTests
+namespace ESNLib.Tools.Tests
 {
     [TestClass()]
     public class LoggerStreamTests

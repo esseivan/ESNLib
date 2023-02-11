@@ -2,7 +2,7 @@ using ESNLib.Tools;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace ESNLib.Tools.UnitTests
+namespace ESNLib.Tools.Tests
 {
     [TestClass]
     public class MiscToolsTests

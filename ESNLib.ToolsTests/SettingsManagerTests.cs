@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
-namespace ESNLib.Tools.UnitTests
+namespace ESNLib.Tools.Tests
 {
     [TestClass()]
     public class SettingsManagerTests
