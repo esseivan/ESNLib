@@ -43,7 +43,7 @@ namespace ESNLib.Tools
             File.Move(path, bakPath);
             if (hide)
             {
-                File.SetAttributes(path, FileAttributes.Hidden);
+                File.SetAttributes(bakPath, FileAttributes.Hidden);
             }
         }
 
@@ -71,6 +71,8 @@ namespace ESNLib.Tools
                 BackupSetting(path, hide);
             }
 
+            if (File.Exists(path))
+                File.SetAttributes(path, FileAttributes.Normal); // Must be unhidden in order to write to it
             File.WriteAllText(path, Serialize(setting, indent));
 
             if (hide)
