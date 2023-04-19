@@ -60,6 +60,7 @@ namespace ESNLib.Tools.Tests
             string AppName = GetTestName(3);
             string path = SettingsManager.GetDefaultPath(AppName);
 
+            Console.WriteLine(path);
             // Save file then load it and read content
             SettingsManager.SaveTo(path, new double[] { Math.PI, Math.E }, false, false);
 
@@ -405,6 +406,58 @@ namespace ESNLib.Tools.Tests
 
             // Save one more time for backup
             SettingsManager.SaveToDefault(AppName, dic, indent: true);
+
+            Assert.AreEqual(2, read.Count);
+            TestClass read1 = read["Entry #1"];
+            Assert.AreEqual(tc1.x, read1.x);
+            Assert.AreEqual(tc1.name, read1.name);
+            Assert.AreEqual(tc1.constants.Length, read1.constants.Length);
+            Assert.AreEqual(tc1.constants[0], read1.constants[0]);
+            Assert.AreEqual(tc1.constants[1], read1.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read1.hiddenText));
+            Assert.AreNotEqual(tc1.hiddenText, read1.hiddenText);
+
+            TestClass read2 = read["Entry #2"];
+            Assert.AreEqual(tc2.x, read2.x);
+            Assert.AreEqual(tc2.name, read2.name);
+            Assert.AreEqual(tc2.constants.Length, read2.constants.Length);
+            Assert.AreEqual(tc2.constants[0], read2.constants[0]);
+            Assert.AreEqual(tc2.constants[1], read2.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read2.hiddenText));
+            Assert.AreNotEqual(tc2.hiddenText, read2.hiddenText);
+        }
+
+        [TestMethod()]
+        public void TestSaveAndLoadCustomClassDictionaryFromDefault_NonZipped()
+        {
+            string AppName = GetTestName(10);
+            TestClass tc1 = new TestClass()
+            {
+                x = -1,
+                name = "Hello world !",
+                constants = new double[] { Math.PI, Math.E },
+                hiddenText = "password",
+            };
+            TestClass tc2 = new TestClass()
+            {
+                x = -255,
+                name = "Hello !",
+                constants = new double[] { double.NegativeInfinity, int.MaxValue },
+                hiddenText = "123456",
+            };
+            Dictionary<string, TestClass> dic = new Dictionary<string, TestClass>
+            {
+                { "Entry #1", tc1 },
+                { "Entry #2", tc2 }
+            };
+
+            // Save file then load it and read content
+            SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
+
+            SettingsManager.LoadFromDefault(AppName, out Dictionary<string, TestClass> read, isZipped: false);
+
+            // Save one more time for backup
+            SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
 
             Assert.AreEqual(2, read.Count);
             TestClass read1 = read["Entry #1"];

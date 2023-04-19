@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -16,14 +17,14 @@ namespace ESNLib.Tools
         /// <summary>
         /// Get the default path to save settings if not specified
         /// </summary>
-        public static string GetDefaultPath(string appName)
+        public static string GetDefaultPath(string appName, bool isZip = true)
         {
             // %Appdata%\ESN\<appName>
             return Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                 "ESN",
                 "Defaults",
-                appName + "_config.txt"
+                appName + "_config" + (isZip ? ".zip" : ".txt")
             );
         }
 
@@ -55,7 +56,8 @@ namespace ESNLib.Tools
             T setting,
             bool backup = true,
             bool indent = true,
-            bool hide = false
+            bool hide = false,
+            bool zipFile = true
         )
         {
             if (string.IsNullOrEmpty(path))
@@ -71,9 +73,29 @@ namespace ESNLib.Tools
                 BackupSetting(path, hide);
             }
 
-            if (File.Exists(path))
-                File.SetAttributes(path, FileAttributes.Normal); // Must be unhidden in order to write to it
-            File.WriteAllText(path, Serialize(setting, indent));
+            string content = Serialize(setting, indent);
+
+            if (zipFile)
+            {
+                string tempFile = Path.GetTempFileName();
+                File.WriteAllText(tempFile, content);
+
+                if (File.Exists(path))
+                    File.Delete(path);
+
+                using (ZipArchive zip = ZipFile.Open(path, ZipArchiveMode.Create))
+                {
+                    zip.CreateEntryFromFile(tempFile, "settings.txt");
+                }
+
+                File.Delete(tempFile);
+            }
+            else
+            {
+                if (File.Exists(path))
+                    File.SetAttributes(path, FileAttributes.Normal); // Must be unhidden in order to write to it
+                File.WriteAllText(path, content);
+            }
 
             if (hide)
             {
@@ -89,21 +111,35 @@ namespace ESNLib.Tools
             T setting,
             bool backup = true,
             bool indent = true,
-            bool hide = false
+            bool hide = false,
+            bool zipFile = true
         )
         {
-            SaveTo(GetDefaultPath(appName), setting, backup, indent, hide);
+            SaveTo(GetDefaultPath(appName), setting, backup, indent, hide, zipFile);
         }
 
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public static bool LoadFrom<T>(string path, out T output)
+        public static bool LoadFrom<T>(string path, out T output, bool isZipped = true)
         {
             if (File.Exists(path))
             {
-                // Load settings from raw data
-                string fileData = File.ReadAllText(path);
+                string fileData = null;
+                if (isZipped)
+                {
+                    using (ZipArchive zip = ZipFile.Open(path, ZipArchiveMode.Read))
+                    using (Stream st = zip.Entries[0].Open())
+                    using (StreamReader sw = new StreamReader(st))
+                    {
+                        fileData = sw.ReadToEnd();
+                    }
+                }
+                else
+                {
+                    fileData = File.ReadAllText(path);
+                }
+
                 if (!string.IsNullOrEmpty(fileData))
                 {
                     T setting = Deserialize<T>(fileData);
@@ -120,9 +156,9 @@ namespace ESNLib.Tools
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public static bool LoadFromDefault<T>(string appName, out T output)
+        public static bool LoadFromDefault<T>(string appName, out T output, bool isZipped = true)
         {
-            return LoadFrom(GetDefaultPath(appName), out output);
+            return LoadFrom(GetDefaultPath(appName), out output, isZipped);
         }
 
         /// <summary>
