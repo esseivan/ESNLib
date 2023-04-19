@@ -454,7 +454,11 @@ namespace ESNLib.Tools.Tests
             // Save file then load it and read content
             SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
 
-            SettingsManager.LoadFromDefault(AppName, out Dictionary<string, TestClass> read, isZipped: false);
+            SettingsManager.LoadFromDefault(
+                AppName,
+                out Dictionary<string, TestClass> read,
+                isZipped: false
+            );
 
             // Save one more time for backup
             SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
