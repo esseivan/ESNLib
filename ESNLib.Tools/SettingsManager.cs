@@ -51,13 +51,15 @@ namespace ESNLib.Tools
         /// <summary>
         /// Save settings to specified file
         /// </summary>
+        /// <param name="internalFileName">Name inside the zip file. No actual effect on the proces, just to make it nicer</param>
         public static void SaveTo<T>(
             string path,
             T setting,
             bool backup = true,
             bool indent = true,
             bool hide = false,
-            bool zipFile = true
+            bool zipFile = true,
+            string internalFileName = "settings.txt"
         )
         {
             if (string.IsNullOrEmpty(path))
@@ -85,7 +87,7 @@ namespace ESNLib.Tools
 
                 using (ZipArchive zip = ZipFile.Open(path, ZipArchiveMode.Create))
                 {
-                    zip.CreateEntryFromFile(tempFile, "settings.txt");
+                    zip.CreateEntryFromFile(tempFile, internalFileName);
                 }
 
                 File.Delete(tempFile);
