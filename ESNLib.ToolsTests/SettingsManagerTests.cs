@@ -19,20 +19,23 @@ namespace ESNLib.Tools.Tests
         /// </summary>
         private string GetTestName(int index)
         {
-            return $"{DEFAULT_APP_NAME}{index}";
+            string value = $"{DEFAULT_APP_NAME}{index}";
+            SettingsManager.MyAppName = value;
+            return value;
         }
 
         [TestMethod()]
         public void TestSaveAndLoadFromDefault()
         {
-            string AppName = GetTestName(1);
-            // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, Math.PI, false, false);
+            _ = GetTestName(1);
 
-            SettingsManager.LoadFromDefault(AppName, out double read);
+            // Save file then load it and read content
+            SettingsManager.SaveToDefault(Math.PI, SettingsManager.BackupMode.None, false);
+
+            SettingsManager.LoadFromDefault(out double read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, Math.PI, false, false);
+            SettingsManager.SaveToDefault(Math.PI, SettingsManager.BackupMode.None, false);
 
             Assert.IsTrue(read == Math.PI);
         }
@@ -40,14 +43,23 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadArrayFromDefault()
         {
-            string AppName = GetTestName(2);
-            // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, new double[] { Math.PI, Math.E }, false, false);
+            _ = GetTestName(2);
 
-            SettingsManager.LoadFromDefault(AppName, out double[] read);
+            // Save file then load it and read content
+            SettingsManager.SaveToDefault(
+                new double[] { Math.PI, Math.E },
+                SettingsManager.BackupMode.None,
+                false
+            );
+
+            SettingsManager.LoadFromDefault(out double[] read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, new double[] { Math.PI, Math.E }, false, false);
+            SettingsManager.SaveToDefault(
+                new double[] { Math.PI, Math.E },
+                SettingsManager.BackupMode.None,
+                false
+            );
 
             Assert.IsTrue(read.Length == 2);
             Assert.IsTrue(read[0] == Math.PI);
@@ -57,17 +69,27 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadArrayFromPath()
         {
-            string AppName = GetTestName(3);
-            string path = SettingsManager.GetDefaultPath(AppName);
+            _ = GetTestName(3);
+            string path = SettingsManager.GetDefaultSettingPath(false);
 
             Console.WriteLine(path);
             // Save file then load it and read content
-            SettingsManager.SaveTo(path, new double[] { Math.PI, Math.E }, false, false);
+            SettingsManager.SaveTo(
+                path,
+                new double[] { Math.PI, Math.E },
+                SettingsManager.BackupMode.None,
+                false
+            );
 
             SettingsManager.LoadFrom(path, out double[] read);
 
             // Save one more time for backup
-            SettingsManager.SaveTo(path, new double[] { Math.PI, Math.E }, false, false);
+            SettingsManager.SaveTo(
+                path,
+                new double[] { Math.PI, Math.E },
+                SettingsManager.BackupMode.None,
+                false
+            );
 
             Assert.IsTrue(read.Length == 2);
             Assert.IsTrue(read[0] == Math.PI);
@@ -77,7 +99,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassFromDefault()
         {
-            string AppName = GetTestName(4);
+            _ = GetTestName(4);
+
             TestClass tc = new TestClass()
             {
                 x = -1,
@@ -87,12 +110,12 @@ namespace ESNLib.Tools.Tests
             };
 
             // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, tc, false, false);
+            SettingsManager.SaveToDefault(tc, SettingsManager.BackupMode.None, false);
 
-            SettingsManager.LoadFromDefault(AppName, out TestClass read);
+            SettingsManager.LoadFromDefault(out TestClass read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, tc, false, false);
+            SettingsManager.SaveToDefault(tc, SettingsManager.BackupMode.None, false);
 
             Assert.AreEqual(tc.x, read.x);
             Assert.AreEqual(tc.name, read.name);
@@ -106,7 +129,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassArrayFromDefault()
         {
-            string AppName = GetTestName(5);
+            _ = GetTestName(5);
+
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -123,12 +147,20 @@ namespace ESNLib.Tools.Tests
             };
 
             // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, new TestClass[] { tc1, tc2 }, false, false);
+            SettingsManager.SaveToDefault(
+                new TestClass[] { tc1, tc2 },
+                SettingsManager.BackupMode.None,
+                false
+            );
 
-            SettingsManager.LoadFromDefault(AppName, out TestClass[] read);
+            SettingsManager.LoadFromDefault(out TestClass[] read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, new TestClass[] { tc1, tc2 }, false, false);
+            SettingsManager.SaveToDefault(
+                new TestClass[] { tc1, tc2 },
+                SettingsManager.BackupMode.None,
+                false
+            );
 
             Assert.AreEqual(2, read.Length);
             TestClass read1 = read[0];
@@ -153,7 +185,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassArrayFromDefaultHide()
         {
-            string AppName = GetTestName(6);
+            _ = GetTestName(6);
+
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -171,20 +204,18 @@ namespace ESNLib.Tools.Tests
 
             // Save file then load it and read content
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: false,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: true
             );
 
-            SettingsManager.LoadFromDefault(AppName, out TestClass[] read);
+            SettingsManager.LoadFromDefault(out TestClass[] read);
 
             // Save one more time for backup
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: false,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: true
             );
@@ -212,7 +243,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassArrayFromDefaultBackup()
         {
-            string AppName = GetTestName(7);
+            _ = GetTestName(7);
+
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -230,20 +262,18 @@ namespace ESNLib.Tools.Tests
 
             // Save file then load it and read content
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: true,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: false
             );
 
-            SettingsManager.LoadFromDefault(AppName, out TestClass[] read);
+            SettingsManager.LoadFromDefault(out TestClass[] read);
 
             // Save one more time for backup
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: true,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: false
             );
@@ -271,7 +301,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassArrayFromDefaultBackupHide()
         {
-            string AppName = GetTestName(8);
+            _ = GetTestName(8);
+
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -289,20 +320,18 @@ namespace ESNLib.Tools.Tests
 
             // Save file then load it and read content
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: true,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: true
             );
 
-            SettingsManager.LoadFromDefault(AppName, out TestClass[] read);
+            SettingsManager.LoadFromDefault(out TestClass[] read);
 
             // Save one more time for backup
             SettingsManager.SaveToDefault(
-                AppName,
                 new TestClass[] { tc1, tc2 },
-                backup: true,
+                backup: SettingsManager.BackupMode.None,
                 indent: false,
                 hide: true
             );
@@ -330,7 +359,8 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassListFromDefault()
         {
-            string AppName = GetTestName(9);
+            _ = GetTestName(9);
+
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -348,12 +378,12 @@ namespace ESNLib.Tools.Tests
             List<TestClass> list = new List<TestClass>() { tc1, tc2 };
 
             // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, list, false, false);
+            SettingsManager.SaveToDefault(list, SettingsManager.BackupMode.None, false);
 
-            SettingsManager.LoadFromDefault(AppName, out List<TestClass> read);
+            SettingsManager.LoadFromDefault(out List<TestClass> read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, list, false, false);
+            SettingsManager.SaveToDefault(list, SettingsManager.BackupMode.None, false);
 
             Assert.AreEqual(2, read.Count);
             TestClass read1 = read[0];
@@ -378,7 +408,7 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassDictionaryFromDefault()
         {
-            string AppName = GetTestName(10);
+            _ = GetTestName(10);
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -400,12 +430,12 @@ namespace ESNLib.Tools.Tests
             };
 
             // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, dic, indent: true);
+            SettingsManager.SaveToDefault(dic, indent: true);
 
-            SettingsManager.LoadFromDefault(AppName, out Dictionary<string, TestClass> read);
+            SettingsManager.LoadFromDefault(out Dictionary<string, TestClass> read);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, dic, indent: true);
+            SettingsManager.SaveToDefault(dic, indent: true);
 
             Assert.AreEqual(2, read.Count);
             TestClass read1 = read["Entry #1"];
@@ -430,7 +460,7 @@ namespace ESNLib.Tools.Tests
         [TestMethod()]
         public void TestSaveAndLoadCustomClassDictionaryFromDefault_NonZipped()
         {
-            string AppName = GetTestName(10);
+            _ = GetTestName(11);
             TestClass tc1 = new TestClass()
             {
                 x = -1,
@@ -452,16 +482,126 @@ namespace ESNLib.Tools.Tests
             };
 
             // Save file then load it and read content
-            SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
+            SettingsManager.SaveToDefault(dic, indent: true, zipFile: false);
 
-            SettingsManager.LoadFromDefault(
-                AppName,
-                out Dictionary<string, TestClass> read,
-                isZipped: false
-            );
+            SettingsManager.LoadFromDefault(out Dictionary<string, TestClass> read, zipFile: false);
 
             // Save one more time for backup
-            SettingsManager.SaveToDefault(AppName, dic, indent: true, zipFile: false);
+            SettingsManager.SaveToDefault(dic, indent: true, zipFile: false);
+
+            Assert.AreEqual(2, read.Count);
+            TestClass read1 = read["Entry #1"];
+            Assert.AreEqual(tc1.x, read1.x);
+            Assert.AreEqual(tc1.name, read1.name);
+            Assert.AreEqual(tc1.constants.Length, read1.constants.Length);
+            Assert.AreEqual(tc1.constants[0], read1.constants[0]);
+            Assert.AreEqual(tc1.constants[1], read1.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read1.hiddenText));
+            Assert.AreNotEqual(tc1.hiddenText, read1.hiddenText);
+
+            TestClass read2 = read["Entry #2"];
+            Assert.AreEqual(tc2.x, read2.x);
+            Assert.AreEqual(tc2.name, read2.name);
+            Assert.AreEqual(tc2.constants.Length, read2.constants.Length);
+            Assert.AreEqual(tc2.constants[0], read2.constants[0]);
+            Assert.AreEqual(tc2.constants[1], read2.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read2.hiddenText));
+            Assert.AreNotEqual(tc2.hiddenText, read2.hiddenText);
+        }
+
+        [TestMethod()]
+        public void TestSaveAndLoadCustomClassDictionaryFromDefault_Zipped()
+        {
+            _ = GetTestName(12);
+            TestClass tc1 = new TestClass()
+            {
+                x = -1,
+                name = "Hello world !",
+                constants = new double[] { Math.PI, Math.E },
+                hiddenText = "password",
+            };
+            TestClass tc2 = new TestClass()
+            {
+                x = -255,
+                name = "Hello !",
+                constants = new double[] { double.NegativeInfinity, int.MaxValue },
+                hiddenText = "123456",
+            };
+            Dictionary<string, TestClass> dic = new Dictionary<string, TestClass>
+            {
+                { "Entry #1", tc1 },
+                { "Entry #2", tc2 }
+            };
+
+            // Save file then load it and read content
+            SettingsManager.SaveToDefault(dic, indent: true, zipFile: true);
+
+            SettingsManager.LoadFromDefault(out Dictionary<string, TestClass> read, zipFile: true);
+
+            // Save one more time for backup
+            SettingsManager.SaveToDefault(dic, indent: true, zipFile: true);
+
+            Assert.AreEqual(2, read.Count);
+            TestClass read1 = read["Entry #1"];
+            Assert.AreEqual(tc1.x, read1.x);
+            Assert.AreEqual(tc1.name, read1.name);
+            Assert.AreEqual(tc1.constants.Length, read1.constants.Length);
+            Assert.AreEqual(tc1.constants[0], read1.constants[0]);
+            Assert.AreEqual(tc1.constants[1], read1.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read1.hiddenText));
+            Assert.AreNotEqual(tc1.hiddenText, read1.hiddenText);
+
+            TestClass read2 = read["Entry #2"];
+            Assert.AreEqual(tc2.x, read2.x);
+            Assert.AreEqual(tc2.name, read2.name);
+            Assert.AreEqual(tc2.constants.Length, read2.constants.Length);
+            Assert.AreEqual(tc2.constants[0], read2.constants[0]);
+            Assert.AreEqual(tc2.constants[1], read2.constants[1]);
+            Assert.IsTrue(string.IsNullOrEmpty(read2.hiddenText));
+            Assert.AreNotEqual(tc2.hiddenText, read2.hiddenText);
+        }
+
+        [TestMethod()]
+        public void TestSaveAndLoadCustomClassDictionaryFromDefault_BackupDateFormat()
+        {
+            _ = GetTestName(13);
+            TestClass tc1 = new TestClass()
+            {
+                x = -1,
+                name = "Hello world !",
+                constants = new double[] { Math.PI, Math.E },
+                hiddenText = "password",
+            };
+            TestClass tc2 = new TestClass()
+            {
+                x = -255,
+                name = "Hello !",
+                constants = new double[] { double.NegativeInfinity, int.MaxValue },
+                hiddenText = "123456",
+            };
+            Dictionary<string, TestClass> dic = new Dictionary<string, TestClass>
+            {
+                { "Entry #1", tc1 },
+                { "Entry #2", tc2 }
+            };
+
+            // Save file then load it and read content
+            SettingsManager.SaveToDefault(
+                dic,
+                indent: true,
+                zipFile: false,
+                backup: SettingsManager.BackupMode.datetimeFormatAppdata
+            );
+
+            SettingsManager.LoadFromDefault(out Dictionary<string, TestClass> read, zipFile: false);
+
+            // Save one more time for backup
+            SettingsManager.SaveToDefault(
+                dic,
+                indent: true,
+                zipFile: false,
+                backup: SettingsManager.BackupMode.datetimeFormatAppdata
+            );
 
             Assert.AreEqual(2, read.Count);
             TestClass read1 = read["Entry #1"];

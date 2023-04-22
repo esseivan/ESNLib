@@ -15,33 +15,107 @@ namespace ESNLib.Tools
     public abstract class SettingsManager
     {
         /// <summary>
+        /// Define the name of your application. This is used for default paths
+        /// </summary>
+        public static string MyAppName { get; set; } = null;
+
+        /// <summary>
+        /// The type of backup
+        /// </summary>
+        public enum BackupMode
+        {
+            /// <summary>
+            /// No backup of the file
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Add a .bak to the same path
+            /// </summary>
+            dotBak,
+
+            /// <summary>
+            /// Add a datetime format and store to the default path in appdata. Get the path with GetDefaultBackupPath
+            /// </summary>
+            datetimeFormatAppdata,
+        }
+
+        /// <summary>
         /// Get the default path to save settings if not specified
         /// </summary>
-        public static string GetDefaultPath(string appName, bool isZip = true)
+        public static string GetDefaultSettingPath(bool isZip)
         {
-            // %Appdata%\ESN\<appName>
+            if (string.IsNullOrEmpty(MyAppName))
+                throw new ArgumentNullException("The app name is null...", "MyAppName");
+
+            // %Appdata%\ESN\Defaults\<appName>
             return Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "ESN",
-                "Defaults",
-                appName + "_config" + (isZip ? ".zip" : ".txt")
+                MyAppName,
+                "Settings",
+                "config" + (isZip ? ".zip" : ".txt")
+            );
+        }
+
+        /// <summary>
+        /// Get the default path to save settings if not specified
+        /// </summary>
+        public static string GetDefaultBackupPath()
+        {
+            if (string.IsNullOrEmpty(MyAppName))
+                throw new ArgumentNullException("The app name is null...", "MyAppName");
+
+            // %Appdata%\ESN\Backups\
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                MyAppName,
+                "Backups"
             );
         }
 
         /// <summary>
         /// Backup the previous file
         /// </summary>
-        private static void BackupSetting(string path, bool hide)
+        private static void BackupSetting(string settingPath, bool hide, BackupMode mode)
         {
-            // If current setting doesn't exists, abort. Do not delete the previous backup
-            if (!File.Exists(path))
+            if (mode == BackupMode.None)
                 return;
 
-            // Delete the previous backup and replace it with the current setting
-            string bakPath = path + ".bak";
-            if (File.Exists(bakPath))
-                File.Delete(bakPath);
-            File.Move(path, bakPath);
+            // If current setting doesn't exists, abort, nothing to backup...
+            if (!File.Exists(settingPath))
+                return;
+
+            string bakPath = null;
+            switch (mode)
+            {
+                case BackupMode.dotBak:
+                    // Append .bak
+                    bakPath = settingPath + ".bak";
+                    // This method overwrite the file over and over. Delete before
+                    if (File.Exists(bakPath))
+                        File.Delete(bakPath);
+                    break;
+                case BackupMode.datetimeFormatAppdata:
+                    // Get filename, append datetime and move to appdata
+                    string appDataPath = GetDefaultBackupPath();
+                    string fileName = Path.GetFileNameWithoutExtension(settingPath);
+                    string ext = Path.GetExtension(settingPath);
+                    bakPath = Path.Combine(
+                        appDataPath,
+                        $"{fileName}_{DateTime.Now:yyyyMMdd_HHmmss}{ext}"
+                    );
+                    // Check directory
+                    if (!Directory.Exists(Path.GetDirectoryName(bakPath)))
+                    {
+                        Directory.CreateDirectory(Path.GetDirectoryName(bakPath));
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            // Move the current setting
+            File.Move(settingPath, bakPath);
             if (hide)
             {
                 File.SetAttributes(bakPath, FileAttributes.Hidden);
@@ -55,7 +129,7 @@ namespace ESNLib.Tools
         public static void SaveTo<T>(
             string path,
             T setting,
-            bool backup = true,
+            BackupMode backup = BackupMode.None,
             bool indent = true,
             bool hide = false,
             bool zipFile = true,
@@ -70,9 +144,9 @@ namespace ESNLib.Tools
             if (!Directory.Exists(dirPath))
                 Directory.CreateDirectory(dirPath);
 
-            if (backup)
+            if (backup != BackupMode.None)
             {
-                BackupSetting(path, hide);
+                BackupSetting(path, hide, backup);
             }
 
             string content = Serialize(setting, indent);
@@ -109,26 +183,25 @@ namespace ESNLib.Tools
         /// Save settings to specified file
         /// </summary>
         public static void SaveToDefault<T>(
-            string appName,
             T setting,
-            bool backup = true,
+            BackupMode backup = BackupMode.None,
             bool indent = true,
             bool hide = false,
             bool zipFile = true
         )
         {
-            SaveTo(GetDefaultPath(appName), setting, backup, indent, hide, zipFile);
+            SaveTo(GetDefaultSettingPath(zipFile), setting, backup, indent, hide, zipFile);
         }
 
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public static bool LoadFrom<T>(string path, out T output, bool isZipped = true)
+        public static bool LoadFrom<T>(string path, out T output, bool zipFile = true)
         {
             if (File.Exists(path))
             {
                 string fileData = null;
-                if (isZipped)
+                if (zipFile)
                 {
                     using (ZipArchive zip = ZipFile.Open(path, ZipArchiveMode.Read))
                     using (Stream st = zip.Entries[0].Open())
@@ -158,9 +231,9 @@ namespace ESNLib.Tools
         /// <summary>
         /// Load settings from specified path
         /// </summary>
-        public static bool LoadFromDefault<T>(string appName, out T output, bool isZipped = true)
+        public static bool LoadFromDefault<T>(out T output, bool zipFile = true)
         {
-            return LoadFrom(GetDefaultPath(appName), out output, isZipped);
+            return LoadFrom(GetDefaultSettingPath(zipFile), out output, zipFile);
         }
 
         /// <summary>

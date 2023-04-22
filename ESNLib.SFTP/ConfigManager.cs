@@ -33,7 +33,7 @@ namespace ESNLib.SFTP
         {
             try
             {
-                SettingsManager.SaveTo(Path, Configs, false, false);
+                SettingsManager.SaveTo(Path, Configs, SettingsManager.BackupMode.None, false);
             }
             catch (Exception ex)
             {
