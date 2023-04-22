@@ -20,7 +20,7 @@ namespace ESNLib.Tools
         /// <summary>
         /// How is the filaneme determined
         /// </summary>
-        public FilenamesModes FilenameMode { get; set; } = FilenamesModes.FileName_LastPrevious;
+        public FilenamesModes FilenameMode { get; set; } = FilenamesModes.FileName_CurrentPrevious;
 
         /// <summary>
         /// Prefix of the lines in the log
@@ -156,9 +156,9 @@ namespace ESNLib.Tools
             FileName_DateSuffix = 2,
 
             /// <summary>
-            /// Keep the 2 last logs name last and previous
+            /// Keep the 2 last logs name current and previous
             /// </summary>
-            FileName_LastPrevious = 3
+            FileName_CurrentPrevious = 3
         }
 
         /// <summary>
@@ -352,21 +352,27 @@ namespace ESNLib.Tools
                     outputPath = Path.ChangeExtension(outputPath, extension);
 
                     break;
-                case FilenamesModes.FileName_LastPrevious:
+                case FilenamesModes.FileName_CurrentPrevious:
                     // If string empty, invalid FilePath
                     if (string.IsNullOrEmpty(FilePath))
                         return false;
 
-                    // Save extension to set it later
+                    // If no extension, set it to .log
+                    if (!Path.HasExtension(FilePath))
+                    {
+                        FilePath = Path.ChangeExtension(FilePath, "log");
+                    }
                     extension = Path.GetExtension(FilePath);
-                    // Remove extension
-                    outputPath = Path.ChangeExtension(FilePath, null);
-                    // Add suffix
-                    string previousPath = outputPath + "_previous";
-                    outputPath += "_current";
-                    // Add extension
-                    outputPath = Path.ChangeExtension(outputPath, extension);
-                    previousPath = Path.ChangeExtension(previousPath, extension);
+                    string filename = Path.GetFileNameWithoutExtension(FilePath);
+
+                    outputPath = Path.Combine(
+                        Path.GetDirectoryName(FilePath),
+                        $"{filename}_current{extension}"
+                    );
+                    string previousPath = Path.Combine(
+                        Path.GetDirectoryName(outputPath),
+                        $"{filename}_previous{extension}"
+                    );
 
                     // Rename last file
                     try

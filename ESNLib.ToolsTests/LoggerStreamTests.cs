@@ -97,7 +97,7 @@ namespace ESNLib.Tools.Tests
             lg.BasicAppendLastPreviousTest();
             lg.BasicAppendTest();
             lg.BasicWriteTest();
-            lg.FileNameLastPreviousTest();
+            lg.FileNameCurrentPreviousTest();
             lg.FileNameTest();
             lg.FileNameDateSuffixTest();
             lg.LoggerBasicTest();

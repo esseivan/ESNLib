@@ -20,7 +20,7 @@ namespace ESNLib.Tools.Tests
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 PrefixMode = Logger.PrefixModes.RunTime,
                 WriteMode = Logger.WriteModes.Write,
@@ -45,7 +45,7 @@ namespace ESNLib.Tools.Tests
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 PrefixMode = Logger.PrefixModes.CurrentTime,
                 WriteMode = Logger.WriteModes.Write,
@@ -70,7 +70,7 @@ namespace ESNLib.Tools.Tests
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 PrefixMode = Logger.PrefixModes.Custom,
                 WriteMode = Logger.WriteModes.Write,
@@ -94,7 +94,7 @@ namespace ESNLib.Tools.Tests
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 PrefixMode = Logger.PrefixModes.None,
                 WriteMode = Logger.WriteModes.Write,
@@ -132,11 +132,11 @@ namespace ESNLib.Tools.Tests
         }
 
         [TestMethod()]
-        public void FileNameLastPreviousTest()
+        public void FileNameCurrentPreviousTest()
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 WriteMode = Logger.WriteModes.Write,
                 PrefixMode = Logger.PrefixModes.None,
@@ -150,6 +150,7 @@ namespace ESNLib.Tools.Tests
             // 2nd write
             log.Disable();
             Assert.IsTrue(log.Enable());
+            Assert.IsTrue(File.Exists(outputPath1.Replace("_current", "_previous")));
             Assert.IsTrue(log.Write("Hello world 2"));
             string outputPath2 = log.FileOutputPath;
             string data2 = File.ReadAllText(outputPath2).Trim();
@@ -275,7 +276,7 @@ namespace ESNLib.Tools.Tests
         {
             Logger log = new Logger()
             {
-                FilenameMode = Logger.FilenamesModes.FileName_LastPrevious,
+                FilenameMode = Logger.FilenamesModes.FileName_CurrentPrevious,
                 FilePath = path,
                 WriteMode = Logger.WriteModes.Append,
                 PrefixMode = Logger.PrefixModes.None,

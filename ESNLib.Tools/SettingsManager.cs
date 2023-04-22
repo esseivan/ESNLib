@@ -115,7 +115,9 @@ namespace ESNLib.Tools
             }
 
             // Move the current setting
-            File.Move(settingPath, bakPath);
+            if (!File.Exists(bakPath)) // Too recent change
+                File.Move(settingPath, bakPath);
+
             if (hide)
             {
                 File.SetAttributes(bakPath, FileAttributes.Hidden);
