@@ -70,7 +70,7 @@ namespace ESNLib.Tools.Tests
         public void TestSaveAndLoadArrayFromPath()
         {
             _ = GetTestName(3);
-            string path = SettingsManager.GetDefaultSettingPath(false);
+            string path = SettingsManager.GetDefaultSettingFilePath(false);
 
             Console.WriteLine(path);
             // Save file then load it and read content

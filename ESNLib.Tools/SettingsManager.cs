@@ -15,6 +15,11 @@ namespace ESNLib.Tools
     public abstract class SettingsManager
     {
         /// <summary>
+        /// Define the name of your publisher/developper. This is used for default paths. If set to null, not used
+        /// </summary>
+        public static string MyPublisherName { get; set; } = null;
+
+        /// <summary>
         /// Define the name of your application. This is used for default paths
         /// </summary>
         public static string MyAppName { get; set; } = null;
@@ -41,24 +46,39 @@ namespace ESNLib.Tools
         }
 
         /// <summary>
-        /// Get the default path to save settings if not specified
+        /// Get the default path to the settings file if not specified. The format is : %appdata%/Roaming/<see cref="MyPublisherName"/>/<see cref="MyAppName"/>/Settings/config.txt (or .zip).
+        /// If <see cref="MyPublisherName"/> is set to null, it is not used in the path.
+        /// <see cref="MyAppName"/> MUST be set otherwise an exception will be thrown
         /// </summary>
-        public static string GetDefaultSettingPath(bool isZip)
+        /// <exception cref="ArgumentNullException"></exception>
+        public static string GetDefaultSettingFilePath(bool isZip)
         {
             if (string.IsNullOrEmpty(MyAppName))
                 throw new ArgumentNullException("The app name is null...", "MyAppName");
 
-            // %Appdata%\ESN\Defaults\<appName>
-            return Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                MyAppName,
-                "Settings",
-                "config" + (isZip ? ".zip" : ".txt")
-            );
+            // %Appdata%\<publisher>\<appname>\settings
+
+            if (string.IsNullOrEmpty(MyPublisherName))
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    MyAppName,
+                    "Settings",
+                    "config" + (isZip ? ".zip" : ".txt")
+                );
+            else
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    MyPublisherName,
+                    MyAppName,
+                    "Settings",
+                    "config" + (isZip ? ".zip" : ".txt")
+                );
         }
 
         /// <summary>
-        /// Get the default path to save settings if not specified
+        /// Get the default path to save settings if not specified. The format is : %appdata%/Roaming/<see cref="MyPublisherName"/>/<see cref="MyAppName"/>/Settings/config.txt (or .zip).
+        /// If <see cref="MyPublisherName"/> is set to null, it is not used in the path.
+        /// <see cref="MyAppName"/> MUST be set otherwise an exception will be thrown
         /// </summary>
         public static string GetDefaultBackupPath()
         {
@@ -66,11 +86,19 @@ namespace ESNLib.Tools
                 throw new ArgumentNullException("The app name is null...", "MyAppName");
 
             // %Appdata%\ESN\Backups\
-            return Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                MyAppName,
-                "Backups"
-            );
+            if (string.IsNullOrEmpty(MyPublisherName))
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    MyAppName,
+                    "Backups"
+                );
+            else
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    MyPublisherName,
+                    MyAppName,
+                    "Backups"
+                );
         }
 
         /// <summary>
@@ -192,7 +220,7 @@ namespace ESNLib.Tools
             bool zipFile = true
         )
         {
-            SaveTo(GetDefaultSettingPath(zipFile), setting, backup, indent, hide, zipFile);
+            SaveTo(GetDefaultSettingFilePath(zipFile), setting, backup, indent, hide, zipFile);
         }
 
         /// <summary>
@@ -235,7 +263,7 @@ namespace ESNLib.Tools
         /// </summary>
         public static bool LoadFromDefault<T>(out T output, bool zipFile = true)
         {
-            return LoadFrom(GetDefaultSettingPath(zipFile), out output, zipFile);
+            return LoadFrom(GetDefaultSettingFilePath(zipFile), out output, zipFile);
         }
 
         /// <summary>
