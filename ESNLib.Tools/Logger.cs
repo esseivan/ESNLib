@@ -570,7 +570,7 @@ namespace ESNLib.Tools
             else
                 loglevelPrefix = $"[{loglevelPrefix}] ";
             // Set to be all the same length to have a better readability
-            loglevelPrefix.PadRight(PrefixPadding);
+            loglevelPrefix = loglevelPrefix.PadRight(PrefixPadding);
 
             switch (PrefixMode)
             {
