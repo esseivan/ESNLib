@@ -37,11 +37,11 @@ namespace ESNLib.Tools.WinForms.Tests
         private class MyClass
         {
             public int x { get; set; }
-            public int y;
+            public int y; // This one is invisible...
 
-            public float n;
+            public float n { get; set; }
 
-            public string text;
+            public string text { get; set; }
         }
 
 
@@ -63,7 +63,7 @@ namespace ESNLib.Tools.WinForms.Tests
 
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual(1, result[0].x);
-            Assert.AreEqual(2, result[0].y);
+            Assert.AreEqual(0, result[0].y);
             Assert.AreEqual(3.0, result[0].n);
             Assert.AreEqual("name", result[0].text);
         }

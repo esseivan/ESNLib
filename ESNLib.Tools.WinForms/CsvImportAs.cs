@@ -56,9 +56,10 @@ namespace ESNLib.Tools.WinForms
                 for (int i = 0; i < lineItems.Length; i++)
                 {
                     if (properties[i] == null) { continue; }
+                    PropertyInfo pinfo = properties[i];
 
                     string lineItem = lineItems[i];
-                    properties[i].SetValue(item, lineItem);
+                    pinfo.SetValue(item, Convert.ChangeType(lineItem, pinfo.PropertyType));
                 }
                 list.Add(item);
             }
