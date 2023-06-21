@@ -12,13 +12,45 @@ namespace ESNLib.Tools.WinForms
     /// </summary>
     public class CsvImportAs<T> where T : new()
     {
-
-
-        public void Import()
+        /// <summary>
+        /// Links between header names and properties of the class
+        /// </summary>
+        private Dictionary<string, PropertyInfo> propertiesLink = null;
+        /// <summary>
+        /// Links between header names and properties' name of the class
+        /// </summary>
+        private Dictionary<string, string> propertiesLinkNames = null;
+        /// <summary>
+        /// Get the list of properties for this class <see cref="T"/>
+        /// </summary>
+        public PropertyInfo[] GetProperties()
         {
-
+            return typeof(T).GetProperties();
         }
 
+        /// <summary>
+        /// Set linking between the header name and the property
+        /// </summary>
+        public void SetPropertiesLink(Dictionary<string, PropertyInfo> links)
+        {
+            propertiesLinkNames = null;
+            propertiesLink = links;
+        }
+
+        /// <summary>
+        /// Set linking between the header name and the property name
+        /// </summary>
+        public void SetPropertiesLink(Dictionary<string, string> links)
+        {
+            propertiesLink = null;
+            propertiesLinkNames = links;
+        }
+
+        /// <summary>
+        /// Import the data as the content of a csv file
+        /// </summary>
+        /// <param name="data">content of the csv, ',' separated</param>
+        /// <returns>List of converted items</returns>
         public List<T> ImportData(string data)
         {
             if (string.IsNullOrEmpty(data))
@@ -47,7 +79,7 @@ namespace ESNLib.Tools.WinForms
 
             foreach (string line in lines)
             {
-                if(string.IsNullOrEmpty(line))
+                if (string.IsNullOrEmpty(line))
                 { continue; }
 
                 T item = new T();
@@ -67,5 +99,21 @@ namespace ESNLib.Tools.WinForms
             return list;
         }
 
+
+
     }
+
+
+    ///// <summary>
+    ///// Attribute to set a special header name for the property
+    ///// </summary>
+    //[AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    //public class CsvImportAttribute : Attribute
+    //{
+    //    public string CustomName { get; }
+    //    public CsvImportAttribute(string name)
+    //    {
+    //        this.CustomName = name;
+    //    }
+    //}
 }

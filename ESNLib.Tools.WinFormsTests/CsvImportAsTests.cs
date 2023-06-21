@@ -5,23 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ESNLib.Tools.WinForms.Tests
 {
     [TestClass()]
     public class CsvImportAsTests
     {
-        private string GenerateCSV(MyClass item)
+        private string GenerateCSV(MyClass item, bool generateHeader = true)
         {
-            string csvOutput = $"dummy2,x,n,y,dummy2,text\n";
+            string csvOutput = generateHeader ? $"dummy2,x,n,y,dummy2,text\n" : string.Empty;
             csvOutput += $"DummyText,{item.x},{item.n},{item.y},DummyText2,{item.text}\n";
 
             return csvOutput;
         }
 
-        private string GenerateCSV(IEnumerable<MyClass> classes)
+        private string GenerateCSV(IEnumerable<MyClass> classes, bool generateHeader = true)
         {
-            string csvOutput = $"dummy2,x,n,y,dummy2,text\n";
+            string csvOutput = generateHeader ? $"dummy2,x,n,y,dummy2,text\n" : string.Empty;
 
             foreach (MyClass item in classes)
             {
@@ -46,7 +47,7 @@ namespace ESNLib.Tools.WinForms.Tests
 
 
         [TestMethod()]
-        public void TestImport()
+        public void TestImport_Single()
         {
             // CSV data
             MyClass c = new MyClass()
@@ -66,6 +67,95 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(0, result[0].y);
             Assert.AreEqual(3.0, result[0].n);
             Assert.AreEqual("name", result[0].text);
+        }
+
+
+        [TestMethod()]
+        public void TestImport_Multiple()
+        {
+            // CSV data
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            string s = GenerateCSV(new MyClass[] { c1, c2 });
+
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+            List<MyClass> result = csvi.ImportData(s);
+
+            Assert.AreEqual(2, result.Count);
+            MyClass r = result[0];
+            MyClass comp = c1;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
+            r = result[1];
+            comp = c2;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
+        }
+
+
+        [TestMethod()]
+        public void TestImport_CustomHeaders()
+        {
+            // CSV data
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            string s = GenerateCSV(new MyClass[] { c1, c2 }, false);
+            s = $"C1,C2,C3,C4,C5,C6\n{s}";
+
+
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+
+            Dictionary<string, PropertyInfo> links = new Dictionary<string, PropertyInfo>()
+            {
+                {"C2", typeof(MyClass).GetProperty("x") },
+                {"C3",  typeof(MyClass).GetProperty("n")},
+                {"C3",  typeof(MyClass).GetProperty("y")},
+                {"C5", typeof(MyClass).GetProperty("text")},
+            };
+            csvi.SetPropertiesLink(links);
+            List<MyClass> result = csvi.ImportData(s);
+
+            Assert.AreEqual(2, result.Count);
+            MyClass r = result[0];
+            MyClass comp = c1;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
+            r = result[1];
+            comp = c2;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
         }
     }
 }
