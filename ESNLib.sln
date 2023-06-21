@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.Controls", "ESNLib.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib.SFTP", "ESNLib.SFTP\ESNLib.SFTP.csproj", "{C9EA4868-E93D-414D-827A-1155F87D2009}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib", "ESNLib\ESNLib.csproj", "{82F84A50-1FA9-4BA5-8096-4CDD4C4A4F71}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESNLib", "ESNLib\ESNLib.csproj", "{82F84A50-1FA9-4BA5-8096-4CDD4C4A4F71}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESNLib.Tools.WinFormsTests", "ESNLib.Tools.WinFormsTests\ESNLib.Tools.WinFormsTests.csproj", "{778ADF43-88B4-467F-BB3D-E28D697DDF24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{82F84A50-1FA9-4BA5-8096-4CDD4C4A4F71}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82F84A50-1FA9-4BA5-8096-4CDD4C4A4F71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82F84A50-1FA9-4BA5-8096-4CDD4C4A4F71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{778ADF43-88B4-467F-BB3D-E28D697DDF24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{778ADF43-88B4-467F-BB3D-E28D697DDF24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{778ADF43-88B4-467F-BB3D-E28D697DDF24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{778ADF43-88B4-467F-BB3D-E28D697DDF24}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
