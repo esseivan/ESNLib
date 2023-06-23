@@ -157,5 +157,62 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(comp.n, r.n);
             Assert.AreEqual(comp.text, r.text);
         }
+
+        [TestMethod()]
+        public void TestImport_MissingData()
+        {
+            // CSV data
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            string s = GenerateCSV(new MyClass[] { c1, c2 }, false);
+            s = $"C1,C2,C3,C4,C5,C6\n{s}"; //Custom header
+            // Add custom line
+            s += $"d,666,,,,\n";
+
+
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+
+            // Define headers links
+            Dictionary<string, string> links = new Dictionary<string, string>()
+            {
+                {"C2", "x" },
+                {"C3",  "n"},
+                {"C4",  "y"},
+                {"C6", "text"},
+            };
+            List<MyClass> result = csvi.ImportData(s, links);
+
+            Assert.AreEqual(3, result.Count);
+            MyClass r = result[0];
+            MyClass comp = c1;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
+            r = result[1];
+            comp = c2;
+            Assert.AreEqual(comp.x, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(comp.n, r.n);
+            Assert.AreEqual(comp.text, r.text);
+            r = result[2];
+
+            Assert.AreEqual(666, r.x);
+            Assert.AreEqual(0, r.y);
+            Assert.AreEqual(0, r.n);
+            Assert.AreEqual(string.Empty, r.text);
+        }
     }
 }

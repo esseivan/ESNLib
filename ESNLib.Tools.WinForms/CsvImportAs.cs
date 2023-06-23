@@ -1,7 +1,9 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -72,6 +74,7 @@ namespace ESNLib.Tools.WinForms
 
             return list;
         }
+        
         /// <summary>
         /// Import the data as the content of a csv file
         /// </summary>
@@ -143,7 +146,17 @@ namespace ESNLib.Tools.WinForms
                     }
 
                     PropertyInfo property = HeaderNameToPropertyLink[headers[i]];
-                    property.SetValue(newObject, Convert.ChangeType(elementData[i], property.PropertyType));
+                    if (!string.IsNullOrEmpty(elementData[i]))
+                    {
+                        property.SetValue(newObject, Convert.ChangeType(elementData[i], property.PropertyType));
+                    }
+                    else
+                    {
+                        // Not working...
+                        ConstructorInfo[] constructor = property.PropertyType.GetConstructors();
+                        object result = constructor[0].Invoke(null);
+                        property.SetValue(newObject, Convert.ChangeType(result, property.PropertyType));
+                    }
                 }
 
                 list.Add(newObject);
@@ -153,7 +166,19 @@ namespace ESNLib.Tools.WinForms
         }
 
 
+        /// <summary>
+        /// Ask for the user with a GUI way, to choose the headers linking
+        /// </summary>
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks()
+        {
 
+
+
+
+
+
+            return null;
+        }
     }
 
 
