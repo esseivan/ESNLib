@@ -13,37 +13,11 @@ namespace ESNLib.Tools.WinForms
     public class CsvImportAs<T> where T : new()
     {
         /// <summary>
-        /// Links between header names and properties of the class
-        /// </summary>
-        private Dictionary<string, PropertyInfo> propertiesLink = null;
-        /// <summary>
-        /// Links between header names and properties' name of the class
-        /// </summary>
-        private Dictionary<string, string> propertiesLinkNames = null;
-        /// <summary>
-        /// Get the list of properties for this class <see cref="T"/>
+        /// Get the list of properties for this class T
         /// </summary>
         public PropertyInfo[] GetProperties()
         {
             return typeof(T).GetProperties();
-        }
-
-        /// <summary>
-        /// Set linking between the header name and the property
-        /// </summary>
-        public void SetPropertiesLink(Dictionary<string, PropertyInfo> links)
-        {
-            propertiesLinkNames = null;
-            propertiesLink = links;
-        }
-
-        /// <summary>
-        /// Set linking between the header name and the property name
-        /// </summary>
-        public void SetPropertiesLink(Dictionary<string, string> links)
-        {
-            propertiesLink = null;
-            propertiesLinkNames = links;
         }
 
         /// <summary>
@@ -94,6 +68,85 @@ namespace ESNLib.Tools.WinForms
                     pinfo.SetValue(item, Convert.ChangeType(lineItem, pinfo.PropertyType));
                 }
                 list.Add(item);
+            }
+
+            return list;
+        }
+        /// <summary>
+        /// Import the data as the content of a csv file
+        /// </summary>
+        /// <param name="data">content of the csv, ',' separated</param>
+        /// <param name="HeaderNameToPropertyNameLink">Links between header name and property name</param>
+        /// <returns>List of converted items</returns>
+        public List<T> ImportData(string data, Dictionary<string, string> HeaderNameToPropertyNameLink)
+        {
+            // Convert dictionary
+            Dictionary<string, PropertyInfo> newLink = new Dictionary<string, PropertyInfo>();
+            foreach (var kvpair in HeaderNameToPropertyNameLink)
+            {
+                newLink[kvpair.Key] = typeof(T).GetProperty(kvpair.Value);
+            }
+
+            return ImportData(data, newLink);
+        }
+
+        /// <summary>
+        /// Import the data as the content of a csv file
+        /// </summary>
+        /// <param name="data">content of the csv, ',' separated</param>
+        /// <param name="HeaderNameToPropertyLink">Links between header name and property</param>
+        /// <returns>List of converted items</returns>
+        public List<T> ImportData(string data, Dictionary<string, PropertyInfo> HeaderNameToPropertyLink)
+        {
+            if (string.IsNullOrEmpty(data))
+            {
+                return null;
+            }
+
+            // Split by lines
+            string[] lines = data.Split('\n');
+            // Headers on first line
+            string[] headers = lines[0].Split(',');
+            string[] elements = lines.Skip(1).ToArray();
+
+            // Generate Properties Info if link is null
+            if (HeaderNameToPropertyLink == null)
+            {
+                HeaderNameToPropertyLink = new Dictionary<string, PropertyInfo>();
+                PropertyInfo[] properties = GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    HeaderNameToPropertyLink.Add(property.Name, property);
+                }
+            }
+
+            // Ready to convert csv data...
+            List<T> list = new List<T>();
+
+            foreach (string element in elements)
+            {
+                if (string.IsNullOrEmpty(element))
+                {
+                    continue;
+                }
+
+                string[] elementData = element.Split(',');
+
+                T newObject = new T();
+
+                for (int i = 0; i < elementData.Length; i++)
+                {
+                    if (!HeaderNameToPropertyLink.ContainsKey(headers[i]) || HeaderNameToPropertyLink[headers[i]] == null)
+                    {
+                        // No link for this header...
+                        continue;
+                    }
+
+                    PropertyInfo property = HeaderNameToPropertyLink[headers[i]];
+                    property.SetValue(newObject, Convert.ChangeType(elementData[i], property.PropertyType));
+                }
+
+                list.Add(newObject);
             }
 
             return list;

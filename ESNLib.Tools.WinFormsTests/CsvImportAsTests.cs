@@ -128,20 +128,20 @@ namespace ESNLib.Tools.WinForms.Tests
                 text = "newname",
             };
             string s = GenerateCSV(new MyClass[] { c1, c2 }, false);
-            s = $"C1,C2,C3,C4,C5,C6\n{s}";
+            s = $"C1,C2,C3,C4,C5,C6\n{s}"; //Custom header
 
 
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
 
-            Dictionary<string, PropertyInfo> links = new Dictionary<string, PropertyInfo>()
+            // Define headers links
+            Dictionary<string, string> links = new Dictionary<string, string>()
             {
-                {"C2", typeof(MyClass).GetProperty("x") },
-                {"C3",  typeof(MyClass).GetProperty("n")},
-                {"C3",  typeof(MyClass).GetProperty("y")},
-                {"C5", typeof(MyClass).GetProperty("text")},
+                {"C2", "x" },
+                {"C3",  "n"},
+                {"C4",  "y"},
+                {"C6", "text"},
             };
-            csvi.SetPropertiesLink(links);
-            List<MyClass> result = csvi.ImportData(s);
+            List<MyClass> result = csvi.ImportData(s, links);
 
             Assert.AreEqual(2, result.Count);
             MyClass r = result[0];
