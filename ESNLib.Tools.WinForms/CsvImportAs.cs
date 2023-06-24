@@ -165,13 +165,15 @@ namespace ESNLib.Tools.WinForms
             return list;
         }
 
-
         /// <summary>
         /// Ask for the user with a GUI way, to choose the headers linking
         /// </summary>
-        public Dictionary<string, PropertyInfo> AskUserHeadersLinks()
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(IEnumerable<T> objects)
         {
+            IEnumerable<string> names = GetProperties().ToList().Select((x) => x.Name);
 
+            frmChooseHeaderLinking frm = new frmChooseHeaderLinking(names, objects.Cast<object>());
+            frm.ShowDialog();
 
 
 

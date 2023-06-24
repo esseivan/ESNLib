@@ -214,5 +214,28 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(0, r.n);
             Assert.AreEqual(string.Empty, r.text);
         }
+
+        [TestMethod()]
+        public void AskUserHeadersLinksTest()
+        {
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+
+            csvi.AskUserHeadersLinks(new MyClass[] { c1, c2 });
+
+        }
     }
 }
