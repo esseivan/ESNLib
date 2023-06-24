@@ -19,27 +19,27 @@ namespace ESNLib.Tools.WinForms
             InitializeComponent();
         }
 
-        public frmChooseHeaderLinking(IEnumerable<string> properties, IEnumerable<object> objects) : this()
+        public frmChooseHeaderLinking(IEnumerable<string> properties, IEnumerable<object> objects)
+            : this()
         {
             Init(properties, objects);
         }
 
         private void Init(IEnumerable<string> properties, IEnumerable<object> objects)
         {
-            dataGridView1.AutoGenerateColumns = false;
+            //dataGridView1.AutoGenerateColumns = false;
 
-            foreach (string item in properties)
-            {
-                var col1 = new DataGridViewTextBoxColumn();
-                col1.DataPropertyName = item;
-                col1.Name = item;
-                dataGridView1.Columns.Add(col1);
-            }
+            //foreach (string item in properties)
+            //{
+            //    var col1 = new DataGridViewTextBoxColumn();
+            //    col1.DataPropertyName = item;
+            //    col1.Name = item;
+            //    dataGridView1.Columns.Add(col1);
+            //}
 
-            BindingSource bs = new BindingSource();
-            objects.ToList().ForEach((x) => bs.Add(x));
-            dataGridView1.DataSource = bs;
-
+            //BindingSource bs = new BindingSource();
+            //objects.ToList().ForEach((x) => bs.Add(x));
+            //dataGridView1.DataSource = bs;
         }
 
         private void Populate()
@@ -55,29 +55,11 @@ namespace ESNLib.Tools.WinForms
             string[] headers = lines[0].Split(',');
             string[] elements = lines.Skip(1).ToArray();
             elements = elements.Take(4).ToArray(); // Only display the first four
-
-
         }
 
         private Button button2;
-        private DataGridView dataGridView1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        private Examples.ColumnSelection columnSelection1;
+        private Examples.ColumnSelection columnSelection2;
 
         /************* Initialize ***************/
 
@@ -87,8 +69,8 @@ namespace ESNLib.Tools.WinForms
         {
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.columnSelection2 = new ESNLib.Examples.ColumnSelection();
+            this.columnSelection1 = new ESNLib.Examples.ColumnSelection();
             this.SuspendLayout();
             // 
             // button1
@@ -109,30 +91,36 @@ namespace ESNLib.Tools.WinForms
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // columnSelection2
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersWidth = 62;
-            this.dataGridView1.RowTemplate.Height = 28;
-            this.dataGridView1.Size = new System.Drawing.Size(607, 150);
-            this.dataGridView1.TabIndex = 1;
+            this.columnSelection2.AutoSize = true;
+            this.columnSelection2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.columnSelection2.Location = new System.Drawing.Point(114, 12);
+            this.columnSelection2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.columnSelection2.Name = "columnSelection2";
+            this.columnSelection2.Size = new System.Drawing.Size(87, 119);
+            this.columnSelection2.TabIndex = 1;
+            // 
+            // columnSelection1
+            // 
+            this.columnSelection1.AutoSize = true;
+            this.columnSelection1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.columnSelection1.Location = new System.Drawing.Point(12, 12);
+            this.columnSelection1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
+            this.columnSelection1.Name = "columnSelection1";
+            this.columnSelection1.Size = new System.Drawing.Size(102, 119);
+            this.columnSelection1.TabIndex = 1;
             // 
             // frmChooseHeaderLinking
             // 
             this.ClientSize = new System.Drawing.Size(631, 352);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.columnSelection2);
+            this.Controls.Add(this.columnSelection1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "frmChooseHeaderLinking";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
     }
