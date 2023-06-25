@@ -61,7 +61,6 @@ namespace ESNLib.Tools.Tests
             Assert.AreEqual("230e3", output6); // No SI prefix when no unit
         }
 
-
         [TestMethod()]
         public void DecimalToEngineerTest_noUnit()
         {

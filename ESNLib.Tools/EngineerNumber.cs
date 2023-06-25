@@ -41,45 +41,51 @@ namespace ESNLib.Tools
         /// </summary>
         public bool TrailingZeros { get; set; } = false;
 
-        private static readonly Dictionary<string, short> PrefixToValue = new Dictionary<string, short>()
+        private static readonly Dictionary<string, short> PrefixToValue = new Dictionary<
+            string,
+            short
+        >()
         {
-             {  "y",  -8 },
-             {  "z",  -7 },
-             {  "a",  -6 },
-             {  "f",  -5 },
-             {  "p",  -4 },
-             {  "n",  -3 },
-             {  "μ",  -2 },
-             {  "m",  -1 },
-             {  "" ,  0 },
-             {  "k",   1 },
-             {  "M",   2 },
-             {  "G",   3 },
-             {  "T",   4 },
-             {  "P",   5 },
-             {  "E",   6 },
-             {  "Z",   7 },
-             {  "Y",   8 },
+            { "y", -8 },
+            { "z", -7 },
+            { "a", -6 },
+            { "f", -5 },
+            { "p", -4 },
+            { "n", -3 },
+            { "μ", -2 },
+            { "m", -1 },
+            { "", 0 },
+            { "k", 1 },
+            { "M", 2 },
+            { "G", 3 },
+            { "T", 4 },
+            { "P", 5 },
+            { "E", 6 },
+            { "Z", 7 },
+            { "Y", 8 },
         };
-        private static readonly Dictionary<short, string> ValueToPrefix = new Dictionary<short, string>()
+        private static readonly Dictionary<short, string> ValueToPrefix = new Dictionary<
+            short,
+            string
+        >()
         {
-             {  -8, "y" },
-             {  -7, "z" },
-             {  -6, "a" },
-             {  -5, "f" },
-             {  -4, "p" },
-             {  -3, "n" },
-             {  -2, "μ" },
-             {  -1, "m" },
-             {   0, ""  },
-             {   1, "k" },
-             {   2, "M" },
-             {   3, "G" },
-             {   4, "T" },
-             {   5, "P" },
-             {   6, "E" },
-             {   7, "Z" },
-             {   8, "Y" },
+            { -8, "y" },
+            { -7, "z" },
+            { -6, "a" },
+            { -5, "f" },
+            { -4, "p" },
+            { -3, "n" },
+            { -2, "μ" },
+            { -1, "m" },
+            { 0, "" },
+            { 1, "k" },
+            { 2, "M" },
+            { 3, "G" },
+            { 4, "T" },
+            { 5, "P" },
+            { 6, "E" },
+            { 7, "Z" },
+            { 8, "Y" },
         };
 
         /// <summary>
@@ -118,7 +124,8 @@ namespace ESNLib.Tools
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
-        public static EngineerNumber operator -(EngineerNumber n) => new EngineerNumber(-n.Value, n.Unit, n.SpaceBeforeUnit, n.PrecisionDigits);
+        public static EngineerNumber operator -(EngineerNumber n) =>
+            new EngineerNumber(-n.Value, n.Unit, n.SpaceBeforeUnit, n.PrecisionDigits);
 
         /// <summary>
         /// a+b
@@ -126,7 +133,12 @@ namespace ESNLib.Tools
         public static EngineerNumber operator +(EngineerNumber a, EngineerNumber b)
         {
             // No unit verification
-            return new EngineerNumber(a.Value + b.Value, a.Unit, a.SpaceBeforeUnit, a.PrecisionDigits);
+            return new EngineerNumber(
+                a.Value + b.Value,
+                a.Unit,
+                a.SpaceBeforeUnit,
+                a.PrecisionDigits
+            );
         }
 
         /// <summary>
@@ -135,7 +147,12 @@ namespace ESNLib.Tools
         public static EngineerNumber operator -(EngineerNumber a, EngineerNumber b)
         {
             // No unit verification
-            return new EngineerNumber(a.Value - b.Value, a.Unit, a.SpaceBeforeUnit, a.PrecisionDigits);
+            return new EngineerNumber(
+                a.Value - b.Value,
+                a.Unit,
+                a.SpaceBeforeUnit,
+                a.PrecisionDigits
+            );
         }
 
         /// <summary>
@@ -233,7 +250,13 @@ namespace ESNLib.Tools
         /// <param name="Spacing">Add a space between the number and the unit</param>
         /// <param name="Precision">The number of digit precision (significative digits)</param>
         /// <param name="TrailingZeros">Zeros with no value displayed</param>
-        public EngineerNumber(double Number, string Unit, bool Spacing, ushort Precision, bool TrailingZeros)
+        public EngineerNumber(
+            double Number,
+            string Unit,
+            bool Spacing,
+            ushort Precision,
+            bool TrailingZeros
+        )
         {
             this.Value = Number;
             this.Unit = Unit;
@@ -278,10 +301,13 @@ namespace ESNLib.Tools
             short SubPowerValue = (short)Math.Floor(Math.Log10(NewValue));
 
             // Trick to get the number of significative digits requested.
-            NewValue = Math.Round(NewValue * Math.Pow(10, -SubPowerValue), Digits - 1) * Math.Pow(10, SubPowerValue);
+            NewValue =
+                Math.Round(NewValue * Math.Pow(10, -SubPowerValue), Digits - 1)
+                * Math.Pow(10, SubPowerValue);
 
-
-            string Output = TrailingZeros ? NewValue.ToString($"N{PrecisionDigits - 1}") : NewValue.ToString();
+            string Output = TrailingZeros
+                ? NewValue.ToString($"N{PrecisionDigits - 1}")
+                : NewValue.ToString();
             if ((!HasUnit) || (PowerValue < -8 || PowerValue > 8))
             {
                 if (PowerValue != 0)
@@ -315,7 +341,9 @@ namespace ESNLib.Tools
 
             // Try direct conversion
 
-            Regex validateDoubleFormat = new Regex(@"(\d{1,}(?:[.]\d{0,})?e-?\d{1,})[ ]?(?:\w{1,})?");
+            Regex validateDoubleFormat = new Regex(
+                @"(\d{1,}(?:[.]\d{0,})?e-?\d{1,})[ ]?(?:\w{1,})?"
+            );
             var result = validateDoubleFormat.Match(Text);
             if (result.Success)
             {
@@ -359,7 +387,6 @@ namespace ESNLib.Tools
                 Value /= 1000;
                 PowS++;
             }
-
 
             short delta = PrefixToValue[si];
             PowS += delta;
