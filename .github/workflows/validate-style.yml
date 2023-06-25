@@ -1,6 +1,9 @@
 name: Validate PR
 on:
   push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main", "development" ]
 jobs:
   check_formatting:
     runs-on: windows-latest
