@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ESNLib.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -135,7 +136,7 @@ namespace ESNLib.Tools.WinForms
             propertiesName = propertiesName.Prepend(DEFAULT_PROPERTY).ToArray();
             var colProp = new DataGridViewComboBoxColumn()
             {
-                Name = nameof(T),
+                Name = typeof(T).Name,
                 DataPropertyName = "PropertyName",
                 DataSource = propertiesName,
             };
@@ -191,9 +192,10 @@ namespace ESNLib.Tools.WinForms
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            //
+            // 
             // btnAccept
-            //
+            // 
+            this.btnAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAccept.Location = new System.Drawing.Point(463, 317);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
@@ -201,9 +203,10 @@ namespace ESNLib.Tools.WinForms
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
-            //
+            // 
             // btnCancel
-            //
+            // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.Location = new System.Drawing.Point(544, 317);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -211,30 +214,31 @@ namespace ESNLib.Tools.WinForms
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            //
+            // 
             // dataGridView1
-            //
+            // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System
-                .Windows
-                .Forms
-                .DataGridViewColumnHeadersHeightSizeMode
-                .AutoSize;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(607, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(607, 299);
             this.dataGridView1.TabIndex = 1;
-            //
+            // 
             // frmChooseHeaderLinking
-            //
+            // 
             this.ClientSize = new System.Drawing.Size(631, 352);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
             this.Name = "frmChooseHeaderLinking";
+            this.Text = "Select link between headers and properties";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         /************* End of Initialiye ***************/
@@ -243,6 +247,8 @@ namespace ESNLib.Tools.WinForms
         {
             // Generate dictionary header to property
             Dictionary<string, PropertyInfo> links = new Dictionary<string, PropertyInfo>();
+
+            Dictionary<PropertyInfo, int> timesUsed = new Dictionary<PropertyInfo, int>();
 
             const int columnIndex = 1;
             for (int i = 0; i < dataGridView1.RowCount; i++)
@@ -253,6 +259,38 @@ namespace ESNLib.Tools.WinForms
                 if (!links.ContainsKey(headerName))
                 {
                     links.Add(headerName, pi);
+                    if (pi != null)
+                    {
+                        if(timesUsed.ContainsKey(pi))
+                        {
+                            timesUsed[pi]++;
+                        }
+                        else
+                        {
+                            timesUsed[pi]=1;
+                        }
+                    }
+                }
+            }
+
+            var over = timesUsed.Where((x) => x.Value > 1).Select((x) => $"{x.Key.Name}:{x.Value}");
+
+            if(over.Count() > 0)
+            {
+                // One property set multiple times...
+                Dialog.DialogConfig dc = new Dialog.DialogConfig();
+                dc.Message = $"Warning ! Some properties are set multiple times !\n{string.Join("; ", over)}";
+                dc.Title = "Warning";
+                dc.Button1 = Dialog.ButtonType.Continue;
+                dc.Button2 = Dialog.ButtonType.Custom1;
+                dc.CustomButton1Text = "Edit...";
+                dc.Icon = Dialog.DialogIcon.Warning;
+
+                var result = Dialog.ShowDialog(dc);
+                if (result.DialogResult != Dialog.DialogResult.Continue)
+                {
+                    // Abort if not continue
+                    return;
                 }
             }
 
