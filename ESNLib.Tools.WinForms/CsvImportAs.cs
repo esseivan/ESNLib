@@ -12,7 +12,8 @@ namespace ESNLib.Tools.WinForms
     /// <summary>
     /// Import a csv file into a list of objects. Let the user decide the columns
     /// </summary>
-    public class CsvImportAs<T> where T : new()
+    public class CsvImportAs<T>
+        where T : new()
     {
         /// <summary>
         /// Get the list of properties for this class T
@@ -56,14 +57,19 @@ namespace ESNLib.Tools.WinForms
             foreach (string line in lines)
             {
                 if (string.IsNullOrEmpty(line))
-                { continue; }
+                {
+                    continue;
+                }
 
                 T item = new T();
                 string[] lineItems = line.Split(',');
 
                 for (int i = 0; i < lineItems.Length; i++)
                 {
-                    if (properties[i] == null) { continue; }
+                    if (properties[i] == null)
+                    {
+                        continue;
+                    }
                     PropertyInfo pinfo = properties[i];
 
                     string lineItem = lineItems[i];
@@ -74,14 +80,17 @@ namespace ESNLib.Tools.WinForms
 
             return list;
         }
-        
+
         /// <summary>
         /// Import the data as the content of a csv file
         /// </summary>
         /// <param name="data">content of the csv, ',' separated</param>
         /// <param name="HeaderNameToPropertyNameLink">Links between header name and property name</param>
         /// <returns>List of converted items</returns>
-        public List<T> ImportData(string data, Dictionary<string, string> HeaderNameToPropertyNameLink)
+        public List<T> ImportData(
+            string data,
+            Dictionary<string, string> HeaderNameToPropertyNameLink
+        )
         {
             // Convert dictionary
             Dictionary<string, PropertyInfo> newLink = new Dictionary<string, PropertyInfo>();
@@ -99,7 +108,10 @@ namespace ESNLib.Tools.WinForms
         /// <param name="data">content of the csv, ',' separated</param>
         /// <param name="HeaderNameToPropertyLink">Links between header name and property</param>
         /// <returns>List of converted items</returns>
-        public List<T> ImportData(string data, Dictionary<string, PropertyInfo> HeaderNameToPropertyLink)
+        public List<T> ImportData(
+            string data,
+            Dictionary<string, PropertyInfo> HeaderNameToPropertyLink
+        )
         {
             if (string.IsNullOrEmpty(data))
             {
@@ -126,6 +138,7 @@ namespace ESNLib.Tools.WinForms
             // Ready to convert csv data...
             List<T> list = new List<T>();
 
+            // For each element in the list
             foreach (string element in elements)
             {
                 if (string.IsNullOrEmpty(element))
@@ -133,29 +146,44 @@ namespace ESNLib.Tools.WinForms
                     continue;
                 }
 
+                // Create a new object
                 string[] elementData = element.Split(',');
 
                 T newObject = new T();
 
+                // Apply the properties
                 for (int i = 0; i < elementData.Length; i++)
                 {
-                    if (!HeaderNameToPropertyLink.ContainsKey(headers[i]) || HeaderNameToPropertyLink[headers[i]] == null)
+                    // If there's no link, do nothing
+                    if (
+                        !HeaderNameToPropertyLink.ContainsKey(headers[i])
+                        || HeaderNameToPropertyLink[headers[i]] == null
+                    )
                     {
                         // No link for this header...
                         continue;
                     }
 
+                    // Retrieve the link
                     PropertyInfo property = HeaderNameToPropertyLink[headers[i]];
+                    // If value is not empty, apply it to the property
                     if (!string.IsNullOrEmpty(elementData[i]))
                     {
-                        property.SetValue(newObject, Convert.ChangeType(elementData[i], property.PropertyType));
+                        property.SetValue(
+                            newObject,
+                            Convert.ChangeType(elementData[i], property.PropertyType)
+                        );
                     }
                     else
                     {
-                        // Not working...
-                        ConstructorInfo[] constructor = property.PropertyType.GetConstructors();
-                        object result = constructor[0].Invoke(null);
-                        property.SetValue(newObject, Convert.ChangeType(result, property.PropertyType));
+                        var defaultValue =
+                            (property.PropertyType.IsValueType)
+                                ? Activator.CreateInstance(property.PropertyType, true)
+                                : null;
+                        property.SetValue(
+                            newObject,
+                            Convert.ChangeType(defaultValue, property.PropertyType)
+                        );
                     }
                 }
 
@@ -165,22 +193,21 @@ namespace ESNLib.Tools.WinForms
             return list;
         }
 
-
         /// <summary>
         /// Ask for the user with a GUI way, to choose the headers linking
         /// </summary>
-        public Dictionary<string, PropertyInfo> AskUserHeadersLinks()
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(string data)
         {
-
-
-
-
-
-
+            frmChooseHeaderLinking frm = new frmChooseHeaderLinking();
+            frm.Populate<T>(data);
+            frm.ShowDialog();
+            if (frm.Result)
+            {
+                return frm.Output;
+            }
             return null;
         }
     }
-
 
     ///// <summary>
     ///// Attribute to set a special header name for the property

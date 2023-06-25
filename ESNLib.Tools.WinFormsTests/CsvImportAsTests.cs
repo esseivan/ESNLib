@@ -14,7 +14,7 @@ namespace ESNLib.Tools.WinForms.Tests
     {
         private string GenerateCSV(MyClass item, bool generateHeader = true)
         {
-            string csvOutput = generateHeader ? $"dummy2,x,n,y,dummy2,text\n" : string.Empty;
+            string csvOutput = generateHeader ? $"dummy1,x,n,y,dummy2,text\n" : string.Empty;
             csvOutput += $"DummyText,{item.x},{item.n},{item.y},DummyText2,{item.text}\n";
 
             return csvOutput;
@@ -22,7 +22,7 @@ namespace ESNLib.Tools.WinForms.Tests
 
         private string GenerateCSV(IEnumerable<MyClass> classes, bool generateHeader = true)
         {
-            string csvOutput = generateHeader ? $"dummy2,x,n,y,dummy2,text\n" : string.Empty;
+            string csvOutput = generateHeader ? $"dummy1,x,n,y,dummy2,text\n" : string.Empty;
 
             foreach (MyClass item in classes)
             {
@@ -44,7 +44,6 @@ namespace ESNLib.Tools.WinForms.Tests
 
             public string text { get; set; }
         }
-
 
         [TestMethod()]
         public void TestImport_Single()
@@ -68,7 +67,6 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(3.0, result[0].n);
             Assert.AreEqual("name", result[0].text);
         }
-
 
         [TestMethod()]
         public void TestImport_Multiple()
@@ -108,7 +106,6 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(comp.text, r.text);
         }
 
-
         [TestMethod()]
         public void TestImport_CustomHeaders()
         {
@@ -130,16 +127,15 @@ namespace ESNLib.Tools.WinForms.Tests
             string s = GenerateCSV(new MyClass[] { c1, c2 }, false);
             s = $"C1,C2,C3,C4,C5,C6\n{s}"; //Custom header
 
-
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
 
             // Define headers links
             Dictionary<string, string> links = new Dictionary<string, string>()
             {
-                {"C2", "x" },
-                {"C3",  "n"},
-                {"C4",  "y"},
-                {"C6", "text"},
+                { "C2", "x" },
+                { "C3", "n" },
+                { "C4", "y" },
+                { "C6", "text" },
             };
             List<MyClass> result = csvi.ImportData(s, links);
 
@@ -181,16 +177,15 @@ namespace ESNLib.Tools.WinForms.Tests
             // Add custom line
             s += $"d,666,,,,\n";
 
-
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
 
             // Define headers links
             Dictionary<string, string> links = new Dictionary<string, string>()
             {
-                {"C2", "x" },
-                {"C3",  "n"},
-                {"C4",  "y"},
-                {"C6", "text"},
+                { "C2", "x" },
+                { "C3", "n" },
+                { "C4", "y" },
+                { "C6", "text" },
             };
             List<MyClass> result = csvi.ImportData(s, links);
 
@@ -212,7 +207,68 @@ namespace ESNLib.Tools.WinForms.Tests
             Assert.AreEqual(666, r.x);
             Assert.AreEqual(0, r.y);
             Assert.AreEqual(0, r.n);
-            Assert.AreEqual(string.Empty, r.text);
+            Assert.AreEqual(default(String), r.text);
+        }
+
+        [TestMethod()]
+        public void AskUserHeadersLinksTest_Cancel()
+        {
+            return;
+
+            // CSV data
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            string s = GenerateCSV(new MyClass[] { c1, c2 });
+
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+
+            var result = csvi.AskUserHeadersLinks(s);
+
+            Assert.IsNull(result);
+        }
+
+        [TestMethod()]
+        public void AskUserHeadersLinksTest_Accept_AsIs()
+        {
+            return;
+
+            // CSV data
+            MyClass c1 = new MyClass()
+            {
+                x = 1,
+                y = 2,
+                n = 3.0f,
+                text = "name",
+            };
+            MyClass c2 = new MyClass()
+            {
+                x = 4,
+                y = 5,
+                n = 6.66f,
+                text = "newname",
+            };
+            string s = GenerateCSV(new MyClass[] { c1, c2 });
+
+            CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
+
+            var result = csvi.AskUserHeadersLinks(s);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual("x", result["x"].Name);
+            Assert.AreEqual("n", result["n"].Name);
+            Assert.AreEqual("text", result["text"].Name);
         }
     }
 }

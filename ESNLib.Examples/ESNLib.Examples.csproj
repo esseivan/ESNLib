@@ -52,6 +52,12 @@
     <Compile Include="ex_clipboard_monitor.Designer.cs">
       <DependentUpon>ex_clipboard_monitor.cs</DependentUpon>
     </Compile>
+    <Compile Include="ex_csv.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ex_csv.Designer.cs">
+      <DependentUpon>ex_csv.cs</DependentUpon>
+    </Compile>
     <Compile Include="ex_dialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +134,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ex_clipboard_monitor.resx">
       <DependentUpon>ex_clipboard_monitor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ex_csv.resx">
+      <DependentUpon>ex_csv.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ex_dialog.resx">
       <DependentUpon>ex_dialog.cs</DependentUpon>
