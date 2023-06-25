@@ -13,9 +13,10 @@ namespace ESNLib.Examples
 
         /// <summary>
         /// When this is set to a type, the corresponding example will automatically start.
-        /// The example app will then stop. Set to null to run the selection form
+        /// The example app will then stop. Set to null to run the selection form.
+        /// Set to e.g. typeof(ex_...) otherwise
         /// </summary>
-        public Type OPEN_DEFAULT = typeof(ex_csv);
+        public Type OPEN_DEFAULT = null;
 
         public List<Type> WindowsList = new List<Type>()
         {

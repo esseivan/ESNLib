@@ -192,10 +192,17 @@ namespace ESNLib.Tools.WinForms
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
+            //
             // btnAccept
-            // 
-            this.btnAccept.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //
+            this.btnAccept.Anchor = (
+                (System.Windows.Forms.AnchorStyles)(
+                    (
+                        System.Windows.Forms.AnchorStyles.Bottom
+                        | System.Windows.Forms.AnchorStyles.Right
+                    )
+                )
+            );
             this.btnAccept.Location = new System.Drawing.Point(463, 317);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(75, 23);
@@ -203,10 +210,17 @@ namespace ESNLib.Tools.WinForms
             this.btnAccept.Text = "Accept";
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
-            // 
+            //
             // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            //
+            this.btnCancel.Anchor = (
+                (System.Windows.Forms.AnchorStyles)(
+                    (
+                        System.Windows.Forms.AnchorStyles.Bottom
+                        | System.Windows.Forms.AnchorStyles.Right
+                    )
+                )
+            );
             this.btnCancel.Location = new System.Drawing.Point(544, 317);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -214,22 +228,35 @@ namespace ESNLib.Tools.WinForms
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
+            //
             // dataGridView1
-            // 
+            //
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Anchor = (
+                (System.Windows.Forms.AnchorStyles)(
+                    (
+                        (
+                            (
+                                System.Windows.Forms.AnchorStyles.Top
+                                | System.Windows.Forms.AnchorStyles.Bottom
+                            ) | System.Windows.Forms.AnchorStyles.Left
+                        ) | System.Windows.Forms.AnchorStyles.Right
+                    )
+                )
+            );
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System
+                .Windows
+                .Forms
+                .DataGridViewColumnHeadersHeightSizeMode
+                .AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 12);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(607, 299);
             this.dataGridView1.TabIndex = 1;
-            // 
+            //
             // frmChooseHeaderLinking
-            // 
+            //
             this.ClientSize = new System.Drawing.Size(631, 352);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnCancel);
@@ -238,7 +265,6 @@ namespace ESNLib.Tools.WinForms
             this.Text = "Select link between headers and properties";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         /************* End of Initialiye ***************/
@@ -261,13 +287,13 @@ namespace ESNLib.Tools.WinForms
                     links.Add(headerName, pi);
                     if (pi != null)
                     {
-                        if(timesUsed.ContainsKey(pi))
+                        if (timesUsed.ContainsKey(pi))
                         {
                             timesUsed[pi]++;
                         }
                         else
                         {
-                            timesUsed[pi]=1;
+                            timesUsed[pi] = 1;
                         }
                     }
                 }
@@ -275,11 +301,12 @@ namespace ESNLib.Tools.WinForms
 
             var over = timesUsed.Where((x) => x.Value > 1).Select((x) => $"{x.Key.Name}:{x.Value}");
 
-            if(over.Count() > 0)
+            if (over.Count() > 0)
             {
                 // One property set multiple times...
                 Dialog.DialogConfig dc = new Dialog.DialogConfig();
-                dc.Message = $"Warning ! Some properties are set multiple times !\n{string.Join("; ", over)}";
+                dc.Message =
+                    $"Warning ! Some properties are set multiple times !\n{string.Join("; ", over)}";
                 dc.Title = "Warning";
                 dc.Button1 = Dialog.ButtonType.Continue;
                 dc.Button2 = Dialog.ButtonType.Custom1;
