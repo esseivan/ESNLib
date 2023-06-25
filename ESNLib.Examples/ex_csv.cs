@@ -18,6 +18,20 @@ namespace ESNLib.Examples
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Generate the CSV data
+        private string GenerateCSV(IEnumerable<MyClass> classes, bool generateHeader = true)
+        {
+            string csvOutput = generateHeader ? $"dummy2,x,n,y,dummy2,Text\n" : string.Empty;
+
+            foreach (MyClass item in classes)
+            {
+                csvOutput += $"DummyText,{item.x},{item.n},{item.y},DummyText2,{item.text}\n";
+            }
+
+            return csvOutput;
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             MyClass c1 = new MyClass()
@@ -34,14 +48,12 @@ namespace ESNLib.Examples
                 n = 6.66f,
                 text = "newname",
             };
+            // generate string
+            string s = GenerateCSV(new MyClass[] { c1, c2 });
+
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
 
-            string[] headers = new string[]
-            {
-                "C1","C2","C3","C4","C5","C6"
-            };
-
-            csvi.AskUserHeadersLinks(new MyClass[] { c1, c2 }, headers);
+            csvi.AskUserHeadersLinks(s);
         }
 
         /// <summary>

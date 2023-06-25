@@ -138,6 +138,7 @@ namespace ESNLib.Tools.WinForms
             // Ready to convert csv data...
             List<T> list = new List<T>();
 
+            // For each element in the list
             foreach (string element in elements)
             {
                 if (string.IsNullOrEmpty(element))
@@ -145,12 +146,15 @@ namespace ESNLib.Tools.WinForms
                     continue;
                 }
 
+                // Create a new object
                 string[] elementData = element.Split(',');
 
                 T newObject = new T();
 
+                // Apply the properties
                 for (int i = 0; i < elementData.Length; i++)
                 {
+                    // If there's no link, do nothing
                     if (
                         !HeaderNameToPropertyLink.ContainsKey(headers[i])
                         || HeaderNameToPropertyLink[headers[i]] == null
@@ -160,7 +164,9 @@ namespace ESNLib.Tools.WinForms
                         continue;
                     }
 
+                    // Retrieve the link
                     PropertyInfo property = HeaderNameToPropertyLink[headers[i]];
+                    // If value is not empty, apply it to the property
                     if (!string.IsNullOrEmpty(elementData[i]))
                     {
                         property.SetValue(
@@ -170,12 +176,13 @@ namespace ESNLib.Tools.WinForms
                     }
                     else
                     {
-                        // Not working...
-                        ConstructorInfo[] constructor = property.PropertyType.GetConstructors();
-                        object result = constructor[0].Invoke(null);
+                        var defaultValue =
+                            (property.PropertyType.IsValueType)
+                                ? Activator.CreateInstance(property.PropertyType, true)
+                                : null;
                         property.SetValue(
                             newObject,
-                            Convert.ChangeType(result, property.PropertyType)
+                            Convert.ChangeType(defaultValue, property.PropertyType)
                         );
                     }
                 }
@@ -189,14 +196,15 @@ namespace ESNLib.Tools.WinForms
         /// <summary>
         /// Ask for the user with a GUI way, to choose the headers linking
         /// </summary>
-        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(IEnumerable<T> objects, IEnumerable<string> headers)
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(string data)
         {
-            IEnumerable<string> names = GetProperties().ToList().Select((x) => x.Name);
-
             frmChooseHeaderLinking frm = new frmChooseHeaderLinking();
-            frm.Init(objects, headers);
+            frm.Populate<T>(data);
             frm.ShowDialog();
-
+            if (frm.Result)
+            {
+                return frm.Output;
+            }
             return null;
         }
     }
