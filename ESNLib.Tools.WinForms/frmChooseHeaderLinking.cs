@@ -19,27 +19,73 @@ namespace ESNLib.Tools.WinForms
             InitializeComponent();
         }
 
-        public frmChooseHeaderLinking(IEnumerable<string> properties, IEnumerable<object> objects)
-            : this()
+        public void Init<T>(IEnumerable<T> items, IEnumerable<string> headers)
         {
-            Init(properties, objects);
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.DataError += DataGridView1_DataError;
+
+            // Create table
+            var properties = typeof(T).GetProperties();
+
+            List<LineItem> myList = new List<LineItem>();
+            for (int i = 0; i < properties.Count(); i++)
+            {
+                myList.Insert(i, new LineItem() { PropertyName = properties[i].Name, HeaderName = "?", });
+
+                if (items.Count() >= 1)
+                {
+                    myList[i].Item1 = properties[i].GetValue(items.ElementAt(0))?.ToString();
+                    if (items.Count() >= 2)
+                    {
+                        myList[i].Item2 = properties[i].GetValue(items.ElementAt(1))?.ToString();
+                        if (items.Count() >= 3)
+                        {
+                            myList[i].Item3 = properties[i].GetValue(items.ElementAt(2))?.ToString();
+                        }
+                    }
+                }
+            }
+
+            // Create columns
+            // Class properties | Header linking | Item1 | Item2 ...
+            var colProp = new DataGridViewTextBoxColumn()
+            {
+                ReadOnly = true,
+                Name = nameof(T),
+                DataPropertyName = "PropertyName"
+            };
+            dataGridView1.Columns.Add(colProp);
+
+            headers = headers.Prepend("?").ToArray();
+            var colHeader = new DataGridViewComboBoxColumn()
+            {
+                Name = "Header link",
+                DataPropertyName = "HeaderName",
+                DataSource = headers,
+            };
+            dataGridView1.Columns.Add(colHeader);
+
+            int itemCounter = 1;
+            foreach (T item in items)
+            {
+                var col1 = new DataGridViewTextBoxColumn
+                {
+                    Name = $"Item{itemCounter}",
+                    ReadOnly = true,
+                    DataPropertyName = $"Item{itemCounter}",
+                };
+                itemCounter++;
+                dataGridView1.Columns.Add(col1);
+            }
+
+            BindingSource bs = new BindingSource();
+            myList.ToList().ForEach((x) => bs.Add(x));
+            dataGridView1.DataSource = bs;
         }
 
-        private void Init(IEnumerable<string> properties, IEnumerable<object> objects)
+        private void DataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            //dataGridView1.AutoGenerateColumns = false;
-
-            //foreach (string item in properties)
-            //{
-            //    var col1 = new DataGridViewTextBoxColumn();
-            //    col1.DataPropertyName = item;
-            //    col1.Name = item;
-            //    dataGridView1.Columns.Add(col1);
-            //}
-
-            //BindingSource bs = new BindingSource();
-            //objects.ToList().ForEach((x) => bs.Add(x));
-            //dataGridView1.DataSource = bs;
+            Console.WriteLine(e.ToString());
         }
 
         private void Populate()
@@ -58,8 +104,7 @@ namespace ESNLib.Tools.WinForms
         }
 
         private Button button2;
-        private Examples.ColumnSelection columnSelection1;
-        private Examples.ColumnSelection columnSelection2;
+        private DataGridView dataGridView1;
 
         /************* Initialize ***************/
 
@@ -69,59 +114,76 @@ namespace ESNLib.Tools.WinForms
         {
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.columnSelection2 = new ESNLib.Examples.ColumnSelection();
-            this.columnSelection1 = new ESNLib.Examples.ColumnSelection();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(405, 317);
+            this.button1.Location = new System.Drawing.Point(463, 317);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
             this.button1.Text = "Accept";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(486, 317);
+            this.button2.Location = new System.Drawing.Point(544, 317);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 0;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // columnSelection2
+            // dataGridView1
             // 
-            this.columnSelection2.AutoSize = true;
-            this.columnSelection2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.columnSelection2.Location = new System.Drawing.Point(114, 12);
-            this.columnSelection2.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.columnSelection2.Name = "columnSelection2";
-            this.columnSelection2.Size = new System.Drawing.Size(87, 119);
-            this.columnSelection2.TabIndex = 1;
-            // 
-            // columnSelection1
-            // 
-            this.columnSelection1.AutoSize = true;
-            this.columnSelection1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.columnSelection1.Location = new System.Drawing.Point(12, 12);
-            this.columnSelection1.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
-            this.columnSelection1.Name = "columnSelection1";
-            this.columnSelection1.Size = new System.Drawing.Size(102, 119);
-            this.columnSelection1.TabIndex = 1;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(607, 150);
+            this.dataGridView1.TabIndex = 1;
             // 
             // frmChooseHeaderLinking
             // 
             this.ClientSize = new System.Drawing.Size(631, 352);
-            this.Controls.Add(this.columnSelection2);
-            this.Controls.Add(this.columnSelection1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Name = "frmChooseHeaderLinking";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Verify that the headers are not duplicate
 
         }
     }
+
+        internal class LineItem
+    {
+        public LineItem() { }
+
+        public LineItem(string propertyName, string headerName, string[] items)
+        {
+            PropertyName = propertyName;
+            HeaderName = headerName;
+            Item1 = items[0];
+            Item2 = items[1];
+            Item3 = items[2];
+        }
+
+        public string PropertyName { get; set; }
+        public string HeaderName { get; set; }
+        public string Item1 { get; set; }
+        public string Item2 { get; set; }
+        public string Item3 { get; set; }
+    }
+
 }

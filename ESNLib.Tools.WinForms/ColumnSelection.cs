@@ -19,13 +19,28 @@ namespace ESNLib.Examples
 
         private const int step = 19;
 
+        [
+            Browsable(true),
+            EditorBrowsable(EditorBrowsableState.Always),
+            Category("misc"),
+            Description("Use combobox instead of textbox")
+        ]
+        public bool UseCombobox { get; set; } = false;
+
         public ColumnSelection()
         {
             InitializeComponent();
-            PopulateLines();
         }
 
-        private void PopulateLines()
+        private void ColumnSelection_Load(object sender, EventArgs e)
+        {
+            if (UseCombobox)
+                CreateComboboxes();
+            else
+                CreateTextboxes();
+        }
+
+        private void CreateTextboxes()
         {
             for (int i = 0; i < numElements; i++)
             {
@@ -42,9 +57,36 @@ namespace ESNLib.Examples
             }
         }
 
-        public void AddObjects<T>(IEnumerable<object> obj)
+        private void CreateComboboxes()
         {
-            var prop = typeof(T).GetProperties();
+            for (int i = 0; i < numElements; i++)
+            {
+                ComboBox newLine = new ComboBox()
+                {
+                    Margin = new Padding(0, 0, 0, 3),
+                    Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Top,
+                    Location = new Point(0, (i + 1) * step + 20),
+                    Size = new System.Drawing.Size(144, 17),
+                    Name = $"combobox{i}",
+                };
+                this.Controls.Add(newLine);
+            }
         }
+
+        public void DisableSelection()
+        {
+            comboBox1.Visible = false;
+        }
+
+        public void SetSelection() { }
+
+        public void SetTypeProperties<T>()
+        {
+            System.Reflection.PropertyInfo[] properties = typeof(T).GetProperties();
+            IEnumerable<string> names = properties.Select((x) => x.Name);
+            SetObjects(names);
+        }
+
+        public void SetObjects(IEnumerable<string> objects) { }
     }
 }

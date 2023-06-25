@@ -234,7 +234,12 @@ namespace ESNLib.Tools.WinForms.Tests
             };
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
 
-            csvi.AskUserHeadersLinks(new MyClass[] { c1, c2 });
+            string[] headers = new string[]
+            {
+                "C1","C2","C3","C4","C5","C6"
+            };
+
+            csvi.AskUserHeadersLinks(new MyClass[] { c1, c2 }, headers);
 
         }
     }

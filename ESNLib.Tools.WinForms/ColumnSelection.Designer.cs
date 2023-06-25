@@ -65,6 +65,7 @@
             this.Margin = new System.Windows.Forms.Padding(0, 3, 0, 3);
             this.Name = "ColumnSelection";
             this.Size = new System.Drawing.Size(144, 43);
+            this.Load += new System.EventHandler(this.ColumnSelection_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

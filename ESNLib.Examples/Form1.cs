@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace ESNLib.Examples
@@ -9,6 +10,12 @@ namespace ESNLib.Examples
     public partial class Form1 : Form
     {
         private string[] args;
+
+        /// <summary>
+        /// When this is set to a type, the corresponding example will automatically start.
+        /// The example app will then stop. Set to null to run the selection form
+        /// </summary>
+        public Type OPEN_DEFAULT = typeof(ex_csv);
 
         public List<Type> WindowsList = new List<Type>()
         {
@@ -24,6 +31,7 @@ namespace ESNLib.Examples
             typeof(ex_tools),
             typeof(ex_math),
             typeof(ex_plugins),
+            typeof(ex_csv),
         };
 
         public Form1()
@@ -86,8 +94,16 @@ namespace ESNLib.Examples
                     "Tools",
                     "Math",
                     "Plugin",
+                    "CSV Import",
                 }
             );
+
+            if (OPEN_DEFAULT != null)
+            {
+                Form frm = (Form)Activator.CreateInstance(OPEN_DEFAULT);
+                frm.ShowDialog();
+                this.Close();
+            }
         }
 
         private void button1_Click(object sender, EventArgs e)
