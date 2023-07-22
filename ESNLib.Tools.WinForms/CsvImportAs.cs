@@ -183,10 +183,7 @@ namespace ESNLib.Tools.WinForms
                                     Convert.ChangeType(field, property.PropertyType)
                                 );
                             }
-                            catch (Exception ex)
-                            {
-
-                            }
+                            catch (Exception ex) { }
                         }
                         else
                         {
