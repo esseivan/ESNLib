@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -52,8 +53,11 @@ namespace ESNLib.Examples
             string s = GenerateCSV(new MyClass[] { c1, c2 });
 
             CsvImportAs<MyClass> csvi = new CsvImportAs<MyClass>();
-
-            csvi.AskUserHeadersLinks(s);
+            Dictionary<string, string> myLinks = new Dictionary<string, string>()
+            {
+                { "x", "text" },
+            };
+            csvi.AskUserHeadersLinks(s, myLinks);
         }
 
         /// <summary>

@@ -204,10 +204,29 @@ namespace ESNLib.Tools.WinForms
         /// <summary>
         /// Ask for the user with a GUI way, to choose the headers linking
         /// </summary>
-        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(string data)
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(string data, Dictionary<string, PropertyInfo> defaultLink)
+        {
+            Dictionary<string, string> newList = null;
+
+            if (!(defaultLink == null || defaultLink.Count == 0))
+            {
+                newList = new Dictionary<string, string>();
+                foreach (var item in defaultLink)
+                {
+                    newList.Add(item.Key, item.Value.Name);
+                }
+            }
+
+            return AskUserHeadersLinks(data, newList);
+        }
+
+        /// <summary>
+        /// Ask for the user with a GUI way, to choose the headers linking
+        /// </summary>
+        public Dictionary<string, PropertyInfo> AskUserHeadersLinks(string data, Dictionary<string, string> defaultLink = null)
         {
             frmChooseHeaderLinking frm = new frmChooseHeaderLinking();
-            frm.Populate<T>(data);
+            frm.Populate<T>(data, defaultLink);
             frm.ShowDialog();
             if (frm.Result)
             {

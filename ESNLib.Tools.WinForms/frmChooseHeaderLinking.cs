@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -47,7 +48,23 @@ namespace ESNLib.Tools.WinForms
             return myList;
         }
 
-        public void Populate<T>(string Data)
+        public void Populate<T>(string Data, Dictionary<string, PropertyInfo> defaultLink)
+        {
+            Dictionary<string, string> newList = null;
+
+            if (!(defaultLink == null || defaultLink.Count == 0))
+            {
+                newList = new Dictionary<string, string>();
+                foreach (var item in defaultLink)
+                {
+                    newList.Add(item.Key, item.Value.Name);
+                }
+            }
+
+            Populate<T>(Data, newList);
+        }
+
+        public void Populate<T>(string Data, Dictionary<string, string> defaultLink = null)
         {
             if (string.IsNullOrEmpty(Data))
             {
@@ -75,6 +92,8 @@ namespace ESNLib.Tools.WinForms
             data2 = elements.ElementAtOrDefault(1)?.Split(',') ?? new string[0];
             data3 = elements.ElementAtOrDefault(2)?.Split(',') ?? new string[0];
 
+            bool hasLink = defaultLink != null;
+
             for (int i = 0; i < headers.Length; i++)
             {
                 LineItem li = new LineItem()
@@ -85,6 +104,12 @@ namespace ESNLib.Tools.WinForms
                     Item2 = data2.ElementAtOrDefault(i),
                     Item3 = data3.ElementAtOrDefault(i),
                 };
+
+                if (hasLink && defaultLink.ContainsKey(li.HeaderName))
+                {
+                    li.PropertyName = defaultLink[li.HeaderName];
+                }
+
                 items.Add(li);
             }
 
@@ -107,12 +132,16 @@ namespace ESNLib.Tools.WinForms
             {
                 for (int j = 0; j < propertiesName.Length; j++)
                 {
+
+                    if (items[i].PropertyName != DEFAULT_PROPERTY) // Already set. Do not replace
+                        continue;
+
                     if (
-                        propertiesName[j].Equals(
-                            items[i].HeaderName,
-                            StringComparison.InvariantCultureIgnoreCase
-                        )
+                    propertiesName[j].Equals(
+                        items[i].HeaderName,
+                        StringComparison.InvariantCultureIgnoreCase
                     )
+                )
                     {
                         // Header found in properties
                         items[i].PropertyName = propertiesName[j];
