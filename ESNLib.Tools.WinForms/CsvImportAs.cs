@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.FileIO;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ESNLib.Tools.WinForms
 {
@@ -110,19 +113,14 @@ namespace ESNLib.Tools.WinForms
         /// <returns>List of converted items</returns>
         public List<T> ImportData(
             string data,
-            Dictionary<string, PropertyInfo> HeaderNameToPropertyLink
+            Dictionary<string, PropertyInfo> HeaderNameToPropertyLink,
+            string separator = ","
         )
         {
             if (string.IsNullOrEmpty(data))
             {
                 return null;
             }
-
-            // Split by lines
-            string[] lines = data.Split('\n');
-            // Headers on first line
-            string[] headers = lines[0].Split(',');
-            string[] elements = lines.Skip(1).ToArray();
 
             // Generate Properties Info if link is null
             if (HeaderNameToPropertyLink == null)
@@ -138,56 +136,66 @@ namespace ESNLib.Tools.WinForms
             // Ready to convert csv data...
             List<T> list = new List<T>();
 
-            // For each element in the list
-            foreach (string element in elements)
+            StringReader sr = new StringReader(data);
+            using (TextFieldParser parser = new TextFieldParser(sr))
             {
-                if (string.IsNullOrEmpty(element))
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(separator);
+                if (parser.EndOfData)
+                    return null;
+
+                string[] headers = parser.ReadFields();
+
+                while (!parser.EndOfData)
                 {
-                    continue;
+                    //Processing row
+                    T newObject = new T();
+                    string[] fields = parser.ReadFields();
+                    for (int i = 0; i < fields.Length; i++)
+                    {
+                        string field = fields[i];
+                        string header = headers[i];
+                        // Processing field
+                        if (string.IsNullOrEmpty(field))
+                        {
+                            continue;
+                        }
+
+                        // If there's no link, do nothing
+                        if (
+                            !HeaderNameToPropertyLink.ContainsKey(header)
+                            || HeaderNameToPropertyLink[header] == null
+                        )
+                        {
+                            // No link for this header...
+                            continue;
+                        }
+
+                        // Retrieve the link
+                        PropertyInfo property = HeaderNameToPropertyLink[header];
+                        // If value is not empty, apply it to the property
+                        if (!string.IsNullOrEmpty(field))
+                        {
+                            property.SetValue(
+                                newObject,
+                                Convert.ChangeType(field, property.PropertyType)
+                            );
+                        }
+                        else
+                        {
+                            var defaultValue =
+                                (property.PropertyType.IsValueType)
+                                    ? Activator.CreateInstance(property.PropertyType, true)
+                                    : null;
+                            property.SetValue(
+                                newObject,
+                                Convert.ChangeType(defaultValue, property.PropertyType)
+                            );
+                        }
+                    }
+
+                    list.Add(newObject);
                 }
-
-                // Create a new object
-                string[] elementData = element.Split(',');
-
-                T newObject = new T();
-
-                // Apply the properties
-                for (int i = 0; i < elementData.Length; i++)
-                {
-                    // If there's no link, do nothing
-                    if (
-                        !HeaderNameToPropertyLink.ContainsKey(headers[i])
-                        || HeaderNameToPropertyLink[headers[i]] == null
-                    )
-                    {
-                        // No link for this header...
-                        continue;
-                    }
-
-                    // Retrieve the link
-                    PropertyInfo property = HeaderNameToPropertyLink[headers[i]];
-                    // If value is not empty, apply it to the property
-                    if (!string.IsNullOrEmpty(elementData[i]))
-                    {
-                        property.SetValue(
-                            newObject,
-                            Convert.ChangeType(elementData[i], property.PropertyType)
-                        );
-                    }
-                    else
-                    {
-                        var defaultValue =
-                            (property.PropertyType.IsValueType)
-                                ? Activator.CreateInstance(property.PropertyType, true)
-                                : null;
-                        property.SetValue(
-                            newObject,
-                            Convert.ChangeType(defaultValue, property.PropertyType)
-                        );
-                    }
-                }
-
-                list.Add(newObject);
             }
 
             return list;
