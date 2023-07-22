@@ -176,10 +176,17 @@ namespace ESNLib.Tools.WinForms
                         // If value is not empty, apply it to the property
                         if (!string.IsNullOrEmpty(field))
                         {
-                            property.SetValue(
-                                newObject,
-                                Convert.ChangeType(field, property.PropertyType)
-                            );
+                            try
+                            {
+                                property.SetValue(
+                                    newObject,
+                                    Convert.ChangeType(field, property.PropertyType)
+                                );
+                            }
+                            catch (Exception ex)
+                            {
+
+                            }
                         }
                         else
                         {
