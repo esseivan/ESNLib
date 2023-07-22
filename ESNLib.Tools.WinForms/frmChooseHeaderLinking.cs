@@ -132,16 +132,15 @@ namespace ESNLib.Tools.WinForms
             {
                 for (int j = 0; j < propertiesName.Length; j++)
                 {
-
                     if (items[i].PropertyName != DEFAULT_PROPERTY) // Already set. Do not replace
                         continue;
 
                     if (
-                    propertiesName[j].Equals(
-                        items[i].HeaderName,
-                        StringComparison.InvariantCultureIgnoreCase
+                        propertiesName[j].Equals(
+                            items[i].HeaderName,
+                            StringComparison.InvariantCultureIgnoreCase
+                        )
                     )
-                )
                     {
                         // Header found in properties
                         items[i].PropertyName = propertiesName[j];
