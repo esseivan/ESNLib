@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>ESN</Authors>
     <Description>My personnal library</Description>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WinSCP" Version="5.21.1" />
+    <PackageReference Include="WinSCP" Version="6.3.6" />
   </ItemGroup>
 
   <ItemGroup>

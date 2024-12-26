@@ -292,7 +292,7 @@ usage: <app_name> [BaseConfig path]";
                                 Mirror = false,
                                 RemoveFiles = false,
                                 RunPriority = 0,
-                                SyncCriteria = SynchronizationCriteria.Either,
+                                SyncCriteria = SynchronizationCriteria.Time | SynchronizationCriteria.Size,
                                 SyncMode = SynchronizationMode.Remote,
                                 TransferMode = TransferMode.Binary
                             }
